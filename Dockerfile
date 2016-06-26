@@ -1,6 +1,12 @@
 # Use exathe latest nodejs version.
 FROM node:6.2
 
+# Expose the port.
+EXPOSE 80
+
+# Set environment variables.
+ENV PORT=80
+
 # Create the application directory in the dock.
 RUN mkdir /opt/service
 
@@ -12,9 +18,6 @@ WORKDIR /opt/service
 
 # Install all the dependencies.
 RUN npm install
-
-# Expose the port.
-EXPOSE 3000
 
 # Run the app.
 CMD node /opt/service/index.js
