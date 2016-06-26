@@ -24,7 +24,5 @@ kubectl expose deployment tomwielandnl --type="LoadBalancer"
 
 ### Destroy
 ```
-kubectl delete service,deployment hello-node
-gcloud container clusters delete hello-world
-gsutils rm -r $(gsutils ls)
+kubectl delete service,deployment tomwielandnl
 ```
