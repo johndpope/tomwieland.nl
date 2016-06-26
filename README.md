@@ -1,6 +1,6 @@
 # tomwieland.nl
 
-## Upgrading
+## Deployment
 
 ### Build an Image
 ```
