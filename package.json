@@ -6,9 +6,9 @@
   "main": "index.js",
   "author": "",
   "license": "ISC",
-  "homepage": "https://github.com/Industrial/tomwieland.nl#readme"
+  "homepage": "https://github.com/Industrial/tomwieland.nl#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "node index.js"
   },
   "repository": {
     "type": "git",
