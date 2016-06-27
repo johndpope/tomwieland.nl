@@ -1,8 +1,8 @@
 {
   "private": true,
   "name": "tomwieland.nl",
-  "version": "1.0.0",
-  "description": "## Deployment",
+  "version": "1.1.0",
+  "description": "",
   "main": "index.js",
   "author": "",
   "license": "ISC",
@@ -17,19 +17,7 @@
   "bugs": {
     "url": "https://github.com/Industrial/tomwieland.nl/issues"
   },
-  "hexo": {
-    "version": "3.2.0"
-  },
   "dependencies": {
-    "hexo": "^3.2.0",
-    "hexo-generator-archive": "^0.1.4",
-    "hexo-generator-category": "^0.1.3",
-    "hexo-generator-index": "^0.2.0",
-    "hexo-generator-tag": "^0.2.0",
-    "hexo-renderer-ejs": "^0.2.0",
-    "hexo-renderer-stylus": "^0.3.1",
-    "hexo-renderer-marked": "^0.2.10",
-    "hexo-server": "^0.2.0"
   },
   "devDependencies": {}
 }
