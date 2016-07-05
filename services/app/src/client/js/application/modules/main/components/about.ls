@@ -13,7 +13,7 @@ class About extends React.Component
         margin-top: \21px
 
       el Row,
-        null,
+        void,
 
         el Col,
           xs: 12

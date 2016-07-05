@@ -27,7 +27,7 @@ gulp.task \browserify:compile, (cb) ->
 
     bundle
       .bundle!
-      .on \error, handle-error.bind null, \browserify:compile
+      .on \error, handle-error.bind void, \browserify:compile
       .pipe vinyl-source-stream file-name
       .pipe gulp.dest directory-path
       .on \end ->
@@ -68,7 +68,7 @@ gulp.task \browserify:watch, (cb) ->
 
     bundle
       .bundle!
-      .on \error, handle-error.bind null, \browserify:watch
+      .on \error, handle-error.bind void, \browserify:watch
       .pipe vinyl-source-stream file-name
       .pipe gulp.dest directory-path
       .on \end ->

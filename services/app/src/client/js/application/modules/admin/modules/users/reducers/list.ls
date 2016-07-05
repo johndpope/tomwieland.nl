@@ -5,7 +5,7 @@ default-state = immutable.Map do
   is-fetching: false
   has-succeeded: true
   has-failed: false
-  error: null
+  error: void
 
   entries: immutable.List!
 
@@ -21,7 +21,7 @@ actions =
         is-fetching: false
         has-succeeded: true
         has-failed: false
-        error: null
+        error: void
         entries: action.payload
 
   \admin:users:fetch:failure: (state, action) ->

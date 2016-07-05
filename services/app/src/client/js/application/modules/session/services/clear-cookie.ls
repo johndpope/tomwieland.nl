@@ -1,13 +1,16 @@
 cookies = require \cookies-js
-hl = require \highland
+hl      = require \highland
+log     = require \loglevel
 
 { create-action } = require \redux-actions
 
-start = create-action \user:clear-cookie:start
+start   = create-action \user:clear-cookie:start
 success = create-action \user:clear-cookie:success
 failure = create-action \user:clear-cookie:failure
 
 module.exports = ->
+  log.debug \modules/session/services/clear-cookie
+
   output = hl!
 
   output.write start!

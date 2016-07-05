@@ -29,10 +29,10 @@ class List extends React.Component
       el 'tr',
         on-click: @handle-row-click.bind this, v.id,
 
-        el 'td', null,
+        el 'td', void,
           v.username
 
-        el 'td', null,
+        el 'td', void,
           v.email
 
   render-pagination: ->
@@ -46,8 +46,8 @@ class List extends React.Component
         loaded: not is-fetching
         color: \#000000
 
-    el Grid, null,
-      el Row, null,
+    el Grid, void,
+      el Row, void,
         el Col,
           xs: 12,
 
@@ -57,18 +57,18 @@ class List extends React.Component
             condensed: true
             hover: true,
 
-            el 'thead', null,
-              el 'tr', null,
-                el 'th', null,
+            el 'thead', void,
+              el 'tr', void,
+                el 'th', void,
                   'Username'
 
-                el 'th', null,
+                el 'th', void,
                   'Email'
 
-            el 'tbody', null,
+            el 'tbody', void,
               @render-rows!
 
-            el 'tfoot', null,
+            el 'tfoot', void,
               @render-pagination!
 
 module.exports = List

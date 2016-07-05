@@ -7,8 +7,8 @@ React = require \react
 el = React~create-element
 
 module.exports = (context) ->
-  el Grid, null,
-    el Row, null,
+  el Grid, void,
+    el Row, void,
       el Col,
         xs: 12,
 

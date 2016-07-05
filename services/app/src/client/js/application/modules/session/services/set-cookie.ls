@@ -1,5 +1,6 @@
-hl = require \highland
-cookies = require \cookies-js
+cookies           = require \cookies-js
+hl                = require \highland
+log               = require \loglevel
 { create-action } = require \redux-actions
 
 get-profile = require \./get-profile
@@ -9,6 +10,8 @@ set-cookie-success = create-action \user:set-cookie:success
 set-cookie-failure = create-action \user:set-cookie:failure
 
 module.exports = ({ created, token, ttl, user-id }) ->
+  log.debug \modules/session/services/set-cookie
+
   output = hl!
 
   output.write set-cookie-start!

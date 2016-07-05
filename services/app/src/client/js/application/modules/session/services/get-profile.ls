@@ -1,18 +1,19 @@
-hl = require \highland
-#request = require \request
+hl                = require \highland
+log               = require \loglevel
 { create-action } = require \redux-actions
 
 start   = create-action \user:get-profile:start
 success = create-action \user:get-profile:success
 failure = create-action \user:get-profile:failure
 
-module.exports = get-profile = (token, user-id) ->
+module.exports = (token, user-id) ->
+  log.debug \modules/session/services/get-profile
+
   output = hl!
   output.write start!
 
   fetch("#{window.location.origin}/api/users/#{user-id}",
     method: \GET
-    json: true
     headers:
       'Content-Type': \application/json
       Accept: \application/json

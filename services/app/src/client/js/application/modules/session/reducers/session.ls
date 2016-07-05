@@ -5,10 +5,10 @@ default-state = immutable do
   is-logging-in: false
   is-logging-out: false
 
-  token: null
-  ttl: null
-  user-id: null
-  created: null
+  token: void
+  ttl: void
+  user-id: void
+  created: void
 
 actions =
   \user:login:start: (state, action) ->

@@ -4,16 +4,19 @@ require \whatwg-fetch
 domready   = require \domready
 log        = require \loglevel
 { render } = require \react-dom
+react-to-jsx = require \react-to-jsx
 
 log.set-level \debug
 
-{ get-routes, get-reducers, set-store } = require \./library/module
+{
+  get-routes
+  get-reducers
+  set-store
+} = require \./library/module
 
-application = require \./application
+application       = require \./application
 initialize-action = require \./application/actions/initialize
-{ create-store } = require \./store
-
-react-to-jsx = require \react-to-jsx
+{ create-store }  = require \./store
 
 # Get all reducers.
 all-reducers = get-reducers application

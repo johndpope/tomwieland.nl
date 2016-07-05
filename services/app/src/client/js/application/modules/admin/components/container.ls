@@ -4,7 +4,7 @@ el = React~create-element
 Navigation = require \./navigation
 
 module.exports = (context) ->
-  el 'div', null,
+  el 'div', void,
     el Navigation,
       history: context.history
       location: context.location

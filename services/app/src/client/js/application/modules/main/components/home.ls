@@ -16,7 +16,7 @@ class Home extends React.Component
       style:
         margin-top: \21px
 
-      el Row, null
+      el Row, void
         el Col,
           xs: 12
 

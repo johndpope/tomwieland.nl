@@ -1,32 +1,17 @@
-hl = require \highland
-#request = require \request
+hl                = require \highland
+log               = require \loglevel
 { create-action } = require \redux-actions
 
-get-profile-start = create-action \user:get-profile:start
-get-profile-success = create-action \user:get-profile:success
-get-profile-failure = create-action \user:get-profile:failure
+get-profile-service = require \../services/get-profile
 
-get-profile = create-action \user:get-profile, (token, user-id) ->
+get-profile = create-action \user:get-profile, ->
+  log.debug \modules/session/actions/get-profile
+
   output = hl!
 
-  output.write get-profile-start!
-
-  /*
-  request(
-    method: \get
-    url: "#{window.location.origin}/api/users/#{user-id}"
-    json: true
-    headers:
-      Authorization: token
-  )
-    .pipe json-stream.parse!
-
-    .pipe hl!
-
-    .to-array ([body]) ->
-      output.write(get-profile-success body)
-      output.end!
-  */
+  get-profile-service!
+    .each output~write
+    .then output~end
 
   output
 

@@ -18,7 +18,7 @@ class Container extends React.Component
       routes
     } = @props
 
-    el \div, null,
+    el \div, void,
       el Navigation,
         history: history
         location: location

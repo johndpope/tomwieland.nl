@@ -3,8 +3,10 @@ log   = require \loglevel
 {
   Button
   Col
+  ControlLabel
+  FormControl
+  FormGroup
   Grid
-  Input
   Panel
   Row
 } = require \react-bootstrap
@@ -33,36 +35,44 @@ class Login extends React.Component
       style:
         margin-top: \21px
 
-      el Row, null,
+      el Row, void
         el Col,
-          xs: 12,
+          xs: 12
 
           el Panel,
             header: 'Login'
 
             el 'form',
-              on-submit: @~handle-form-submit,
+              on-submit: @~handle-form-submit
 
-              el Input,
-                ref: 'email'
-                type: 'email'
-                placeholder: 'Email'
-                label: 'Email'
-                disabled: is-logging-in
-                auto-focus: true,
+              el FormGroup,
+                control-id: \email
 
-              el Input,
-                ref: 'password'
-                type: 'password'
-                placeholder: 'Password'
-                label: 'Password'
-                disabled: is-logging-in,
+                el ControlLabel, void
+                  'Email'
+
+                el FormControl,
+                  type: 'email'
+                  placeholder: 'Email'
+                  disabled: is-logging-in
+                  auto-focus: true
+
+              el FormGroup,
+                control-id: \password
+
+                el ControlLabel, void
+                  'Password'
+
+                el FormControl,
+                  type: 'password'
+                  placeholder: 'Password'
+                  disabled: is-logging-in
 
               el Button,
                 ref: 'submit'
                 type: 'submit'
                 bs-style: 'primary'
-                disabled: is-logging-in,
+                disabled: is-logging-in
 
                 'Login'
 

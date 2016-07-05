@@ -9,7 +9,7 @@ DevTools = require \./library/components/DevTools
 
 get-debug-session-key = ->
   matches = window.location.href.match /[?&]debug_session=([^&#]+)\b/
-  matches and matches.length > 0 and matches[1] or null
+  matches and matches.length > 0 and matches[1] or void
 
 middleware = [
   redux-streams
@@ -21,14 +21,14 @@ middleware = [
 
 if window.dev-tools-extension
   middleware = compose(
-    apply-middleware.apply null, middleware
+    apply-middleware.apply void, middleware
     window.dev-tools-extension!
     persist-state get-debug-session-key!
   )
 
 else
   middleware = compose(
-    apply-middleware.apply null, middleware
+    apply-middleware.apply void, middleware
     DevTools.instrument!
     persist-state get-debug-session-key!
   )

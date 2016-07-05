@@ -15,7 +15,7 @@ class FileLogger extends Transform
 
     gulp-util.log @task-name, file-name
 
-    cb null, object, encoding
+    cb void, object, encoding
 
 exports.file = (task-name) ->
   new FileLogger do

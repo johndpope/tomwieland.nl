@@ -4,9 +4,9 @@ immutable = require \seamless-immutable
 default-state = immutable do
   is-fetching: false
 
-  id: null
-  username: null
-  email: null
+  id: void
+  username: void
+  email: void
 
 actions =
   \user:get-profile:start: (state, action) ->

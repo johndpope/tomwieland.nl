@@ -5,9 +5,9 @@ default-state = immutable.Map do
   is-fetching: false
   has-succeeded: true
   has-failed: false
-  error: null
+  error: void
 
-  entry: null
+  entry: void
 
 actions =
   \admin:users:fetch-one:start: (state, action) ->
@@ -19,7 +19,7 @@ actions =
       .set \is-fetching, false
       .set \has-succeeded, true
       .set \has-failed, false
-      .set \error, null
+      .set \error, void
       .set \entry, immutable.from-j-s(action.payload)
 
   \admin:users:fetch-one:failure: (state, action) ->

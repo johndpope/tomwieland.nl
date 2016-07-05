@@ -1,7 +1,7 @@
-hl = require \highland
-#request = require \request
+hl                = require \highland
+log               = require \loglevel
 { create-action } = require \redux-actions
-{ push } = require \react-router-redux
+{ push }          = require \react-router-redux
 
 clear-cookie = require \./clear-cookie
 
@@ -9,7 +9,9 @@ logout-start = create-action \user:logout:start
 logout-success = create-action \user:logout:success
 logout-failure = create-action \user:logout:failure
 
-module.exports = logout = (token) ->
+module.exports = (token) ->
+  log.debug \modules/session/services/logout
+
   output = hl!
 
   output.write logout-start!
@@ -37,5 +39,3 @@ module.exports = logout = (token) ->
   */
 
   output
-
-module.exports = logout

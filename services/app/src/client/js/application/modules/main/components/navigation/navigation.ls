@@ -102,8 +102,8 @@ class Navigation extends React.Component
       style:
         margin-bottom: 0
 
-      el Navbar.Header, null,
-        el Navbar.Brand, null,
+      el Navbar.Header, void,
+        el Navbar.Brand, void,
           el \a,
             href: "#",
 
@@ -111,8 +111,8 @@ class Navigation extends React.Component
 
         el Navbar.Toggle
 
-      el Navbar.Collapse, null,
-        el Nav, null, @render-nav-items!
+      el Navbar.Collapse, void,
+        el Nav, void, @render-nav-items!
 
         el account-dropdown,
           on-click: @~handle-shrink
