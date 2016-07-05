@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  db:
+    container_name: "mongo"
+    image: "mongo"
+    ports:
+      - "27017:27017"
+
+  app:
+    container_name: "app"
+    image: "app"
+    depends_on:
+      - "db"
+    build:
+      context: "./services/app"
+      dockerfile: "docker/Dockerfile-develop"
+    ports:
+      - "3000:3000"
+      - "3123:3123"
+      - "8080:8080"
+    volumes:
+      - "./services/app:/src/"
