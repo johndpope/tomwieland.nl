@@ -1,0 +1,62 @@
+package GettingThingsDone {
+  GettingThingsDone.Thing "1" *-- "1" GettingThingsDone.Recurrence
+  GettingThingsDone.Thing "1" *-- "1" GettingThingsDone.Trip
+  GettingThingsDone.Thing "0..*" o-- "0..*" Common.Tag
+  GettingThingsDone.Thing "0..*" o-- "0..1" GettingThingsDone.Place
+  GettingThingsDone.Thing "0..*" o-- "1" Common.Category
+  class GettingThingsDone.Thing {
+    -description: String
+    -completed: Boolean
+  }
+
+  class GettingThingsDone.Place {
+    -street: String
+    -houseNumber: String
+    -postalCode: String
+    -place: String
+    -country: String
+  }
+
+  class GettingThingsDone.Trip {
+    -type: String=ARRIVAL|DEPARTURE
+    -arrivalDate: Date
+    -departureDate: Date
+    -transport: String=ROAD|PUBLIC|CYCLE|WALK
+  }
+
+  class GettingThingsDone.Recurrence {
+    -endAfter: Number
+    -endDate: Date
+    -endType: String=never|after|date
+    -repeatFrequency: Number
+    -repeatType: String=day|month|week|year
+    -repeatWeekDays: Array<String>
+    -startDate: Date
+  }
+}
+
+package News {
+  News.Feed "0..*" o-- "1" Common.Category
+  News.Feed "1" o-- "0..*" News.Article
+  class News.Feed {
+    -url: String
+  }
+
+  class News.Article {
+    -body: String
+    -read: Boolean
+  }
+}
+
+package Bitcoin {
+  Bitcoin.Market "0..*" o-- "1" Common.Category
+  Bitcoin.Market "1" o-- "0..*" Bitcoin.Trade
+  class Bitcoin.Market {
+  }
+
+  class Bitcoin.Trade {
+    -price: Number
+    -amount: Number
+    -date: Date
+  }
+}

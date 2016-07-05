@@ -1,0 +1,20 @@
+# Use the latest nodejs version.
+FROM node:latest
+
+# Port for the application.
+EXPOSE 3000
+
+# Create the application directory in the dock.
+RUN mkdir /src
+
+# Add all the files to the container.
+ADD . /src/
+
+# Change the working directory.
+WORKDIR /src
+
+# Install all the dependencies.
+RUN npm install
+
+# Compile everything.
+CMD node_modules/.bin/gulp production

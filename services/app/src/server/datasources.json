@@ -1,0 +1,9 @@
+{
+  "mongodb": {
+    "host": "db",
+    "port": 27017,
+    "database": "test-loopback",
+    "name": "mongodb",
+    "connector": "mongodb"
+  }
+}
