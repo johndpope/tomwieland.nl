@@ -1,4 +1,5 @@
-immutable = require \seamless-immutable
+immutable          = require \seamless-immutable
+log                = require \loglevel
 { handle-actions } = require \redux-actions
 
 default-state = immutable do
@@ -10,50 +11,83 @@ default-state = immutable do
   user-id: void
   created: void
 
-actions =
-  \user:login:start: (state, action) ->
-    state
-      .set \is-logging-in, true
-  \user:login:success: (state, action) ->
-    state
-      .set \is-logging-in, false
-  \user:login:failure: (state, action) ->
-    state
-      .set \is-logging-in, false
+module.exports = (state, action) ->
+  switch action.type
+    case \user:login:start
+      log.debug \modules/session/reducers/session/user:login:start, state, action
 
-  \user:logout:start: (state, action) ->
-    state
-      .set \is-logging-out, true
-  \user:logout:success: (state, action) ->
-    state
-      .set \is-logging-out, false
-  \user:logout:failure: (state, action) ->
-    state
-      .set \is-logging-out, false
+      state
+        .set \isLoggingIn, true
 
-  \user:get-cookie:start: (state, action) ->
-    state
-      .set \is-logging-in, true
-  \user:get-cookie:success: (state, action) ->
-    state
-      .set \is-logging-in, false
-      .set \created, action.payload.created
-      .set \token, action.payload.token
-      .set \ttl, action.payload.ttl
-      .set \user-id, action.payload.user-id
-  \user:get-cookie:failure: (state, action) ->
-    default-state
+    case \user:login:success
+      log.debug \modules/session/reducers/session/user:login:success, state, action
 
-  \user:set-cookie:success: (state, action) ->
-    state
-      .set \created, action.payload.created
-      .set \token, action.payload.token
-      .set \ttl, action.payload.ttl
-      .set \user-id, action.payload.user-id
-  \user:set-cookie:failure: (state, action) ->
-    default-state
+      state
+        .set \isLoggingIn, false
 
-  \user:clear-cookie:success: (state, action) ->
-    default-state
+    case \user:login:failure
+      log.debug \modules/session/reducers/session/user:login:failure, state, action
 
-module.exports = handle-actions actions, default-state
+      state
+        .set \isLoggingIn, false
+
+    case \user:logout:start
+      log.debug \modules/session/reducers/session/user:logout:start, state, action
+
+      state
+        .set \isLoggingOut, true
+
+    case \user:logout:success
+      log.debug \modules/session/reducers/session/user:logout:success, state, action
+
+      state
+        .set \isLoggingOut, false
+
+    case \user:logout:failure
+      log.debug \modules/session/reducers/session/user:logout:failure, state, action
+
+      state
+        .set \isLoggingOut, false
+
+    case \user:get-cookie:start
+      log.debug \modules/session/reducers/session/user:get-cookie:start, state, action
+
+      state
+        .set \isLoggingIn, true
+
+    case \user:get-cookie:success
+      log.debug \modules/session/reducers/session/user:get-cookie:success, state, action
+
+      state
+        .set \isLoggingIn, false
+        .set \created, action.payload.created
+        .set \token, action.payload.token
+        .set \ttl, action.payload.ttl
+        .set \user-id, action.payload.user-id
+
+    case \user:get-cookie:failure
+      log.debug \modules/session/reducers/session/user:get-cookie:failure, state, action
+
+      default-state
+
+    case \user:set-cookie:success
+      log.debug \modules/session/reducers/session/user:set-cookie:success, state, action
+
+      state
+        .set \created, action.payload.created
+        .set \token, action.payload.token
+        .set \ttl, action.payload.ttl
+        .set \user-id, action.payload.user-id
+
+    case \user:set-cookie:failure
+      log.debug \modules/session/reducers/session/user:set-cookie:failure, state, action
+
+      default-state
+
+    case \user:clear-cookie:success
+      log.debug \modules/session/reducers/session/user:clear-cookie:success, state, action
+
+      default-state
+
+    default
+      state or default-state

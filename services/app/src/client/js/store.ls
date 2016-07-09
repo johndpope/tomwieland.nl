@@ -1,4 +1,4 @@
-#logger-middleware = require \redux-logger
+logger-middleware = require \redux-logger
 redux-streams = require \redux-streams
 { create-store, combine-reducers, apply-middleware, compose } = require \redux
 { hash-history } = require \react-router
@@ -14,8 +14,8 @@ get-debug-session-key = ->
 middleware = [
   redux-streams
   # TODO: Problem with this middleware.
-  #logger-middleware do
-  #  collapsed: true
+  logger-middleware do
+    collapsed: true
   router-middleware hash-history
 ]
 

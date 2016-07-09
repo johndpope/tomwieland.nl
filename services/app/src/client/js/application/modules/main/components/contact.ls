@@ -1,4 +1,5 @@
 React = require \react
+log   = require \loglevel
 el = React~create-element
 {
   Col
@@ -8,6 +9,8 @@ el = React~create-element
 
 class Contact extends React.Component
   render: ->
+    log.debug \modules/main/components/Contact#render
+
     el Grid,
       style:
         margin-top: \21px

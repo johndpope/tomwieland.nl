@@ -7,13 +7,13 @@ el = React~create-element
 
 is-object-empty = (o) -> (Obj.keys o).length is 0
 
-exports.get-reducers = (module) ->
+get-reducers = (module) ->
   log.debug 'module#get-reducers', module
 
   module-reducers = Object.assign {}, module.reducers
 
   for i, sub-module of module.modules
-    sub-module-reducers = exports.get-reducers sub-module
+    sub-module-reducers = get-reducers sub-module
 
     if sub-module-reducers
       module-reducers[sub-module.name] = sub-module-reducers
@@ -21,14 +21,14 @@ exports.get-reducers = (module) ->
   if not is-object-empty module-reducers
     return combine-reducers module-reducers
 
-exports.get-routes = (module, store) ->
+get-routes = (module, store) ->
   log.debug 'module#get-routes', module, store
 
   module-routes     = module.routes
   sub-module-routes = []
 
   for i, v of module.modules
-    routes = exports.get-routes v
+    routes = get-routes v
     element = el \div,
       key: i,
       routes
@@ -38,3 +38,7 @@ exports.get-routes = (module, store) ->
   return module-routes do
     routes: sub-module-routes
     store: store
+
+module.exports =
+  get-reducers: get-reducers
+  get-routes: get-routes

@@ -5,7 +5,7 @@ log               = require \loglevel
 
 get-profile = require \./get-profile
 
-get-cookie-start = create-action \user:get-cookie:start
+get-cookie-start   = create-action \user:get-cookie:start
 get-cookie-success = create-action \user:get-cookie:success
 get-cookie-failure = create-action \user:get-cookie:failure
 
@@ -21,6 +21,8 @@ module.exports = get-cookie = ->
   ttl     = cookies.get \ttl
   user-id = cookies.get \user-id
 
+  log.debug \modules/session/services/get-cookie:data, created, token, ttl, user-id
+
   output.write get-cookie-success do
     created: created
     token:   token
@@ -29,7 +31,7 @@ module.exports = get-cookie = ->
 
   if !token || !user-id
     output.end!
-    output
+    return output
 
   get-profile token, user-id
     .each output~write

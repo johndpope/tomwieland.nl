@@ -4,15 +4,9 @@ log               = require \loglevel
 
 login-service = require \../services/login
 
-login = create-action \user:login, ->
+login = create-action \user:login, (email, password) ->
   log.debug \modules/session/actions/login
 
-  output = hl!
-
-  login-service!
-    .each output~write
-    .then output~end
-
-  output
+  login-service email, password
 
 module.exports = login

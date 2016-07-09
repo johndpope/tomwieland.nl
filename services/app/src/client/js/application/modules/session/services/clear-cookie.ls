@@ -4,16 +4,16 @@ log     = require \loglevel
 
 { create-action } = require \redux-actions
 
-start   = create-action \user:clear-cookie:start
-success = create-action \user:clear-cookie:success
-failure = create-action \user:clear-cookie:failure
+clear-cookie-start   = create-action \user:clear-cookie:start
+clear-cookie-success = create-action \user:clear-cookie:success
+clear-cookie-failure = create-action \user:clear-cookie:failure
 
 module.exports = ->
   log.debug \modules/session/services/clear-cookie
 
   output = hl!
 
-  output.write start!
+  output.write clear-cookie-start!
 
   cookies-options =
     path: \/
@@ -24,7 +24,7 @@ module.exports = ->
   cookies.expire \ttl, cookies-options
   cookies.expire \user-id, cookies-options
 
-  output.write success!
+  output.write clear-cookie-success!
   output.end!
 
   output

@@ -1,10 +1,10 @@
 # Polyfill
 require \whatwg-fetch
 
-domready   = require \domready
-log        = require \loglevel
-{ render } = require \react-dom
+domready     = require \domready
+log          = require \loglevel
 react-to-jsx = require \react-to-jsx
+{ render }   = require \react-dom
 
 log.set-level \debug
 

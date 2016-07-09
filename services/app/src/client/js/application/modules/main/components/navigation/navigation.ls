@@ -18,13 +18,14 @@ account-dropdown = require \./account-dropdown
 
 class Navigation extends React.Component
   (options) ->
-    log.debug \Navigation#constructor, options
+    log.debug \modules/main/components/Navigation#constructor, options
 
     @state =
       expanded: false
 
   get-menu-items: ->
-    log.debug \Navigation#get-menu-items
+    log.debug \modules/main/components/Navigation#get-menu-items
+
     [
       {
         href: \/
@@ -41,17 +42,17 @@ class Navigation extends React.Component
     ]
 
   handle-toggle: ->
-    log.debug \Navigation#handle-toggle
+    log.debug \modules/main/components/Navigation#handle-toggle
     @set-state do
       expanded: !@state.expanded
 
   handle-shrink: ->
-    log.debug \Navigation#handle-shrink
+    log.debug \modules/main/components/Navigation#handle-shrink
     @set-state do
       expanded: false
 
   render-nav-items: ->
-    log.debug \Navigation#render-nav-items
+    log.debug \modules/main/components/Navigation#render-nav-items
 
     current-path = @props.routes
       # Some hrefs appear to put entries in here without a v.path.
@@ -94,7 +95,7 @@ class Navigation extends React.Component
           v.label
 
   render: ->
-    log.debug \Navigation#render
+    log.debug \modules/main/components/Navigation#render
 
     el Navbar,
       on-toggle: @~handle-toggle

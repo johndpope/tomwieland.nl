@@ -7,11 +7,6 @@ initialize-service = require \../services/initialize
 initialize = create-action \initialize, ->
   log.debug \actions/initialize
 
-  output = hl!
-
   initialize-service!
-    .pipe output
-
-  output
 
 module.exports = initialize

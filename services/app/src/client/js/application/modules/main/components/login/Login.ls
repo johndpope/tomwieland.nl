@@ -1,5 +1,6 @@
-React = require \react
-log   = require \loglevel
+React     = require \react
+log       = require \loglevel
+react-dom = require \react-dom
 {
   Button
   Col
@@ -15,17 +16,20 @@ el = React~create-element
 
 class Login extends React.Component
   handle-form-submit: (event) ->
-    log.debug \Login#handle-form-submit, event
+    log.debug \modules/main/components/login/Login#handle-form-submit, event
 
     event.prevent-default!
 
-    email = @refs.email.get-value!
-    password = @refs.password.get-value!
+    email    = (react-dom.findDOMNode @refs.email).value
+    password = (react-dom.findDOMNode @refs.password).value
+
+    log.debug \modules/main/components/login/Login#handle-form-submit:email, email
+    log.debug \modules/main/components/login/Login#handle-form-submit:password, password
 
     @props.handle-login email, password
 
   render: ->
-    log.debug \Login#render, @props
+    log.debug \modules/main/components/login/Login#render, @props
 
     {
       is-logging-in
@@ -52,6 +56,7 @@ class Login extends React.Component
                   'Email'
 
                 el FormControl,
+                  ref: 'email'
                   type: 'email'
                   placeholder: 'Email'
                   disabled: is-logging-in
@@ -64,6 +69,7 @@ class Login extends React.Component
                   'Password'
 
                 el FormControl,
+                  ref: 'password'
                   type: 'password'
                   placeholder: 'Password'
                   disabled: is-logging-in

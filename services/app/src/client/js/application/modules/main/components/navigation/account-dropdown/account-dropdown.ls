@@ -1,15 +1,20 @@
-React = require \react
-el = React~create-element
 Loader = require \react-loader
+React  = require \react
+el     = React~create-element
+log    = require \loglevel
+
 {
   Glyphicon
   Nav
   NavDropdown
   NavItem
   NavItem
+  MenuItem
 } = require \react-bootstrap
 
 handle-click-logout = (props, event) -->
+  log.debug \modules/main/components/navigation/account-dropdown/handle-click-logout
+
   event.prevent-default!
 
   props.logout props.session.token, (error) ->
@@ -21,6 +26,8 @@ handle-click-logout = (props, event) -->
       props.on-click event
 
 render-logged-out = (props) ->
+  log.debug \modules/main/components/navigation/account-dropdown/render-logged-out
+
   el Nav,
     pull-right: true,
 
@@ -32,6 +39,8 @@ render-logged-out = (props) ->
       'Log in'
 
 render-logged-in = (props) ->
+  log.debug \modules/main/components/navigation/account-dropdown/render-logged-in
+
   { profile } = props
 
   el Nav,
@@ -39,7 +48,7 @@ render-logged-in = (props) ->
 
     el NavDropdown,
       event-key: 4
-      title: title
+      title: profile.username
       id: 'basic-nav-dropdown',
 
       el MenuItem,
@@ -50,11 +59,13 @@ render-logged-in = (props) ->
 
       el MenuItem,
         event-key: 4.2
-        on-click: handle-click-logout props,
+        on-click: handle-click-logout props
 
         'Log out'
 
 render-loading = ->
+  log.debug \modules/main/components/navigation/account-dropdown/render-loading
+
   el Nav,
     pull-right: true,
 
@@ -70,11 +81,11 @@ render-loading = ->
 
 class AccountDropdown extends React.Component
   render: ->
+    log.debug \modules/main/components/navigation/account-dropdown/AccountDropdown#render
+
     { session, profile } = @props
 
-    is-loading = session?.is-logging-in or session?.is-logging-out or profile?.is-fetching
-
-    if is-loading
+    if session?.is-logging-in or session?.is-logging-out
       render-loading @props
     else if session && session.token
       render-logged-in @props

@@ -10,7 +10,7 @@ log = require \loglevel
 
 class Home extends React.Component
   render: ->
-    log.debug 'Home#render'
+    log.debug \modules/main/components/Home#render
 
     el Grid,
       style:

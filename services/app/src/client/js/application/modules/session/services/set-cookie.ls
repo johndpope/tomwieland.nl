@@ -10,7 +10,7 @@ set-cookie-success = create-action \user:set-cookie:success
 set-cookie-failure = create-action \user:set-cookie:failure
 
 module.exports = ({ created, token, ttl, user-id }) ->
-  log.debug \modules/session/services/set-cookie
+  log.debug \modules/session/services/set-cookie, created, token, ttl, user-id
 
   output = hl!
 
@@ -28,10 +28,10 @@ module.exports = ({ created, token, ttl, user-id }) ->
   cookies.set \user-id, user-id, cookies-options
 
   output.write set-cookie-success do
-    created
-    token
-    ttl
-    user-id
+    created: created
+    token: token
+    ttl: ttl
+    user-id: user-id
 
   get-profile token, user-id
     .each output~write

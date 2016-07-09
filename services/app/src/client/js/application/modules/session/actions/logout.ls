@@ -4,15 +4,9 @@ log               = require \loglevel
 
 logout-service = require \../services/logout
 
-logout = create-action \user:logout, ->
+logout = create-action \user:logout, (token) ->
   log.debug \modules/session/actions/logout
 
-  output = hl!
-
-  logout-service!
-    .each output~write
-    .then output~end
-
-  output
+  logout-service token
 
 module.exports = logout

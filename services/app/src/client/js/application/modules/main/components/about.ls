@@ -1,5 +1,7 @@
 React = require \react
-el = React~create-element
+el    = React~create-element
+log   = require \loglevel
+
 {
   Col
   Grid
@@ -8,6 +10,8 @@ el = React~create-element
 
 class About extends React.Component
   render: ->
+    log.debug \modules/main/components/About#render
+
     el Grid,
       style:
         margin-top: \21px

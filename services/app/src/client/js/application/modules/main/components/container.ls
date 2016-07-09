@@ -6,7 +6,7 @@ Navigation = require \./navigation
 
 class Container extends React.Component
   render: ->
-    log.debug 'Container#render'
+    log.debug \modules/main/components/Container#render
 
     {
       children

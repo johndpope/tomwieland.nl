@@ -2,15 +2,9 @@ hl                = require \highland
 log               = require \loglevel
 { create-action } = require \redux-actions
 
-get-cookie = require \../modules/session/services/get-cookie
+get-cookie-service = require \../modules/session/services/get-cookie
 
 module.exports = initialize = ->
   log.debug \services/initialize
 
-  output = hl!
-
-  get-cookie!
-    .each output~write
-    .done output~end
-
-  output
+  get-cookie-service!
