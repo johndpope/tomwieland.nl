@@ -8,7 +8,7 @@ el = React~create-element
 is-object-empty = (o) -> (Obj.keys o).length is 0
 
 get-reducers = (module) ->
-  log.debug 'module#get-reducers', module
+  log.debug \module#get-reducers, module
 
   module-reducers = Object.assign {}, module.reducers
 
@@ -22,7 +22,7 @@ get-reducers = (module) ->
     return combine-reducers module-reducers
 
 get-routes = (module, store) ->
-  log.debug 'module#get-routes', module, store
+  log.debug \module#get-routes, module, store
 
   module-routes     = module.routes
   sub-module-routes = []
