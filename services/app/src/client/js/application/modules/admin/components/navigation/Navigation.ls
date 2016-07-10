@@ -1,4 +1,6 @@
 React   = require \react
+_       = require \lodash
+log     = require \loglevel
 { map } = require \prelude-ls
 
 el = React~create-element
@@ -11,19 +13,22 @@ el = React~create-element
 
 # Prepends a slash if it doesn't have one.
 ensure-prepended-slash = (string) ->
-  if (string.index-of \/) is 0
-    string
+  log.debug \modules/admin/components/Navigation.ensure-prenended-slash, string
 
-  "/#{string}"
+  ((string.index-of \/) is 0) and string or "/#{string}"
 
 class Navigation extends React.Component
   (options) ->
+    log.debug \modules/admin/components/Navigation#constructor, options
+
     super options
 
     @state =
       expanded: false
 
   get-menu-items: ->
+    log.debug \modules/admin/components/Navigation#get-menu-items
+
     [
       {
         href: \/admin
@@ -39,16 +44,9 @@ class Navigation extends React.Component
       }
     ]
 
-  handle-toggle: ->
-    @set-state do
-      expanded: !@state.expanded
-
-  handle-shrink: ->
-    @set-state do
-      expanded: false
-
-  render-nav-items: ->
-    active-top-path = _ @props.routes
+  get-active-top-path: ->
+    # TODO: Rewrite with prelude.ls
+    _ @props.routes
       # Some hrefs appear to put entries in here without a v.path.
       .filter (v) -> v.path
       .map (v) -> v.path
@@ -57,32 +55,54 @@ class Navigation extends React.Component
       .value!
       .join ''
 
+  handle-toggle: ->
+    log.debug \modules/admin/components/Navigation#handle-toggle
+
+    @set-state do
+      expanded: !@state.expanded
+
+  handle-shrink: ->
+    log.debug \modules/admin/components/Navigation#handle-shrink
+
+    @set-state do
+      expanded: false
+
+  render-nav-items: ->
+    log.debug \modules/admin/components/Navigation#render-nav-items
+
+    active-top-path = @get-active-top-path!
+
+    log.debug \modules/admin/components/Navigation#render-nav-items:active-top-path, active-top-path
+
     active-top-path-regex = new Reg-exp "^#{active-top-path}"
 
-    @get-menu-items!
-      |> map (v) ->
-        if active-top-path is \/admin
-          if v.href is \/admin
-            v.active = true
+    log.debug \modules/admin/components/Navigation#render-nav-items:active-top-path-regex, active-top-path-regex
 
-            v
-        else
-          if active-top-path-regex.test v.href
-            v.active = true
+    menu-items = @get-menu-items!
 
-        v
+    # Set's the correct menu entry to active.
+    active-links-mapper = (item) ~>
+      item.active = ((active-top-path is \/admin) and item.href is \/admin) or active-top-path-regex.test item.href
+      item
 
-      |> map (v, i) ->
-        el NavItem,
-          key: i + 1
-          event-key: i + 1
-          href: "##{v.href}"
-          active: !!v.active
-          on-click: @~handle-shrink,
+    # Converts menu items into NavItem components.
+    nav-item-mapper = (item, i) ~>
+      el NavItem,
+        key:       i + 1
+        event-key: i + 1
+        href:      "##{item.href}"
+        active:    item.active
+        on-click:  @~handle-shrink,
 
-          v.label
+        item.label
+
+    menu-items
+      |> map active-links-mapper
+      |> map nav-item-mapper
 
   render: ->
+    log.debug \modules/admin/components/Navigation#render
+
     el Navbar,
       on-toggle: @~handle-toggle
       expanded: @state.expanded

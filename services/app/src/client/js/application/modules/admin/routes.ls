@@ -1,5 +1,5 @@
-React = require \react
-el = React~create-element
+React                 = require \react
+el                    = React~create-element
 { Route, IndexRoute } = require \react-router
 
 container = require \./components/container

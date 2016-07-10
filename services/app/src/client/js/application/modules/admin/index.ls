@@ -5,4 +5,4 @@ users = require \./modules/users
 module.exports =
   name: \Admin
   routes: routes
-  modules: [users]
+  modules: [ users ]
