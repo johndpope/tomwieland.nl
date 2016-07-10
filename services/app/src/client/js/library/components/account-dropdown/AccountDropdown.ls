@@ -13,7 +13,7 @@ log    = require \loglevel
 } = require \react-bootstrap
 
 handle-click-logout = (props, event) -->
-  log.debug \modules/main/components/navigation/account-dropdown/handle-click-logout
+  log.debug \modules/main/components/navigation/account-dropdown/handle-click-logout, props
 
   event.prevent-default!
 
@@ -26,7 +26,7 @@ handle-click-logout = (props, event) -->
       props.on-click event
 
 render-logged-out = (props) ->
-  log.debug \modules/main/components/navigation/account-dropdown/render-logged-out
+  log.debug \modules/main/components/navigation/account-dropdown/render-logged-out, props
 
   el Nav,
     pull-right: true,
@@ -39,7 +39,7 @@ render-logged-out = (props) ->
       'Log in'
 
 render-logged-in = (props) ->
-  log.debug \modules/main/components/navigation/account-dropdown/render-logged-in
+  log.debug \modules/main/components/navigation/account-dropdown/render-logged-in, props
 
   { profile } = props
 
@@ -53,6 +53,12 @@ render-logged-in = (props) ->
 
       el MenuItem,
         event-key: 4.1
+        href: "#/",
+
+        'Public'
+
+      el MenuItem,
+        event-key: 4.1
         href: "#/admin",
 
         'Admin'
@@ -63,8 +69,8 @@ render-logged-in = (props) ->
 
         'Log out'
 
-render-loading = ->
-  log.debug \modules/main/components/navigation/account-dropdown/render-loading
+render-loading = (props) ->
+  log.debug \modules/main/components/navigation/account-dropdown/render-loading, props
 
   el Nav,
     pull-right: true,
@@ -81,7 +87,7 @@ render-loading = ->
 
 class AccountDropdown extends React.Component
   render: ->
-    log.debug \modules/main/components/navigation/account-dropdown/AccountDropdown#render
+    log.debug \modules/main/components/navigation/account-dropdown.AccountDropdown#render
 
     { session, profile } = @props
 

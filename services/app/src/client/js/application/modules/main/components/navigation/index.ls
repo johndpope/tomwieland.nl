@@ -1,11 +1,15 @@
 { connect } = require \react-redux
 
-navigation = require \./navigation
+Navigation = require \./Navigation
 
-module.exports = connect(
-  (state) ->
-    session: state.Application.Session.session
-    profile: state.Application.Session.profile
+logout-action = require \../../../session/actions/logout
 
-  (dispatch) -> {}
-) navigation
+select-state = (state) ->
+  session: state.Application.Session.session
+  profile: state.Application.Session.profile
+
+select-dispatch = (dispatch) ->
+  logout: ->
+    dispatch logout-action!
+
+module.exports = (connect select-state, select-dispatch) Navigation

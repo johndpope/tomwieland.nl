@@ -2,11 +2,14 @@
 
 Navigation = require \./Navigation
 
-selectState = (state) ->
+logout-action = require \../../../session/actions/logout
+
+select-state = (state) ->
   session: state.Application.Session.session
   profile: state.Application.Session.profile
 
-selectDispatch = (dispatch) ->
-  {}
+select-dispatch = (dispatch) ->
+  logout: ->
+    dispatch logout-action!
 
-module.exports = (connect selectState, selectDispatch) Navigation
+module.exports = (connect select-state, select-dispatch) Navigation
