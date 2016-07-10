@@ -1,9 +1,12 @@
 React = require \react
-el = React~create-element
+el    = React~create-element
+log   = require \loglevel
 
 module.exports = (context) ->
-  el div, void,
-    el div,
+  log.debug \modules/admin/modules/users/components/container
+
+  el \div, void,
+    el \div,
       style:
         margin-top: \21px,
 

@@ -1,14 +1,12 @@
-hl = require \highland
+hl                = require \highland
+log               = require \loglevel
 { create-action } = require \redux-actions
 
 fetch-service = require \../services/fetch
 
 fetch = create-action \admin:users:fetch, (token, skip, limit, order) ->
-  output = hl!
+  log.debug \modules/admin/modules/user/actions/fetch, token, skip, limit, order
 
   fetch-service token, skip, limit, order
-    .pipe output
-
-  output
 
 module.exports = fetch

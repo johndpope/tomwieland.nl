@@ -1,4 +1,5 @@
-immutable = require \immutable
+immutable          = require \immutable
+log                = require \loglevel
 { handle-actions } = require \redux-actions
 
 default-state = immutable.Map do
@@ -11,10 +12,14 @@ default-state = immutable.Map do
 
 actions =
   \admin:users:fetch-one:start: (state, action) ->
+    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch-one:start, state, action
+
     state
       .set \is-fetching, true
 
   \admin:users:fetch-one:success: (state, action) ->
+    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch-one:success, state, action
+
     state
       .set \is-fetching, false
       .set \has-succeeded, true
@@ -23,6 +28,8 @@ actions =
       .set \entry, immutable.from-j-s(action.payload)
 
   \admin:users:fetch-one:failure: (state, action) ->
+    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch-one:failure, state, action
+
     state
       .set \is-fetching, false
       .set \has-succeeded, false

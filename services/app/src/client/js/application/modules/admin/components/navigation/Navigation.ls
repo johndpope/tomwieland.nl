@@ -1,7 +1,13 @@
 React   = require \react
 _       = require \lodash
 log     = require \loglevel
-{ map } = require \prelude-ls
+
+{
+  filter
+  map
+  take
+  { join }: Str
+} = require \prelude-ls
 
 el = React~create-element
 
@@ -45,15 +51,14 @@ class Navigation extends React.Component
     ]
 
   get-active-top-path: ->
-    # TODO: Rewrite with prelude.ls
-    _ @props.routes
-      # Some hrefs appear to put entries in here without a v.path.
-      .filter (v) -> v.path
-      .map (v) -> v.path
-      .map ensure-prepended-slash
-      .take 2
-      .value!
-      .join ''
+    log.debug \modules/admin/components/Navigation#get-active-top-path
+
+    @props.routes
+      |> filter (.path)
+      |> map    (.path)
+      |> map    ensure-prepended-slash
+      |> take   2
+      |> join   ''
 
   handle-toggle: ->
     log.debug \modules/admin/components/Navigation#handle-toggle
@@ -74,29 +79,29 @@ class Navigation extends React.Component
 
     log.debug \modules/admin/components/Navigation#render-nav-items:active-top-path, active-top-path
 
-    active-top-path-regex = new Reg-exp "^#{active-top-path}"
-
-    log.debug \modules/admin/components/Navigation#render-nav-items:active-top-path-regex, active-top-path-regex
-
-    menu-items = @get-menu-items!
-
     # Set's the correct menu entry to active.
     active-links-mapper = (item) ~>
-      item.active = ((active-top-path is \/admin) and item.href is \/admin) or active-top-path-regex.test item.href
+      if active-top-path is \/admin
+        item.active = item.href is \/admin
+      else
+        item.active = (new Reg-exp "^#{active-top-path}$").test item.href
+
       item
 
     # Converts menu items into NavItem components.
     nav-item-mapper = (item, i) ~>
+      log.debug \modules/admin/components/Navigation#render-nav-items.nav-item-mapper, item, i, arguments
+
       el NavItem,
-        key:       i + 1
-        event-key: i + 1
+        key:       item.label
+        event-key: item.label
         href:      "##{item.href}"
         active:    item.active
         on-click:  @~handle-shrink,
 
         item.label
 
-    menu-items
+    @get-menu-items!
       |> map active-links-mapper
       |> map nav-item-mapper
 
@@ -113,7 +118,7 @@ class Navigation extends React.Component
       el Navbar.Header, void,
         el Navbar.Brand, void,
           el 'a',
-            href: '/admin',
+            href: '#/admin',
 
             'Admin'
 

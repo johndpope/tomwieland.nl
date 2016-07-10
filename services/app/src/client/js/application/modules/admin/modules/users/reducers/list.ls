@@ -1,4 +1,5 @@
-immutable = require \immutable
+immutable          = require \immutable
+log                = require \loglevel
 { handle-actions } = require \redux-actions
 
 default-state = immutable.Map do
@@ -11,11 +12,15 @@ default-state = immutable.Map do
 
 actions =
   \admin:users:fetch:start: (state, action) ->
+    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:start, state, action
+
     state
       .merge-deep do
         is-fetching: true
 
   \admin:users:fetch:success: (state, action) ->
+    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:success, state, action
+
     state
       .merge-deep do
         is-fetching: false
@@ -25,6 +30,8 @@ actions =
         entries: action.payload
 
   \admin:users:fetch:failure: (state, action) ->
+    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:failure, state, action
+
     state
       .merge-deep do
         is-fetching: false
