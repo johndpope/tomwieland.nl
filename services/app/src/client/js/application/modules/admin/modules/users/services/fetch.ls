@@ -1,14 +1,15 @@
-hl = require \highland
-#request = require \request
+hl                = require \highland
+log               = require \loglevel
 { create-action } = require \redux-actions
 
-admin-users-list-fetch-start = create-action \admin:users:fetch:start
+admin-users-list-fetch-start   = create-action \admin:users:fetch:start
 admin-users-list-fetch-success = create-action \admin:users:fetch:success
 admin-users-list-fetch-failure = create-action \admin:users:fetch:failure
 
 module.exports = admin-users-list-fetch = (token, skip, limit, order) ->
-  output = hl!
+  log.debug \modules/admin/modules/users/components/list/List#component-will-mount, token
 
+  output = hl!
   output.write admin-users-list-fetch-start!
 
   filters = [
@@ -17,22 +18,25 @@ module.exports = admin-users-list-fetch = (token, skip, limit, order) ->
     "filter[order]=#{order}"
   ].join \&
 
-  /*
-  request(
-    method: \get
-    url: "#{window.location.origin}/api/users?#{filters}"
-    json: true
+  uri     = "#{window.location.origin}/api/users?#{filters}"
+  options =
+    method: \GET
     headers:
+      'Content-Type': \application/json
+      Accept: \application/json
       Authorization: token
-  )
-    .on \error, (error) ->
-      output.write(admin-users-list-fetch-failure error)
-      output.end!
-    .pipe JSONStream.parse!
-    .pipe hl!
-    .to-array ([body]) ->
-      output.write(admin-users-list-fetch-success body)
-      output.end!
-  */
+
+  hl fetch uri, options
+    .flatMap (response) ->
+      # JSON returns a Promise, so wrap it and resolve it.
+      hl response.json!
+
+    .to-callback (error, body) ->
+      if error
+        output.write admin-users-list-fetch-failure error
+        output.end!
+      else
+        output.write admin-users-list-fetch-success body
+        output.end!
 
   output
