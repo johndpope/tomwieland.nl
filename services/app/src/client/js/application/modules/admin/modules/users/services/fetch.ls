@@ -2,15 +2,15 @@ hl                = require \highland
 log               = require \loglevel
 { create-action } = require \redux-actions
 
-admin-users-list-fetch-start   = create-action \admin:users:fetch:start
-admin-users-list-fetch-success = create-action \admin:users:fetch:success
-admin-users-list-fetch-failure = create-action \admin:users:fetch:failure
+admin-users-fetch-start   = create-action \admin:users:fetch:start
+admin-users-fetch-success = create-action \admin:users:fetch:success
+admin-users-fetch-failure = create-action \admin:users:fetch:failure
 
-module.exports = admin-users-list-fetch = (token, skip, limit, order) ->
+module.exports = admin-users-fetch = (token, skip, limit, order) ->
   log.debug \modules/admin/modules/users/components/list/List#component-will-mount, token
 
   output = hl!
-  output.write admin-users-list-fetch-start!
+  output.write admin-users-fetch-start!
 
   filters = [
     "filter[skip]=#{skip}"
@@ -33,10 +33,10 @@ module.exports = admin-users-list-fetch = (token, skip, limit, order) ->
 
     .to-callback (error, body) ->
       if error
-        output.write admin-users-list-fetch-failure error
+        output.write admin-users-fetch-failure error
         output.end!
       else
-        output.write admin-users-list-fetch-success body
+        output.write admin-users-fetch-success body
         output.end!
 
   output

@@ -10,34 +10,36 @@ default-state = immutable.Map do
 
   entries: immutable.List!
 
-actions =
-  \admin:users:fetch:start: (state, action) ->
-    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:start, state, action
+module.exports = (state, action) ->
+  switch action.type
+    case \admin:users:fetch:start
+      log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:start, state, action
 
-    state
-      .merge-deep do
-        is-fetching: true
+      state
+        .merge-deep do
+          is-fetching: true
 
-  \admin:users:fetch:success: (state, action) ->
-    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:success, state, action
+    case \admin:users:fetch:success
+      log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:success, state, action
 
-    state
-      .merge-deep do
-        is-fetching: false
-        has-succeeded: true
-        has-failed: false
-        error: void
-        entries: action.payload
+      state
+        .merge-deep do
+          is-fetching: false
+          has-succeeded: true
+          has-failed: false
+          error: void
+          entries: action.payload
 
-  \admin:users:fetch:failure: (state, action) ->
-    log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:failure, state, action
+    case \admin:users:fetch:failure
+      log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:failure, state, action
 
-    state
-      .merge-deep do
-        is-fetching: false
-        has-succeeded: false
-        has-failed: true
-        error: action.payload
-        entries: immutable.List!
+      state
+        .merge-deep do
+          is-fetching: false
+          has-succeeded: false
+          has-failed: true
+          error: action.payload
+          entries: immutable.List!
 
-module.exports = handle-actions actions, default-state
+    default
+      state or default-state
