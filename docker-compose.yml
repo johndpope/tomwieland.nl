@@ -2,12 +2,15 @@ version: "2"
 
 services:
   db:
-    container_name: "mongo"
+    container_name: "db"
+    hostname: "db"
     image: "mongo"
+    volumes:
+      - "../../volumes/mongodb:/data/db"
     ports:
       - "27017:27017"
 
-  app:
+  tomwielandnl-app:
     container_name: "app"
     image: "app"
     depends_on:

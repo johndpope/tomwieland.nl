@@ -17,7 +17,7 @@ el = React~create-element
   Navbar
 } = require \react-bootstrap
 
-account-dropdown = require \../account-dropdown
+AccountDropdown = require \../AccountDropdown
 
 # Prepends a slash if it doesn't have one.
 ensure-prepended-slash = (string) ->
@@ -120,7 +120,7 @@ class Navigation extends React.Component
       el Navbar.Collapse, void,
         el Nav, void, @render-nav-items!
 
-        el account-dropdown,
+        el AccountDropdown,
           logout:   @props.logout
           on-click: @~handle-shrink
           profile:  @props.profile

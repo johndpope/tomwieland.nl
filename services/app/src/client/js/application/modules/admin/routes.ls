@@ -3,6 +3,8 @@ el                    = React~create-element
 log                   = require \loglevel
 { Route, IndexRoute } = require \react-router
 
+UserIsAuthenticated = require \../../../library/auth/UserIsAuthenticated
+
 container = require \./components/container
 dashboard = require \./components/dashboard
 
@@ -11,7 +13,7 @@ module.exports = (context) ->
 
   el Route,
     path:      \admin
-    component: container
+    component: UserIsAuthenticated container
     key:       context.key,
 
     el IndexRoute,

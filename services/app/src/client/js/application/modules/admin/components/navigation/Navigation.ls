@@ -18,7 +18,6 @@ el = React~create-element
 } = require \react-bootstrap
 
 Navigation = require \../../../../../library/components/Navigation
-account-dropdown = require \../../../../../library/components/account-dropdown
 
 class AdminNavigation extends Navigation
   (options) ->

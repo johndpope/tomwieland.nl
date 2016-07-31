@@ -21,7 +21,7 @@ class List extends React.Component
 
     @props.handle-list token
 
-  handle-row-click: (id, event) ->
+  handle-row-click: (id, event) -->
     log.debug \modules/admin/modules/users/components/list/List#handle-row-click, id, event
 
     event.prevent-default!
@@ -36,6 +36,7 @@ class List extends React.Component
     entries.map (v) ->
       el 'tr',
         # TODO: Correct way of binding this.
+        #
         on-click: (event) -> @handle-row-click v.id, event,
 
         el 'td', void,
@@ -56,7 +57,7 @@ class List extends React.Component
 
     if is-fetching
       el Loader,
-        loaded: not is-fetching
+        loaded: false
         color: \#000000
     else
       el Grid, void,
