@@ -27,14 +27,16 @@ store-instance = create-store all-reducers
 log.debug \store-instance, store-instance
 log.debug \store-state, store-instance.get-state!
 
-# Dispatch the initialize action
-store-instance.dispatch initialize-action!
-
-# Routes can be fetched and bound to the store.
 routes = get-routes application, store-instance
 log.debug \routes, react-to-jsx routes
 
-<- domready
-log.debug \dom-ready
+store-instance.subscribe !->
+  state = store-instance.get-state!
+  log.debug \state, state
 
-render routes, document.query-selector \#root
+  if state?.Application?.initialize?.has-succeeded
+    <- domready
+    render routes, document.query-selector \#root
+
+# Dispatch the initialize action
+store-instance.dispatch initialize-action!

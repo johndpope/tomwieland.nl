@@ -3,11 +3,11 @@ log                = require \loglevel
 { handle-actions } = require \redux-actions
 
 default-state = immutable do
-  is-fetching: false
+  'is-fetching': false
 
-  id: void
-  username: void
-  email: void
+  'id':          void
+  'username':    void
+  'email':       void
 
 module.exports = (state, action) ->
   switch action.type
@@ -32,6 +32,8 @@ module.exports = (state, action) ->
         .set \email, action.payload.email
 
     case \user:logout:success
+      log.debug \modules/session/reducers/profile/user:logout:success, state, action
+
       default-state
 
     default

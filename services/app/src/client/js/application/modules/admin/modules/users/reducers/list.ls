@@ -1,14 +1,14 @@
-immutable          = require \immutable
+immutable          = require \seamless-immutable
 log                = require \loglevel
 { handle-actions } = require \redux-actions
 
-default-state = immutable.Map do
+default-state = immutable do
   is-fetching: false
   has-succeeded: true
   has-failed: false
   error: void
 
-  entries: immutable.List!
+  entries: []
 
 module.exports = (state, action) ->
   switch action.type
@@ -16,14 +16,14 @@ module.exports = (state, action) ->
       log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:start, state, action
 
       state
-        .merge-deep do
+        .merge do
           is-fetching: true
 
     case \admin:users:fetch:success
       log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:success, state, action
 
       state
-        .merge-deep do
+        .merge do
           is-fetching: false
           has-succeeded: true
           has-failed: false
@@ -34,12 +34,12 @@ module.exports = (state, action) ->
       log.debug \modules/admin/modules/user/reducers/current:admin:users:fetch:failure, state, action
 
       state
-        .merge-deep do
+        .merge do
           is-fetching: false
           has-succeeded: false
           has-failed: true
           error: action.payload
-          entries: immutable.List!
+          entries: []
 
     default
       state or default-state

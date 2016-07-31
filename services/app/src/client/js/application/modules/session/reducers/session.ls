@@ -3,13 +3,13 @@ log                = require \loglevel
 { handle-actions } = require \redux-actions
 
 default-state = immutable do
-  is-logging-in: false
-  is-logging-out: false
+  'is-logging-in':  false
+  'is-logging-out': false
 
-  token: void
-  ttl: void
-  user-id: void
-  created: void
+  'token':          void
+  'ttl':            void
+  'user-id':        void
+  'created':        void
 
 module.exports = (state, action) ->
   switch action.type

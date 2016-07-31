@@ -20,6 +20,6 @@ class Home extends React.Component
         el Col,
           xs: 12
 
-          \Home23!
+          \Home234567!
 
 module.exports = Home
