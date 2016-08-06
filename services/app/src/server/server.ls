@@ -7,11 +7,15 @@ log.set-level \debug
 
 acl            = require \./middleware/acl
 authentication = require \./middleware/authentication
+blog-data      = require \./middleware/blog-data
 logger         = require \./middleware/logger
 rest-API       = require \./middleware/rest-api
 serve-index    = require \./middleware/serve-index
 
 app = loopback!
+
+(require \loopback-ds-readonly-mixin) app
+(require \loopback-ds-ips-mixin) app
 
 boot app, __dirname, (error, cb) ->
   throw error if error
@@ -26,6 +30,9 @@ boot app, __dirname, (error, cb) ->
   throw error if error
 
   error <-! acl app
+  throw error if error
+
+  error <-! blog-data app
   throw error if error
 
   if require.main is module

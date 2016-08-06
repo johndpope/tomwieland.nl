@@ -45,6 +45,8 @@ gulp.task \webpack:dev-server, (cb) !->
       '*': 'http://0.0.0.0:3000'
     stats:
       colors: true
+    no-info: true
+    quiet: false
 
   if config.output.public-path
     dev-server-options.public-path = config.output.public-path

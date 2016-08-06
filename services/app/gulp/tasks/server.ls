@@ -17,7 +17,7 @@ gulp.task \server:run, (cb) ->
 
   else
     gulp-develop-server.listen do
-      path: source-file-path
+      path:      source-file-path
 
     gulp-sane-watch watch-path, debounce: debounce, ->
       gulp-develop-server.restart!

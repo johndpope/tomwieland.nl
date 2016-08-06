@@ -9,10 +9,18 @@
     "mixins": [
       "loopback/common/mixins",
       "loopback/server/mixins",
+      "../../node_modules/loopback-ds-ips-mixin",
+      "../../node_modules/loopback-ds-iterator-mixin",
+      "../../node_modules/loopback-ds-paginate-mixin",
+      "../../node_modules/loopback-ds-readonly-mixin",
+      "../../node_modules/loopback-ds-resultset-limit-mixin",
+      "../../node_modules/loopback-ds-timestamp-mixin",
+      "../../node_modules/loopback-ds-tree-mixin",
       "../common/mixins",
       "./mixins"
     ]
   },
+
   "AccessToken": {
     "dataSource": "mongodb",
     "public": false
@@ -36,5 +44,13 @@
   "ACL": {
     "dataSource": "mongodb",
     "public": false
+  },
+  "BlogPost": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "BlogComment": {
+    "dataSource": "mongodb",
+    "public": true
   }
 }

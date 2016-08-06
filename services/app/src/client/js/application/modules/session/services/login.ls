@@ -43,7 +43,8 @@ module.exports = (email, password) ->
 
           .done ->
             output.write login-success body
-            output.write push \/
+            # TODO: Use Authorization to determine location.
+            output.write push \/admin
             output.end!
 
   output

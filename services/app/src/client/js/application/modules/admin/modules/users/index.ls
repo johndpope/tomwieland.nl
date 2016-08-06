@@ -1,5 +1,5 @@
-routes = require \./routes
 reducers = require \./reducers
+routes   = require \./routes
 
 module.exports =
   name: \AdminUsers

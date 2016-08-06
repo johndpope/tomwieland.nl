@@ -4,6 +4,10 @@ FROM node:6.2
 # Expose the port.
 EXPOSE 80
 
+# Debugging port.
+# TODO: Disable in production.
+EXPOSE 5858
+
 # Set environment variables.
 ENV PORT=80
 

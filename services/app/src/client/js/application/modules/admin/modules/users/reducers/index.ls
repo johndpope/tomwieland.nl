@@ -1,6 +1,6 @@
 current = require \./current
-list = require \./list
+list    = require \./list
 
 module.exports =
   current: current
-  list: list
+  list:    list

@@ -1,0 +1,46 @@
+{
+  "name": "BlogPost",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "title"
+    },
+    "body": {
+      "type": "string",
+      "required": true,
+      "default": "body"
+    }
+  },
+  "mixins": {
+    "IPs": true,
+    "Paginate": { "limit": "10" },
+    "ReadOnly": {
+      "createdByIp": true,
+      "updatedByIp": true
+    },
+    "ResultSetLimit": { "limit": 100 },
+    "SoftDelete": true,
+    "TimeStamp": true
+  },
+  "validations": [],
+  "relations": {
+    "blogComments": {
+      "type": "hasMany",
+      "model": "BlogComment",
+      "foreignKey": ""
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

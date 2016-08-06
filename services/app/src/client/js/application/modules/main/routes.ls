@@ -6,7 +6,7 @@ log                   = require \loglevel
 about     = require \./components/about
 contact   = require \./components/contact
 container = require \./components/container
-home      = require \./components/home
+Home      = require \./components/Home
 login     = require \./components/login
 
 module.exports = (context) ->
@@ -18,7 +18,7 @@ module.exports = (context) ->
     key: context.key,
 
     el IndexRoute,
-      component: home
+      component: Home
 
     el Route,
       path: \about

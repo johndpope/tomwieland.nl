@@ -2,7 +2,7 @@ React = require \react
 el    = React~create-element
 log   = require \loglevel
 
-Navigation = require \./navigation
+Navigation = require \./Navigation
 
 module.exports = (context) ->
   log.debug \modules/admin/components/container#render

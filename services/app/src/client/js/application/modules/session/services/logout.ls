@@ -33,10 +33,10 @@ module.exports = (token) ->
       else
         output.write logout-success!
 
-        clear-cookie-service!
+        <-! clear-cookie-service!
           .each output~write
-          .done ->
-            output.write push \/
-            output.end!
+          .done
+
+        output.end!
 
   output

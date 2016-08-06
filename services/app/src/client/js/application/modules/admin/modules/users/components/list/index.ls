@@ -7,10 +7,9 @@ List = require \./List
 fetch = require \../../actions/fetch
 
 module.exports = connect(
-  # TODO: Implement.
   (state) ->
     session: state.Application.Session.session
-    list:    state.Application.Admin.Admin-users.list.to-JS!
+    list:    state.Application.Admin.AdminUsers.list
 
   (dispatch) ->
     handle-list: (token, skip = 0, limit = 10, order = 'username ASC') ->

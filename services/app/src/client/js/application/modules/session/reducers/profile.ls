@@ -3,11 +3,11 @@ log                = require \loglevel
 { handle-actions } = require \redux-actions
 
 default-state = immutable do
-  'is-fetching': false
+  is-fetching: false
 
-  'id':          void
-  'username':    void
-  'email':       void
+  id:          void
+  username:    void
+  email:       void
 
 module.exports = (state, action) ->
   switch action.type
@@ -15,7 +15,8 @@ module.exports = (state, action) ->
       log.debug \modules/session/reducers/profile/user:get-profile:start, state, action
 
       state
-        .set \is-fetching, true
+        .merge do
+          is-fetching: true
 
     case \user:get-profile:failure
       log.debug \modules/session/reducers/profile/user:get-profile:failure, state, action
@@ -25,11 +26,18 @@ module.exports = (state, action) ->
     case \user:get-profile:success
       log.debug \modules/session/reducers/profile/user:get-profile:success, state, action
 
+      {
+        email
+        id
+        username
+      } = action.payload
+
       state
-        .set \is-fetching, false
-        .set \id, action.payload.id
-        .set \username, action.payload.username
-        .set \email, action.payload.email
+        .merge do
+          is-fetching: false
+          id:          id
+          email:       email
+          username:    username
 
     case \user:logout:success
       log.debug \modules/session/reducers/profile/user:logout:success, state, action

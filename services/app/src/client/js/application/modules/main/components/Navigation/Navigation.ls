@@ -2,13 +2,6 @@ React   = require \react
 _       = require \lodash
 log     = require \loglevel
 
-{
-  filter
-  map
-  take
-  { join }: Str
-} = require \prelude-ls
-
 el = React~create-element
 
 {

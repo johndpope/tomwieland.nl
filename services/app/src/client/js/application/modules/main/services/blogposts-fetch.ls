@@ -2,15 +2,15 @@ hl                = require \highland
 log               = require \loglevel
 { create-action } = require \redux-actions
 
-admin-users-fetch-start   = create-action \admin:users:fetch:start
-admin-users-fetch-success = create-action \admin:users:fetch:success
-admin-users-fetch-failure = create-action \admin:users:fetch:failure
+blogposts-fetch-start   = create-action \main:blogposts:fetch:start
+blogposts-fetch-success = create-action \main:blogposts:fetch:success
+blogposts-fetch-failure = create-action \main:blogposts:fetch:failure
 
-module.exports = admin-users-fetch = (token, skip, limit, order) ->
-  log.debug \modules/admin/modules/users/services/fetch, token, skip, limit, order
+module.exports = blogposts-fetch = (token, skip, limit, order) ->
+  log.debug \modules/main/services/blogposts-fetch, token, skip, limit, order
 
   output = hl!
-  output.write admin-users-fetch-start!
+  output.write blogposts-fetch-start!
 
   filters = [
     "filter[skip]=#{skip}"
@@ -18,7 +18,7 @@ module.exports = admin-users-fetch = (token, skip, limit, order) ->
     "filter[order]=#{order}"
   ].join \&
 
-  uri     = "#{window.location.origin}/api/users?#{filters}"
+  uri     = "#{window.location.origin}/api/blogposts?#{filters}"
   options =
     method: \GET
     headers:
@@ -33,10 +33,10 @@ module.exports = admin-users-fetch = (token, skip, limit, order) ->
 
     .to-callback (error, body) ->
       if error
-        output.write admin-users-fetch-failure error
+        output.write blogposts-fetch-failure error
         output.end!
       else
-        output.write admin-users-fetch-success body
+        output.write blogposts-fetch-success body
         output.end!
 
   output

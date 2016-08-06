@@ -23,7 +23,10 @@ AccountDropdown = require \../AccountDropdown
 ensure-prepended-slash = (string) ->
   log.debug \library/components/Navigation.ensure-prenended-slash, string
 
-  ((string.index-of \/) is 0) and string or "/#{string}"
+  if string.starts-with '/'
+    string
+  else
+    "/#{string}"
 
 class Navigation extends React.Component
   (options) ->
@@ -38,6 +41,7 @@ class Navigation extends React.Component
     @state =
       expanded: false
 
+  # Abstract Method
   get-menu-items: ->
     log.debug \library/components/Navigation.Navigation#get-menu-items
 
@@ -49,9 +53,9 @@ class Navigation extends React.Component
     @props.routes
       |> filter (.path)
       |> map    (.path)
-      |> map    ensure-prepended-slash
       |> take   2
-      |> join   ''
+      |> join   '/'
+      |> ensure-prepended-slash
 
   handle-toggle: ->
     log.debug \library/components/Navigation.Navigation#handle-toggle
