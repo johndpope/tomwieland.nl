@@ -103,7 +103,7 @@
     "less-plugin-autoprefix": "^1.5.1",
     "less-plugin-inline-urls": "^1.1.0",
     "live-server": "^1.0.0",
-    "livescript": "^1.4.0",
+    "livescript": "^1.5.0",
     "merge": "^1.2.0",
     "minimatch": "^3.0.0",
     "nsp": "^2.1.0",
