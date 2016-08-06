@@ -1,18 +1,14 @@
-React = require \react
-el = React~create-element
-log = require \loglevel
+React           = require \react
+create-element  = require \../../../../../library/create-element
+log             = require \loglevel
+react-bootstrap = require \react-bootstrap
+{ map }         = require \prelude-ls
 
-{
-  map
-} = require \prelude-ls
-
-{
-  Col
-  Grid
-  Row
-} = require \react-bootstrap
-
-BlogPost = require \./BlogPost
+grid      = create-element react-bootstrap.Grid
+row       = create-element react-bootstrap.Row
+col       = create-element react-bootstrap.Col
+a         = create-element \a
+blog-post = create-element require \./BlogPost
 
 class Home extends React.Component
   component-will-mount: ->
@@ -27,45 +23,27 @@ class Home extends React.Component
 
     log.debug \modules/main/components/Home#render-blog-posts, entries
 
-    map ((entry) ->
-      el BlogPost,
-        key:        entry.id
-        event-key:  entry.id
-        id:         entry.id
-        userId:     entry.userId
-        title:      entry.title
-        body:       entry.body
-        created-at: entry.created-at
-        updated-at: entry.updated-at
+    map (->
+      blog-post do
+        key:        it.id
+        event-key:  it.id
+        id:         it.id
+        userId:     it.userId
+        title:      it.title
+        body:       it.body
+        created-at: it.created-at
+        updated-at: it.updated-at
     ), entries
 
   render: ->
     log.debug \modules/main/components/Home#render
 
-    el Grid,
-      style:
-        margin-top: \81px,
-
-      el Row, void,
-        el Col,
-          xs: 12,
-
-          @render-blog-posts!
-
-      el Row,
-        style:
-          margin-top: 20,
-
-        el Col,
-          xs: 12
-          style:
-            text-align: \center,
-
-          el \a,
-            href: "#/blog",
-
+    grid style: margin-top: \81px,
+      row void,
+        col xs: 12, @render-blog-posts!
+      row style: margin-top: 20,
+        col xs: 12, style: text-align: \center,
+          a href: "#/blog",
             \Archive
-
-
 
 module.exports = Home

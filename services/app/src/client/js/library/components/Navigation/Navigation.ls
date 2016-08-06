@@ -1,32 +1,26 @@
-React   = require \react
-_       = require \lodash
-log     = require \loglevel
+React           = require \react
+_               = require \lodash
+create-element  = require \../../create-element
+log             = require \loglevel
+react-bootstrap = require \react-bootstrap
 
 {
   filter
   map
   take
+  drop
   { join }: Str
 } = require \prelude-ls
 
-el = React~create-element
-
-{
-  Nav
-  NavItem
-  Navbar
-} = require \react-bootstrap
-
-AccountDropdown = require \../AccountDropdown
-
-# Prepends a slash if it doesn't have one.
-ensure-prepended-slash = (string) ->
-  log.debug \library/components/Navigation.ensure-prenended-slash, string
-
-  if string.starts-with '/'
-    string
-  else
-    "/#{string}"
+a                = create-element \a
+account-dropdown = create-element require \../AccountDropdown
+nav              = create-element react-bootstrap.Nav
+nav-item         = create-element react-bootstrap.NavItem
+navbar           = create-element react-bootstrap.Navbar
+navbar-brand     = create-element react-bootstrap.Navbar.Brand
+navbar-collapse  = create-element react-bootstrap.Navbar.Collapse
+navbar-header    = create-element react-bootstrap.Navbar.Header
+navbar-toggle    = create-element react-bootstrap.Navbar.Toggle
 
 class Navigation extends React.Component
   (options) ->
@@ -89,7 +83,7 @@ class Navigation extends React.Component
     nav-item-mapper = (item, i) ~>
       log.debug \library/components/Navigation.Navigation#render-nav-items.nav-item-mapper, item, i, arguments
 
-      el NavItem,
+      nav-item do
         key:       item.label
         event-key: item.label
         href:      "##{item.href}"
@@ -105,26 +99,22 @@ class Navigation extends React.Component
   render: ->
     log.debug \library/components/Navigation.Navigation#render
 
-    el Navbar,
+    navbar do
       on-toggle: @~handle-toggle
       expanded: @state.expanded
       inverse: @inverse
       style:
         margin-bottom: 0,
 
-      el Navbar.Header, void,
-        el Navbar.Brand, void,
-          el 'a',
-            href: @header-link,
+      navbar-header void,
+        navbar-brand void,
+          a href: @header-link, @header-label
+        navbar-toggle!
 
-            @header-label
+      navbar-collapse void,
+        nav void, @render-nav-items!
 
-        el Navbar.Toggle
-
-      el Navbar.Collapse, void,
-        el Nav, void, @render-nav-items!
-
-        el AccountDropdown,
+        account-dropdown do
           logout:   @props.logout
           on-click: @~handle-shrink
           profile:  @props.profile

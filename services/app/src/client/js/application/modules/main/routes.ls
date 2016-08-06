@@ -1,33 +1,26 @@
-React                 = require \react
-el                    = React~create-element
-log                   = require \loglevel
-{ Route, IndexRoute } = require \react-router
+React        = require \react
+el           = React~create-element
+log          = require \loglevel
+react-router = require \react-router
 
-about     = require \./components/about
-contact   = require \./components/contact
-container = require \./components/container
-Home      = require \./components/Home
-login     = require \./components/login
+create-element = require \../../../library/create-element
+
+index-route = create-element react-router.IndexRoute
+route      = create-element react-router.Route
+
+About      = require \./components/About
+Contact    = require \./components/Contact
+Container  = require \./components/Container
+Home       = require \./components/Home
+Login      = require \./components/Login
 
 module.exports = (context) ->
   log.debug \modules/main/routes, context
 
-  el Route,
-    path: '/',
-    component: container,
-    key: context.key,
+  route         path: '/',      component: Container, key: context.key,
+    index-route                 component: Home
+    route       path: \about,   component: About
+    route       path: \contact, component: Contact
+    route       path: \login,   component: Login
 
-    el IndexRoute,
-      component: Home
-
-    el Route,
-      path: \about
-      component: about
-
-    el Route,
-      path: \contact
-      component: contact
-
-    el Route,
-      path: \login
-      component: login
+    context.routes

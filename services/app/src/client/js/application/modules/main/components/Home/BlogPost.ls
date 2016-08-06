@@ -1,15 +1,19 @@
-React  = require \react
-log    = require \loglevel
-moment = require \moment
+React           = require \react
+create-element  = require \../../../../../library/create-element
+log             = require \loglevel
+moment          = require \moment
+react-bootstrap = require \react-bootstrap
 
-el = React~create-element
-
-{
-  Col
-  Grid
-  Row
-  Panel
-} = require \react-bootstrap
+a         = create-element \a
+blog-post = create-element require \./BlogPost
+col       = create-element react-bootstrap.Col
+div       = create-element \div
+grid      = create-element react-bootstrap.Grid
+h1        = create-element \h1
+h2        = create-element \h2
+h4        = create-element \h4
+panel     = create-element react-bootstrap.Panel
+row       = create-element react-bootstrap.Row
 
 class BlogPost extends React.Component
   render: ->
@@ -26,69 +30,18 @@ class BlogPost extends React.Component
     day   = moment created-at .format 'Do'
     year  = moment created-at .format 'YYYY'
 
-    el Row,
-      style:
-        margin-top: 15,
-        margin-bottom: 10,
-
-      el Col,
-        xs: 4,
-
-        el \div,
-          style:
-            float: \right,
-
-          el \h1,
-            style:
-              float: \left
-              margin-top: 1,
-              margin-left: 0,
-              margin-right: 0,
-              margin-bottom: 0,
-
-            day
-
-          el \div,
-            style:
-              float: \right,
-
-            el \h4,
-              style:
-                margin: 0,
-
-              month
-
-            el \h4,
-              style:
-                margin: 0,
-
-              year
-
-      el Col,
-        xs: 8,
-
-        el \div,
-          style:
-            margin-top: 8
-            height: 50,
-
-          el \div,
-            style:
-              # Makes the border go under the text only
-              position: \absolute
-              height: 45
-              #border-bottom: '1px solid #000',
-
-            el \h2,
-              style:
-                margin: 0,
-
-              el \a,
-                href: "#/blog/#{id}"
-                style:
-                  color: \#000000
-                  text-decoration: \none,
-
-                title
+    row style: margin-top: 15, margin-bottom: 10,
+      col xs: 4,
+        div style: float: \right,
+          h1 style: float: \left, margin-top: 1, margin-left: 0, margin-right: 0, margin-bottom: 0, day
+          div style: float: \right,
+            h4 style: margin: 0, month
+            h4 style: margin: 0, year
+      col xs: 8,
+        div style: margin-top: 8, height: 50,
+          div style: position: \absolute, height: 45,
+            h2 style: margin: 0,
+              a href: "#/blog/#{id}", style: color: \#000000, text-decoration: \none, title
 
 module.exports = BlogPost
+

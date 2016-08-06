@@ -5,4 +5,4 @@ log   = require \loglevel
 module.exports = (context) ->
   log.debug \modules/session/routes, context
 
-  el \div, void, context.children
+  context.routes

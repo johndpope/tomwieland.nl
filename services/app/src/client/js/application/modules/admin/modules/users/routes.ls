@@ -12,24 +12,11 @@ show      = require \./components/show
 module.exports = (context) ->
   log.debug \modules/admin/routes, context
 
-  el Route,
-    path:      \users
-    component: container
-    key:       context.key,
+  el Route,          { path: \users, component: container, key: context.key },
+    el IndexRoute,   {               component: list                        }
+    el Route,        { path: \add,   component: add                         }
+    el Route,        { path: \:email                                        },
+      el IndexRoute, {               component: show                        }
+      el Route,      { path: \edit,  component: edit                        }
 
-    el IndexRoute,
-      component: list
-
-    el Route,
-      path:      \add
-      component: add
-
-    el Route,
-      path: \:email,
-
-      el IndexRoute,
-        component: show
-
-      el Route,
-        path:      \edit
-        component: edit
+      context.routes

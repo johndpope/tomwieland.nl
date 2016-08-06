@@ -4,12 +4,6 @@ log     = require \loglevel
 
 el = React~create-element
 
-{
-  Nav
-  NavItem
-  Navbar
-} = require \react-bootstrap
-
 Navigation = require \../../../../../library/components/Navigation
 
 class MainNavigation extends Navigation
@@ -19,7 +13,7 @@ class MainNavigation extends Navigation
     super options
 
     @header-link  = \#/
-    @header-label = \Tomwieland.nl
+    @header-label = \TomWieland.nl
 
   get-menu-items: ->
     log.debug \modules/admin/components/Navigation.MainNavigation#get-menu-items
