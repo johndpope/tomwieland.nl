@@ -2,7 +2,6 @@ version: "2"
 
 services:
   db:
-    container_name: "db"
     hostname: "db"
     image: "mongo"
     volumes:
@@ -10,11 +9,10 @@ services:
     ports:
       - "27017:27017"
 
-  tomwielandnl-app:
-    container_name: "app"
-    image: "app"
+  app:
     depends_on:
       - "db"
+    image: "app"
     build:
       context: "./services/app"
       dockerfile: "docker/Dockerfile-develop"
