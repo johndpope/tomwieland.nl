@@ -44,12 +44,7 @@ class Navigation extends React.Component
   get-active-top-path: ->
     log.debug \library/components/Navigation.Navigation#get-active-top-path
 
-    @props.routes
-      |> filter (.path)
-      |> map    (.path)
-      |> take   2
-      |> join   '/'
-      |> ensure-prepended-slash
+    @props.location.pathname
 
   handle-toggle: ->
     log.debug \library/components/Navigation.Navigation#handle-toggle
