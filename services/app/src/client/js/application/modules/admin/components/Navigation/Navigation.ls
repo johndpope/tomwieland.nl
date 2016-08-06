@@ -1,14 +1,5 @@
-React   = require \react
-_       = require \lodash
-log     = require \loglevel
-
-el = React~create-element
-
-{
-  Nav
-  NavItem
-  Navbar
-} = require \react-bootstrap
+React           = require \react
+log             = require \loglevel
 
 Navigation = require \../../../../../library/components/Navigation
 

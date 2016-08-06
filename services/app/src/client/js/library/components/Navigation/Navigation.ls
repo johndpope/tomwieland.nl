@@ -99,7 +99,7 @@ class Navigation extends React.Component
       expanded: @state.expanded
       inverse: @inverse
       style:
-        margin-bottom: 0,
+        margin-bottom: 50,
 
       navbar-header void,
         navbar-brand void,

@@ -1,8 +1,11 @@
-React = require \react
-el    = React~create-element
-log   = require \loglevel
+React           = require \react
+create-element  = require \../../../../library/create-element
+el              = React~create-element
+log             = require \loglevel
+react-bootstrap = require \react-bootstrap
 
-Navigation = require \./Navigation
+div        = create-element \div
+navigation = create-element require \./Navigation
 
 class Container extends React.Component
   render: ->
@@ -18,15 +21,14 @@ class Container extends React.Component
       routes
     } = @props
 
-    el \div, void,
-      el Navigation,
+    div void,
+      navigation do
         history: history
         location: location
         params: params
         route: route
         routeParams: routeParams
-        routes: routes,
-
+        routes: routes
       children
 
 module.exports = Container

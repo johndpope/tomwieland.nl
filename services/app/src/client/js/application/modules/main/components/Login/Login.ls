@@ -39,7 +39,7 @@ class Login extends React.Component
           panel header: \Login,
             form on-submit: @~handle-form-submit,
               form-group control-id: \email
-                control-label, void, \Email,
+                control-label, void, \Email
                 form-control ref: \email, type: \email, placeholder: \Email, auto-focus: true, disabled: is-logging-in
               form-group control-id: \password,
                 control-label, void, \Password

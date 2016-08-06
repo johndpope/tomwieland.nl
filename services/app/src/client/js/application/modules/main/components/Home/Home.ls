@@ -8,6 +8,7 @@ grid      = create-element react-bootstrap.Grid
 row       = create-element react-bootstrap.Row
 col       = create-element react-bootstrap.Col
 a         = create-element \a
+div       = create-element \div
 blog-post = create-element require \./BlogPost
 
 class Home extends React.Component
@@ -38,12 +39,13 @@ class Home extends React.Component
   render: ->
     log.debug \modules/main/components/Home#render
 
-    grid style: margin-top: \81px,
+    grid void,
       row void,
         col xs: 12, @render-blog-posts!
-      row style: margin-top: 20,
+      row void,
         col xs: 12, style: text-align: \center,
-          a href: "#/blog",
-            \Archive
+          div style: margin-top: 20, margin-bottom: 50,
+            a href: "#/blog",
+              \Archive
 
 module.exports = Home
