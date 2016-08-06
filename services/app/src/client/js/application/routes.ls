@@ -1,20 +1,25 @@
 React                       = require \react
 el                          = React~create-element
 log                         = require \loglevel
-{ Provider }                = require \react-redux
-{ Router, hash-history }    = require \react-router
+react-redux                 = require \react-redux
+react-router                = require \react-router
 { sync-history-with-store } = require \react-router-redux
 
-module.exports = (context) ->
-  log.debug \routes, context
+create-element = require \../library/create-element
 
-  history = sync-history-with-store hash-history, context.store, select-location-state: (.Application.routing)
+provider = create-element react-redux.Provider
+router   = create-element react-router.Router
 
-  el Provider,
-    store: context.store
-    key: context.key,
+module.exports = ->
+  log.debug \routes
 
-    el Router,
+  history = sync-history-with-store react-router.hash-history, it.store, select-location-state: (.Application.routing)
+
+  provider do
+    store: it.store
+    key: it.key,
+
+    router do
       history: history,
 
-      context.routes
+      it.routes

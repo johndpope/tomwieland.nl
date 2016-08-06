@@ -14,13 +14,13 @@ Container  = require \./components/Container
 Home       = require \./components/Home
 Login      = require \./components/Login
 
-module.exports = (context) ->
-  log.debug \modules/main/routes, context
+module.exports = ->
+  log.debug \modules/main/routes
 
-  route         path: '/',      component: Container, key: context.key,
+  route         path: '/',      component: Container, key: it.key,
     index-route                 component: Home
     route       path: \about,   component: About
     route       path: \contact, component: Contact
     route       path: \login,   component: Login
 
-    context.routes
+    it.routes

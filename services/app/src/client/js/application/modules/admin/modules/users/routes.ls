@@ -1,22 +1,27 @@
-React                 = require \react
-el                    = React~create-element
-log                   = require \loglevel
-{ Route, IndexRoute } = require \react-router
+React        = require \react
+el           = React~create-element
+log          = require \loglevel
+react-router = require \react-router
 
-add       = require \./components/add
-container = require \./components/container
-edit      = require \./components/edit
-list      = require \./components/list
-show      = require \./components/show
+create-element = require \../../../../../library/create-element
 
-module.exports = (context) ->
-  log.debug \modules/admin/routes, context
+index-route = create-element react-router.IndexRoute
+route       = create-element react-router.Route
 
-  el Route,          { path: \users, component: container, key: context.key },
-    el IndexRoute,   {               component: list                        }
-    el Route,        { path: \add,   component: add                         }
-    el Route,        { path: \:email                                        },
-      el IndexRoute, {               component: show                        }
-      el Route,      { path: \edit,  component: edit                        }
+Add       = require \./components/Add
+Container = require \./components/Container
+Edit      = require \./components/Edit
+List      = require \./components/List
+Show      = require \./components/Show
 
-      context.routes
+module.exports = ->
+  log.debug \modules/admin/routes
+
+  route           path: \users, component: Container, key: it.key,
+    index-route                 component: List
+    route         path: \add,   component: Add
+    route         path: \:email,
+      index-route               component: Show
+      route       path: \edit,  component: Edit
+
+      it.routes

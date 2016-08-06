@@ -1,16 +1,22 @@
-React                 = require \react
-el                    = React~create-element
-log                   = require \loglevel
-{ Route, IndexRoute } = require \react-router
+React        = require \react
+el           = React~create-element
+log          = require \loglevel
+react-router = require \react-router
+
+create-element = require \../../../library/create-element
+
+index-route = create-element react-router.IndexRoute
+route       = create-element react-router.Route
 
 UserIsAuthenticated = require \../../../library/auth/UserIsAuthenticated
 
 Container = UserIsAuthenticated require \./components/Container
 Dashboard = require \./components/Dashboard
 
-module.exports = (context) ->
-  log.debug \modules/admin/routes, context
+module.exports = ->
+  log.debug \modules/admin/routes
 
-  el Route,        { path: \admin, component: Container, key: context.key, },
-    el IndexRoute, {               component: Dashboard                    }
-    context.routes
+  route         path: \admin, component: Container, key: it.key,
+    index-route               component: Dashboard
+
+    it.routes
