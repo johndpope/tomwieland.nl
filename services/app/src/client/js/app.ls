@@ -6,17 +6,21 @@ log          = require \loglevel
 react-to-jsx = require \react-to-jsx
 { render }   = require \react-dom
 
-log.set-level \debug
-
-{
-  get-routes
-  get-reducers
-  set-store
-} = require \./library/module
-
 application       = require \./application
 initialize-action = require \./application/actions/initialize
 { create-store }  = require \./store
+
+{
+  get-reducers
+  get-routes
+  set-store
+} = require \./library/module
+
+{ loopback-application } = global
+
+log.set-level \debug
+
+log.debug \loopback-application, loopback-application
 
 # Get all reducers.
 all-reducers = get-reducers application
@@ -32,7 +36,6 @@ log.debug \routes, react-to-jsx routes
 
 store-instance.subscribe !->
   state = store-instance.get-state!
-  log.debug \state, state
 
   if state?.Application?.initialize?.has-succeeded
     <- domready

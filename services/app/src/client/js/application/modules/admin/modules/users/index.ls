@@ -2,6 +2,6 @@ reducers = require \./reducers
 routes   = require \./routes
 
 module.exports =
-  name: \AdminUsers
-  reducers: reducers
-  routes: routes
+  name:      \Users
+  reducers:  reducers
+  routes:    routes

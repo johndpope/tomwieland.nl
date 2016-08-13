@@ -9,6 +9,7 @@ react-bootstrap = require \react-bootstrap
   map
   take
   drop
+  find-indices
   { join }: Str
 } = require \prelude-ls
 
@@ -44,7 +45,10 @@ class Navigation extends React.Component
   get-active-top-path: ->
     log.debug \library/components/Navigation.Navigation#get-active-top-path
 
-    @props.location.pathname
+    parts     = @props.location.pathname.split '/'
+    first-two = take 2, drop 1, parts
+
+    "/#{first-two.join '/'}"
 
   handle-toggle: ->
     log.debug \library/components/Navigation.Navigation#handle-toggle
@@ -67,10 +71,6 @@ class Navigation extends React.Component
 
     # Set's the correct menu entry to active.
     active-links-mapper = (item) ~>
-      if active-top-path is \/admin
-        item.active = item.href is \/admin
-      else
-        item.active = (new Reg-exp "^#{active-top-path}$").test item.href
 
       item
 
@@ -87,9 +87,16 @@ class Navigation extends React.Component
 
         item.label
 
-    @get-menu-items!
-      |> map active-links-mapper
-      |> map nav-item-mapper
+    menu-items = @get-menu-items!
+
+    # Count back to find the menu item to activate
+    for i in [ menu-items.length - 1 to 0 by -1 ]
+      item = menu-items[i]
+
+      if (new Reg-exp "^#{active-top-path}$").test item.href
+        item.active = true
+
+    map nav-item-mapper, menu-items
 
   render: ->
     log.debug \library/components/Navigation.Navigation#render

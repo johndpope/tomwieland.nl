@@ -1,1 +1,1 @@
-module.exports = (BlogPost) ->
+module.exports = (BlogPost) !->

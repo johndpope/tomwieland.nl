@@ -1,19 +1,17 @@
-React = require \react
-el    = React~create-element
-log   = require \loglevel
+React           = require \react
+create-element  = require \../../../../../../library/create-element
+el              = React~create-element
+log             = require \loglevel
+react-bootstrap = require \react-bootstrap
 
-{
-  Col
-  Grid
-  Row
-} = require \react-bootstrap
+grid   = create-element react-bootstrap.Grid
+col    = create-element react-bootstrap.Col
+row    = create-element react-bootstrap.Row
+
 
 module.exports = (context) ->
-  log.debug \modules/admin/modules/users/components/edit
+  log.debug \modules/admin/modules/users/components/add
 
-  el Grid, void,
-    el Row, void,
-      el Col,
-        xs: 12,
-
-        'Edit!'
+  grid void,
+    row void,
+      col xs: 12, 'Edit!'

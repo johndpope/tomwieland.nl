@@ -3,7 +3,7 @@ require('livescript');
 var gulp = require('gulp');
 var seq = require('run-sequence');
 
-//require('./gulp/tasks/browserify');
+require('./gulp/tasks/browserify');
 require('./gulp/tasks/clean');
 require('./gulp/tasks/copy');
 require('./gulp/tasks/images');
@@ -29,7 +29,7 @@ gulp.task('develop', function(cb) {
 
     [
       'server:run',
-      //'browserify:watch',
+      'browserify:watch',
       'webpack:dev-server',
       'copy:watch',
       'images:watch',
@@ -53,7 +53,7 @@ gulp.task('production', function(cb) {
       'copy:compile',
     ],
 
-    //'browserify:compile',
+    'browserify:compile',
     'webpack:compile',
 
     [

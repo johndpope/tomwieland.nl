@@ -5,25 +5,18 @@ react-router = require \react-router
 
 create-element = require \../../../../../library/create-element
 
-IndexRoute = create-element react-router.IndexRoute
-Route      = create-element react-router.Route
-Container  = create-element require \./components/Container
-List       = create-element require \./components/List
+index-route = create-element react-router.IndexRoute
+route       = create-element react-router.Route
 
-module.exports = (context) ->
-  log.debug \modules/blog/routes, context
+Container = require \./components/Container
+List      = require \./components/List
+Show      = require \./components/Show
 
-  #Route        { path: \blog, component: Container, key: context.key },
-  #  IndexRoute {              component: List                        }
+module.exports = ->
+  log.debug \modules/blog/routes
 
-  context.routes
-
-/*
-
-el \div, void, 'foo'
-
-div void, 'foo'
-
-div 'foo'
-
-*/
+  route           path: \blog,   component: Container, key: it.key,
+    index-route                  component: List
+    route         path: \:slug,
+      index-route                component: Show
+      it.routes

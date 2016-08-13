@@ -5,12 +5,13 @@ log = require \loglevel
 # TODO: Change in production
 log.set-level \debug
 
-acl            = require \./middleware/acl
-authentication = require \./middleware/authentication
-blog-data      = require \./middleware/blog-data
-logger         = require \./middleware/logger
-rest-API       = require \./middleware/rest-api
-serve-index    = require \./middleware/serve-index
+acl              = require \./middleware/acl
+authentication   = require \./middleware/authentication
+blog-data        = require \./middleware/blog-data
+dummy-users-data = require \./middleware/dummy-users-data
+logger           = require \./middleware/logger
+rest-API         = require \./middleware/rest-api
+serve-index      = require \./middleware/serve-index
 
 app = loopback!
 
@@ -30,6 +31,9 @@ boot app, __dirname, (error, cb) ->
   throw error if error
 
   error <-! acl app
+  throw error if error
+
+  error <-! dummy-users-data app
   throw error if error
 
   error <-! blog-data app

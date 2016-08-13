@@ -1,13 +1,15 @@
-React = require \react
-el    = React~create-element
-log   = require \loglevel
+React           = require \react
+create-element  = require \../../../../../../library/create-element
+log             = require \loglevel
+react-bootstrap = require \react-bootstrap
 
-module.exports = (context) ->
-  log.debug \modules/admin/modules/users/components/container
+div = create-element \div
 
-  el \div, void,
-    el \div,
-      style:
-        margin-top: \21px,
+class Container extends React.Component
+  render: ->
+    log.debug \modules/admin/modules/users/components/Container#render
 
-      context.children
+    div style: margin-top: \21px,
+      @props.children
+
+module.exports = Container

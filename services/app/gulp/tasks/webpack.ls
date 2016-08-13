@@ -33,7 +33,7 @@ gulp.task \webpack:compile, (cb) !->
 gulp.task \webpack:dev-server, (cb) !->
   config = Object.assign {}, webpack-config
 
-  config.dev-tool = \eval
+  config.dev-tool = \eval-source-map
   config.debug    = true
 
   # TODO: Put this outside of function

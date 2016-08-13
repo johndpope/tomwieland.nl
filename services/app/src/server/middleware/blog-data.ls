@@ -7,44 +7,40 @@ log   = require \loglevel
 } = require \prelude-ls
 
 create-blogcomment = (app, user, blogpost, cb) !-->
-  log.debug \middleware/blog-data:create-blogcomment
-
   app.models.BlogComment.create {
-    blogpost: blogpost
-    user:     user
-    email:    faker.fake '{{internet.email}}'
-    body:     faker.fake '{{lorem.paragraphs}}'
+    blogpost:   blogpost
+    user:       user
+    email:      faker.fake '{{internet.email}}'
+    body:       faker.fake '{{lorem.paragraphs}}'
+    created-at: faker.fake '{{date.past}}'
+    updated-at: faker.fake '{{date.past}}'
   }, cb
 
 create-blogcomments = (app, user, blogpost, i, cb) !-->
-  log.debug \middleware/blog-data:create-blogcomments
-
   hl [ 1 to i ]
     .flat-map hl.wrap-callback (i, cb) !->
-      log.debug \middleware/blog-data:create-blogcomments:flat-map, i
       create-blogcomment app, user, blogpost, cb
     .collect!
     .to-callback cb
 
 create-blogpost = (app, user, cb) !-->
-  log.debug \middleware/blog-data:create-blog-post
+  title = faker.fake '{{name.title}}'
 
   error, blogpost <-! app.models.BlogPost.create {
-    user:  user.id
-    title: faker.fake '{{name.title}}'
-    body:  faker.fake '{{lorem.paragraphs}}'
+    user:       user.id
+    title:      title
+    slug:       faker.helpers.slugify title
+    body:       faker.fake '{{lorem.paragraphs}}'
+    created-at: faker.fake '{{date.past}}'
+    updated-at: faker.fake '{{date.past}}'
   }
-  log.debug \middleware/blog-data:create-blog-post:blogpost, error, blogpost
   return cb error if error
 
   create-blogcomments app, user, blogpost, 10, cb
 
 create-blogposts = (app, user, i, cb) !-->
-  log.debug \middleware/blog-data:create-blog-posts
-
   hl [ 1 to i ]
     .flat-map hl.wrap-callback (i, cb) !->
-      log.debug \middleware/blog-data:create-blogposts:flat-map, i
       create-blogpost app, user, cb
     .collect!
     .to-callback cb
@@ -75,7 +71,7 @@ module.exports = (app, cb) !->
 
   # Recreate them.
   error, results <-! create-blogposts app, admin-user, 25
-  log.debug \middleware/blog-data:results, error, results.length
+  log.debug \middleware/blog-data:created-blogposts, error, results.length
   return cb error if error
 
   cb!

@@ -1,5 +1,6 @@
-var WriteFilePlugin = require('write-file-webpack-plugin');
-var webpack = require('webpack');
+var LoopbackBootPlugin = require('loopback-webpack-plugin');
+var WriteFilePlugin    = require('write-file-webpack-plugin');
+var webpack            = require('webpack');
 
 module.exports = {
   contentBase: `${__dirname}/build/client`,
@@ -30,6 +31,7 @@ module.exports = {
   },
 
   plugins: [
+    new LoopbackBootPlugin(),
     new WriteFilePlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],

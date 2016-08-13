@@ -26,14 +26,15 @@ class Home extends React.Component
 
     map (->
       blog-post do
-        key:        it.id
-        event-key:  it.id
-        id:         it.id
-        userId:     it.userId
-        title:      it.title
-        body:       it.body
-        created-at: it.created-at
-        updated-at: it.updated-at
+        key:         it.id
+        event-key:   it.id
+        id:          it.id
+        user-id:     it.user-id
+        title:       it.title
+        slug:        it.slug
+        body:        it.body
+        created-at:  it.created-at
+        updated-at:  it.updated-at
     ), entries
 
   render: ->

@@ -1,5 +1,5 @@
 reducers = require \./reducers
-routes = require \./routes
+routes   = require \./routes
 
 module.exports =
   name: \Blog

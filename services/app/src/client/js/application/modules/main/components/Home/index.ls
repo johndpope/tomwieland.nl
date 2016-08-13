@@ -4,16 +4,16 @@
 
 Home = require \./Home
 
-blogposts-fetch = require \../../actions/blogposts-fetch
+list = require \../../modules/blog/actions/list
 
 module.exports = connect(
   (state) ->
     session:   state.Application.Session.session
-    blogposts: state.Application.Main.blogposts
+    blogposts: state.Application.Main.Blog.list
 
   (dispatch) ->
     handle-list: (token, skip = 0, limit = 10, order = 'created DESC') ->
-      dispatch blogposts-fetch token, skip, limit, order
+      dispatch list token, skip, limit, order
 
     navigate-to-show: (id) ->
       dispatch push "/blog/#{id}"

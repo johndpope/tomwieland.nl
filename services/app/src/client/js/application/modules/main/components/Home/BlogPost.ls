@@ -17,18 +17,9 @@ row       = create-element react-bootstrap.Row
 
 class BlogPost extends React.Component
   render: ->
-    {
-      id
-      user-id
-      title
-      body
-      created-at
-      updated-at
-    } = @props
-
-    month = moment created-at .format 'MMM'
-    day   = moment created-at .format 'Do'
-    year  = moment created-at .format 'YYYY'
+    month = moment @props.created-at .format 'MMM'
+    day   = moment @props.created-at .format 'Do'
+    year  = moment @props.created-at .format 'YYYY'
 
     row style: margin-top: 15, margin-bottom: 10,
       col xs: 4,
@@ -41,7 +32,6 @@ class BlogPost extends React.Component
         div style: margin-top: 8, height: 50,
           div style: position: \absolute, height: 45,
             h2 style: margin: 0,
-              a href: "#/blog/#{id}", style: color: \#000000, text-decoration: \none, title
+            a href: "#/blog/#{@props.slug}", style: color: \#000000, text-decoration: \none, @props.title
 
 module.exports = BlogPost
-

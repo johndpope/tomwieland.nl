@@ -1,0 +1,11 @@
+{
+  "remote": {
+    "connector": "remote",
+    "url": "/api"
+  },
+
+  "local": {
+    "connector": "memory",
+    "localStorage": "tomwielandnl-db"
+  }
+}
