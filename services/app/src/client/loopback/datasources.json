@@ -1,7 +1,7 @@
 {
   "remote": {
     "connector": "remote",
-    "url": "/api"
+    "url": "http://0.0.0.0:3000/api"
   },
 
   "local": {

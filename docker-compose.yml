@@ -1,24 +1,43 @@
 version: "2"
 
 services:
-  db:
-    hostname: "db"
-    image: "mongo"
-    volumes:
-      - "../../volumes/mongodb:/data/db"
-    ports:
-      - "27017:27017"
+  #db:
+  #  image: "mongo"
+  #  hostname: "db"
+  #  volumes:
+  #    - "../../volumes/mongodb:/data/db"
+  #  ports:
+  #    - "27017:27017"
 
-  app:
-    depends_on:
-      - "db"
-    image: "app"
-    build:
-      context: "./services/app"
-      dockerfile: "docker/Dockerfile-develop"
+  #app:
+  #  depends_on:
+  #    - "db"
+  #  build: "./services/app"
+  #  ports:
+  #    - "3000:3000"
+  #    - "3123:3123"
+  #    - "8080:8080"
+  #  volumes:
+  #    - "./services/app:/opt/service"
+  #  #  - "/opt/service/node_modules"
+
+  #blog:
+  #  depends_on:
+  #    - "db"
+  #  build: "./services/blog"
+  #  ports:
+  #    - "3001:3000"
+  #  environment:
+  #    - LOGLEVEL=debug
+  #  volumes:
+  #    - "./services/blog:/opt/service"
+  #  #  - "/opt/service/node_modules"
+
+  lua:
+    #depends_on:
+    #  - "db"
+    build: "./services/lua"
     ports:
-      - "3000:3000"
-      - "3123:3123"
-      - "8080:8080"
+      - "3002:3000"
     volumes:
-      - "./services/app:/src/"
+      - "./services/lua:/service"

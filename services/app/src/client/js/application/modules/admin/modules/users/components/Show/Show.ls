@@ -41,13 +41,13 @@ class Show extends React.Component
       col xs: 12,
         button-toolbar style: margin-bottom: 10,
           button do
-            on-click: @props.navigate-to-list
+            on-click: !~> @props.navigate-to-list!
             bs-style: \primary,
 
             glyphicon glyph: \chevron-left
 
           button do
-            on-click: !-> @props.navigate-to-edit email
+            on-click: !~> @props.navigate-to-edit user.email
             bs-style: \success,
 
             glyphicon glyph: \pencil

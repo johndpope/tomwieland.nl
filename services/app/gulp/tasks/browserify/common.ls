@@ -18,7 +18,7 @@ get-bundle = (root-dir, entry-file-path)->
     debug: true
 
   loopback-options =
-    app-root-dir: root-dir
+    app-root-dir: "#{root-dir}/loopback"
 
   loopback-boot.compile-to-browserify loopback-options, bundle
 

@@ -1,7 +1,10 @@
 hl         = require \highland
+immutable  = require \seamless-immutable
 log        = require \loglevel
 redux-crud = require \redux-crud
 uuid       = require \uuid
+
+fetch-api = require \../../../../../library/fetch-api
 
 standard-actions = redux-crud.action-creators-for \users
 
@@ -12,11 +15,8 @@ actions = Object.assign {}, standard-actions,
   delete: ->
     debugger
 
-  fetch-one: (token, email) ->
+  fetch-one: (record, token, email) ->
     log.debug \modules/admin/modules/users/services/fetch-one, token, email
-
-    output = hl!
-    output.write actions.fetch-start!
 
     filter = JSON.stringify do
       where:
@@ -27,31 +27,14 @@ actions = Object.assign {}, standard-actions,
     options =
       method: \GET
       headers:
-        'Content-Type': \application/json
-        Accept: \application/json
-        Authorization: token
+        'Content-Type':  \application/json
+        Accept:          \application/json
+        Authorization:   token
 
-    fetch url, options
-      .then (.json!)
-      .then (json) ->
-        log.debug \modules/admin/modules/users/services/fetch-one:then, json
+    fetch-api url, options, standard-actions.fetch-start, standard-actions.fetch-success, standard-actions.fetch-error, record
 
-        output.write actions.fetch-success json[0]
-        output.end!
-
-      .catch (error) ->
-        log.debug \modules/admin/modules/users/services/fetch-one:error, error
-
-        output.write actions.fetch-error error
-        output.end!
-
-    output
-
-  fetch: (token, skip, limit, order) ->
+  fetch: (records, token, skip, limit, order) ->
     log.debug \modules/admin/modules/users/services/fetch, token, skip, limit, order
-
-    output = hl!
-    output.write actions.fetch-start!
 
     filter = JSON.stringify do
       skip:   skip
@@ -63,27 +46,28 @@ actions = Object.assign {}, standard-actions,
     options =
       method: \GET
       headers:
-        'Content-Type': \application/json
-        Accept: \application/json
-        Authorization: token
+        'Content-Type':  \application/json
+        Accept:          \application/json
+        Authorization:   token
 
-    fetch url, options
-      .then (.json!)
-      .then (json) ->
-        log.debug \modules/admin/modules/users/services/fetch:then, json
+    fetch-api url, options, standard-actions.fetch-start, standard-actions.fetch-success, standard-actions.fetch-error, records
 
-        output.write actions.fetch-success json
-        output.end!
+  update: (record, token, data) ->
+    log.debug \modules/admin/modules/users/services/update, token, data
 
-      .catch (error) ->
-        log.debug \modules/admin/modules/users/services/fetch:error, error
+    url  = "#{window.location.origin}/api/users/#{data.id}"
+    body = JSON.stringify Object.assign {}, data
 
-        output.write actions.fetch-error error
-        output.end!
+    delete body.id
 
-    output
+    options =
+      method: \PUT
+      headers:
+        'Content-Type':  \application/json
+        Accept:          \application/json
+        Authorization:   token
+      body: body
 
-  update: ->
-    debugger
+    fetch-api url, options, standard-actions.update-start, standard-actions.update-success, standard-actions.update-error, record
 
 module.exports = actions

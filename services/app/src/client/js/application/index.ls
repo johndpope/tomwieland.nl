@@ -5,7 +5,7 @@ admin   = require \./modules/admin
 main    = require \./modules/main
 session = require \./modules/session
 
-module.exports =
+application =
   name: \Application
   reducers: reducers
   routes: routes
@@ -14,3 +14,5 @@ module.exports =
     main
     session
   ]
+
+module.exports = application

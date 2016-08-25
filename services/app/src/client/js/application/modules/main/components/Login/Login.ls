@@ -40,10 +40,21 @@ class Login extends React.Component
             form on-submit: @~handle-form-submit,
               form-group control-id: \email
                 control-label, void, \Email
-                form-control ref: \email, type: \email, placeholder: \Email, auto-focus: true, disabled: is-logging-in
+                form-control do
+                  ref:          \email
+                  type:         \email
+                  disabled:     is-logging-in
+                  placeholder:  \Email
+                  auto-focus:   true
+
               form-group control-id: \password,
                 control-label, void, \Password
-                form-control ref: \password, type: \password, disabled: is-logging-in, placeholder: \Password
+                form-control do
+                  ref:          \password
+                  type:         \password
+                  disabled:     is-logging-in
+                  placeholder:  \Password
+
               button ref: \submit, type: \submit, bs-style: \primary, disabled: is-logging-in,
                 \Login
 

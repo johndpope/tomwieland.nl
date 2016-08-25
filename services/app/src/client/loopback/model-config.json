@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "sources": [
+      "../../common/models",
+      "./models"
+    ]
+  },
+
+  "User": {
+    "dataSource": "remote"
+  },
+
+  "BlogPost": {
+    "dataSource": "remote"
+  },
+
+  "BlogComment": {
+    "dataSource": "remote"
+  }
+}

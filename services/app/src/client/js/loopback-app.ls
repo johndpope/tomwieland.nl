@@ -1,9 +1,9 @@
+console.log \loopback-app.ls
+
 loopback      = require \loopback
 loopback-boot = require \loopback-boot
 
 loopback-application = loopback!
-
-console.log \loopback-application, loopback-application
 
 loopback-boot loopback-application
 

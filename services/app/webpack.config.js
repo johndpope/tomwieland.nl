@@ -23,6 +23,8 @@ module.exports = {
     net: 'empty',
   },
 
+  devtool: '#inline-source-map',
+
   module: {
     loaders: [
       { test: /\.js$/,   loaders: ['react-hot'], include: `${__dirname}/build` },
