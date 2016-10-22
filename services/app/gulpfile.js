@@ -1,68 +1,77 @@
-require('livescript');
+require('babel-register')
 
-var gulp = require('gulp');
-var seq = require('run-sequence');
+var gulp = require('gulp')
+var seq = require('run-sequence')
 
-require('./gulp/tasks/browserify');
-require('./gulp/tasks/clean');
-require('./gulp/tasks/copy');
-require('./gulp/tasks/images');
-require('./gulp/tasks/less');
-require('./gulp/tasks/livescript');
-require('./gulp/tasks/minify');
-require('./gulp/tasks/mocha');
-require('./gulp/tasks/server');
-require('./gulp/tasks/webpack');
+require('./gulp/tasks/babel')
+require('./gulp/tasks/browserify')
+require('./gulp/tasks/clean')
+require('./gulp/tasks/copy')
+require('./gulp/tasks/images')
+require('./gulp/tasks/less')
+require('./gulp/tasks/livescript')
+require('./gulp/tasks/mocha')
+require('./gulp/tasks/server')
+require('./gulp/tasks/webpack')
 
-gulp.task('develop', function(cb) {
+gulp.task('compile', function(cb) {
   seq(
-    'clean',
-
     [
+      'babel:compile',
+      'copy:compile',
       'images:compile',
       'less:compile',
-      'livescript:compile',
-      'copy:compile',
     ],
 
-    'mocha:istanbul',
+    cb
+  )
+})
 
+gulp.task('watch', function(cb) {
+  seq(
     [
-      'server:run',
-      'browserify:watch',
-      'webpack:dev-server',
+      'babel:watch',
       'copy:watch',
       'images:watch',
       'less:watch',
       'livescript:watch',
-      'mocha:watch'
+      'mocha:watch',
     ],
 
     cb
-  );
-});
+  )
+})
+
+gulp.task('develop', function(cb) {
+  seq(
+    'clean',
+    'compile',
+    'mocha:istanbul',
+
+    [
+      'watch',
+      'server:run',
+
+      'browserify:watch',
+      'webpack:dev-server',
+    ],
+
+    cb
+  )
+})
 
 gulp.task('production', function(cb) {
   seq(
     'clean',
+    'compile',
 
     [
-      'images:compile',
-      'less:compile',
-      'livescript:compile',
-      'copy:compile',
-    ],
-
-    'browserify:compile',
-    'webpack:compile',
-
-    [
-      'html:minify',
-      'javascript:minify',
+      'browserify:compile',
+      'webpack:compile',
     ],
 
     'server:run',
 
     cb
-  );
-});
+  )
+})

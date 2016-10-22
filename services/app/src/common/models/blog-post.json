@@ -24,17 +24,7 @@
       "default": "body"
     }
   },
-  "mixins": {
-    "IPs": true,
-    "Paginate": { "limit": "10" },
-    "ReadOnly": {
-      "createdByIp": true,
-      "updatedByIp": true
-    },
-    "ResultSetLimit": { "limit": 100 },
-    "SoftDelete": true,
-    "TimeStamp": true
-  },
+  "mixins": {},
   "validations": [],
   "relations": {
     "blogComments": {
