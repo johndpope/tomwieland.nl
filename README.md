@@ -1,28 +1,40 @@
 # tomwieland.nl
 
-## Deployment
+## Installation
 
-### Build an Image
-```
-docker build -t gcr.io/tomwielandnl/tomwielandnl .
-```
+### Prerequisites
+TODO: List versions
+- Docker Engine
+- Docker Compose
 
-### Push Image
+### Clone Repository
 ```
-gcloud docker push gcr.io/tomwielandnl/tomwielandnl
-````
-
-### Run Image
-```
-kubectl run tomwielandnl --image=gcr.io/tomwielandnl/tomwielandnl --port=80
+git clone git@github.com:Industrial/tomwieland.nl.git
+cd tomwieland.nl
 ```
 
-### Expose Image (once)
+### Development
 ```
-kubectl expose deployment tomwielandnl --type="LoadBalancer"
+./bin/develop
 ```
 
-### Destroy
+### Production
 ```
-kubectl delete service,deployment tomwielandnl
+./bin/production
 ```
+
+## Live deployment
+Use a CI platform that supports docker.
+- Travis CI (https://docs.travis-ci.com/user/docker/#Pushing-a-Docker-Image-to-a-Registry)
+
+Use a cloud platform.
+- Heroku (https://devcenter.heroku.com/articles/container-registry-and-runtime#using-a-ci-cd-platform)
+
+### DigitalOcean
+- Create a an Ubuntu droplet
+- Install dokku
+  ```
+  wget https://raw.githubusercontent.com/dokku/dokku/v0.7.2/bootstrap.sh
+  sudo DOKKU_TAG=v0.7.2 bash bootstrap.sh
+  ```
+- Configure SSH keys (go to droplet IP in browser)

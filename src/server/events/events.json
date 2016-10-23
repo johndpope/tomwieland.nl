@@ -1,0 +1,16 @@
+[
+  {
+    "name": "User.create",
+    "payload": {
+      "username": "admin",
+      "email":    "admin@test.com",
+      "password": "test"
+    }
+  },
+  {
+    "name": "Role.create",
+    "payload": {
+      "name": "admin"
+    }
+  }
+]

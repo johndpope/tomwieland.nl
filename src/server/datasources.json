@@ -1,0 +1,7 @@
+{
+  "mongodb": {
+    "name": "mongodb",
+    "connector": "mongodb",
+    "uri": "mongodb://tomwieland-nl:55892d66d7ef33ea71a60f8d4cffe144@dokku-mongo-tomwieland-nl:27017/tomwieland-nl"
+  }
+}

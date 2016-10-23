@@ -1,0 +1,39 @@
+version: "2"
+
+services:
+  #db:
+  #  image: "mongo"
+  #  hostname: "db"
+  #  volumes:
+  #    - "./volumes/mongodb:/data/db"
+  #  ports:
+  #    - "27017:27017"
+
+  app:
+    depends_on:
+      - "db"
+    build:
+      context: "./services/app"
+      dockerfile: "Dockerfile-develop"
+    ports:
+      - "3000:3000"
+      - "3123:3123"
+      - "8080:8080"
+    environment:
+      - "NODE_ENV=develop"
+    volumes:
+      - "./services/app:/service"
+    #  - "/service/node_modules"
+
+  triple_store:
+    build: "./services/triple-store"
+    ports:
+      - "4001:4001"
+    environment:
+      - "LOGLEVEL=DEBUG"
+      - "DBPATH=/db"
+      - "PORT=4001"
+    volumes:
+      - "./services/triple-store:/service"
+      - "./.triple-store:/db"
+    #  - "/service/node_modules"

@@ -1,0 +1,43 @@
+{
+  "name": "BlogPost",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "title"
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "index": {
+        "unique": true
+      }
+    },
+    "body": {
+      "type": "string",
+      "required": true,
+      "default": "body"
+    }
+  },
+  "mixins": {},
+  "validations": [],
+  "relations": {
+    "blogComments": {
+      "type": "hasMany",
+      "model": "BlogComment",
+      "foreignKey": ""
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -1,23 +1,14 @@
-# Use exathe latest nodejs version.
 FROM node:6.2
 
-# Expose the port.
-EXPOSE 80
+EXPOSE 3000
 
-# Set environment variables.
-ENV PORT=80
+ENV DOCKERIZE_VERSION v0.2.0
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-# Create the application directory in the dock.
-RUN mkdir /opt/service
+RUN mkdir -p /service
 
-# Add all the files to the container.
-ADD . /opt/service/
+ADD . /service
+WORKDIR /service
 
-# Change the working directory.
-WORKDIR /opt/service
-
-# Install all the dependencies.
-RUN npm install
-
-# Run the app.
-CMD node /opt/service/index.js
+CMD dockerize -wait tcp://db:27017 ./node_modules/.bin/gulp production
