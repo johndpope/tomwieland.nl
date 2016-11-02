@@ -15,8 +15,6 @@ export default class BlogPost extends React.Component {
     const day = moment(this.props.createdAt).format('Do')
     const year = moment(this.props.createdAt).format('YYYY')
 
-    console.log('hmm', this.props)
-
     return (
       <Row style={{ marginTop: 15, marginBottom: 10 }}>
         <Col xs={4}>
