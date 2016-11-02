@@ -2,6 +2,26 @@ export default (app) => {
   const { User, BlogPost, BlogComment } = app.models
 
   return {
+    BlogPost: {
+      user(root, args, context) {
+        return User
+          .findOne({ id: root.user })
+      },
+      blogComments(root, args, context) {
+        return BlogComment
+          .find({ blogPost: root.id })
+      }
+    },
+
+    BlogComment: {
+      blogPost(root, args, context) {
+        return BlogPost
+          .findOne({
+            id: root.blogPost
+          })
+      }
+    },
+
     Query: {
       users() {
         return User

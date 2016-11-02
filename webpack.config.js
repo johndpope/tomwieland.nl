@@ -29,7 +29,7 @@ const options = {
     filename: bundleFileName,
   },
 
-  devtool: '#cheap-module-inline-source-map',
+  devtool: '#source-map',
 
   module: {
     loaders: [

@@ -15,14 +15,16 @@ export default class BlogPost extends React.Component {
     const day = moment(this.props.createdAt).format('Do')
     const year = moment(this.props.createdAt).format('YYYY')
 
+    console.log('hmm', this.props)
+
     return (
       <Row style={{ marginTop: 15, marginBottom: 10 }}>
         <Col xs={4}>
           <div style={{ float: 'right' }}>
-            <h1 style={{ float: 'left', marginTop: 1, marginLeft: 0, marginRight: 0, marginBottom: 0 }}>Day</h1>
+            <h1 style={{ float: 'left', marginTop: 1, marginLeft: 0, marginRight: 0, marginBottom: 0 }}>{day}</h1>
             <div style={{ float: 'right' }}>
-              <h4 style={{ margin: 0 }}>Month</h4>
-              <h4 style={{ margin: 0 }}>Year</h4>
+              <h4 style={{ margin: 0 }}>{month}</h4>
+              <h4 style={{ margin: 0 }}>{year}</h4>
             </div>
           </div>
         </Col>
@@ -31,7 +33,7 @@ export default class BlogPost extends React.Component {
             <div style={{ position: 'absolute', height: 45 }}>
               <h2 style={{ margin: 0 }}>
                 <a href={`#/blog/${this.props.slug}`} style={{ color: '#000000', textDecoration: 'none' }}>
-                  this.props.title
+                  {this.props.title}
                 </a>
               </h2>
             </div>

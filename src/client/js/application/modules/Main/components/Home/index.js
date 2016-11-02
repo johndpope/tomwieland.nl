@@ -13,13 +13,12 @@ import AllBlogPostsQuery from './queries/AllBlogPosts'
 import BlogPost from './BlogPost'
 
 @connect(
-  state => ({
-    session: state.Application.Session.session,
+  state => {
+    return {
+      session: state.Application.Session.session,
+    }
+  },
 
-    // TODO: Fix this.
-    // blogposts: state.Application.Main.Blog.list,
-    blogposts: {},
-  }),
   dispatch => ({
     // handleList(token, skip = 0, limit = 10, order = 'created DESC') {
     //   dispatch(list(token, skip, limit, order))
@@ -40,22 +39,20 @@ export default class Home extends React.Component {
   }
 
   renderBlogPosts() {
-    const { entries } = this.props.blogposts
+    const blogposts = this.props.blogposts || []
 
-    return _.map(it =>
+    return blogposts.map(v =>
       <BlogPost
-        key={it.id}
-        eventKey={it.id}
-        id={it.id}
-        userId={it.userId}
-        title={it.title}
-        slug={it.slug}
-        body={it.body}
-        createdAt={it.createdAt}
-        updatedAt={it.updatedAt}
-      >
-        {entries}
-      </BlogPost>
+        key={v.id}
+        eventKey={v.id}
+        id={v.id}
+        userId={v.userId}
+        tvle={v.tvle}
+        slug={v.slug}
+        body={v.body}
+        createdAt={v.createdAt}
+        updatedAt={v.updatedAt}
+      />
     )
   }
 

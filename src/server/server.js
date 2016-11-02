@@ -2,10 +2,9 @@ import log from 'loglevel'
 import loopback from 'loopback'
 import boot from 'loopback-boot'
 
-import acl from './middleware/acl'
+import fixtures from './middleware/fixtures'
 import authentication from './middleware/authentication'
 import blogData from './middleware/blog-data'
-import dummyUsersData from './middleware/dummy-users-data'
 import logger from './middleware/logger'
 import restAPI from './middleware/rest-api'
 import graphql from './middleware/graphql'
@@ -35,7 +34,7 @@ boot(app, __dirname, (error, cb) => {
           throw error
         }
 
-        acl(app, (error) => {
+        fixtures(app, (error) => {
           if (error) {
             throw error
           }
@@ -45,23 +44,17 @@ boot(app, __dirname, (error, cb) => {
               throw error
             }
 
-            dummyUsersData(app, (error) => {
+            blogData(app, (error) => {
               if (error) {
                 throw error
               }
 
-              blogData(app, (error) => {
-                if (error) {
-                  throw error
-                }
-
-                if (require.main === module) {
-                  app.server = app.listen(() => {
-                    app.emit('started')
-                    console.log(`Web server listening at: ${app.get('url')}`)
-                  })
-                }
-              })
+              if (require.main === module) {
+                app.server = app.listen(() => {
+                  app.emit('started')
+                  console.log(`Web server listening at: ${app.get('url')}`)
+                })
+              }
             })
           })
         })

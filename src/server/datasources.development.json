@@ -1,0 +1,7 @@
+{
+  "mongodb": {
+    "name": "mongodb",
+    "connector": "mongodb",
+    "uri": "mongodb://0.0.0.0:27017/tomwieland-nl"
+  }
+}

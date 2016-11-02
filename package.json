@@ -4,7 +4,9 @@
   "main": "build/server/server.js",
   "description": "test-loopback-app",
   "scripts": {
-    "posttest": "./node_modules/.bin/nsp check"
+    "develop": "NODE_ENV=develop ./node_modules/.bin/gulp develop",
+    "production": "NODE_ENV=production ./node_modules/.bin/gulp production",
+    "start": "npm run production"
   },
   "repository": {},
   "dependencies": {

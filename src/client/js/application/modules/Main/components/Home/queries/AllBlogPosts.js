@@ -7,12 +7,21 @@ export default graphql(gql`
       id
       user {
         id
+        email
+        emailVerified
+        username
+        realm
       }
       title
       slug
       body
       createdAt
       updatedAt
+      blogComments {
+        id
+        email
+        body
+      }
     }
   }
 `, {
@@ -24,6 +33,7 @@ export default graphql(gql`
   },
   props: ({ data, ownProps, mutate }) => {
     return {
+      blogposts: data.blogposts
     }
   },
 })

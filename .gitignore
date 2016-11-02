@@ -43,3 +43,5 @@ jspm_packages
 services/**/build
 services/**/.tmp
 volumes
+.idea
+build
