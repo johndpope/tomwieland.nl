@@ -5,10 +5,10 @@ export default function Role(app, cb) {
 
   const { Role } = app.models
 
-  log.debug('middleware:fixtures:Role:destroying')
-
-  Role.destroyAll({ fixture: true }, (error) => {
+  Role.findOne({ fixture: true }, (error, result) => {
     if (error) return cb(error)
+
+    if (result) return cb()
 
     const record = {
       fixture: true,
@@ -17,7 +17,7 @@ export default function Role(app, cb) {
 
     log.debug('middleware:fixtures:Role:creating')
 
-    Role.create(record, error => {
+    Role.create(record, (error) => {
       if (error) return cb(error)
 
       log.debug('middleware:fixtures:Role:created')

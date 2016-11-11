@@ -1,7 +1,7 @@
 import hl from 'highland'
 import { createAction } from 'redux-actions'
 
-import clearCookieService from './clear-cookie'
+// import clearCookieService from './clear-cookie'
 
 const logoutStart = createAction('user:logout:start')
 const logoutSuccess = createAction('user:logout:success')
@@ -28,8 +28,8 @@ export default (token) => {
       } else {
         output.write(logoutSuccess())
 
-        clearCookieService()
-          .each(output.write.bind(output))
+        // clearCookieService()
+        //   .each(output.write.bind(output))
       }
     })
 

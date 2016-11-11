@@ -5,10 +5,10 @@ export default function RoleMapping(app, cb) {
 
   const { user, Role, RoleMapping } = app.models
 
-  log.debug('middleware:fixtures:RoleMapping:destroying')
-
-  RoleMapping.destroyAll({ fixture: true }, (error) => {
+  RoleMapping.findOne({ fixture: true }, (error, result) => {
     if (error) return cb(error)
+
+    if (result) return cb()
 
     user.findOne({ username: 'admin', fixture: true }, (error, user) => {
       if (error) return cb(error)
@@ -25,7 +25,7 @@ export default function RoleMapping(app, cb) {
 
         log.debug('middleware:fixtures:RoleMapping:creating')
 
-        RoleMapping.create(record, error => {
+        RoleMapping.create(record, (error) => {
           if (error) return cb(error)
 
           log.debug('middleware:fixtures:RoleMapping:created')

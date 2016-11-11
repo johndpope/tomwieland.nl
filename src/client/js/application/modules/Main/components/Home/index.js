@@ -1,23 +1,17 @@
+import Halogen from 'halogen'
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import { graphql } from 'react-apollo'
 
-import {
-  Grid,
-  Row,
-  Col,
-} from 'react-bootstrap'
+import BlogPostsQuery from './queries/BlogPosts'
 
-import AllBlogPostsQuery from './queries/AllBlogPosts'
-
-import BlogPost from './BlogPost'
+import BlogPost from './components/BlogPost'
 
 @connect(
-  state => {
-    return {
-      session: state.Application.Session.session,
-    }
-  },
+  state => ({
+    session: state.Application.Session.session,
+  }),
 
   dispatch => ({
     // handleList(token, skip = 0, limit = 10, order = 'created DESC') {
@@ -26,11 +20,15 @@ import BlogPost from './BlogPost'
 
     navigateToShow(id) {
       console.log('TODO: Implement.')
-      //dispatch(push(`/blog/${id}`))
+      // dispatch(push(`/blog/${id}`))
     },
   })
 )
-@AllBlogPostsQuery
+@graphql(BlogPostsQuery, {
+  props: ({ data, ownProps, mutate }) => ({
+    BlogPosts: data.BlogPosts,
+  }),
+})
 export default class Home extends React.Component {
   componentWillMount() {
     const { token } = this.props.session
@@ -39,38 +37,35 @@ export default class Home extends React.Component {
   }
 
   renderBlogPosts() {
-    const blogposts = this.props.blogposts || []
+    const entries = _(this.props.BlogPosts)
+      .sortBy('createdAt')
+      .value()
+      .reverse()
 
-    return blogposts.map(v =>
-      <BlogPost
-        key={v.id}
-        eventKey={v.id}
-        id={v.id}
-        userId={v.userId}
-        tvle={v.tvle}
-        slug={v.slug}
-        body={v.body}
-        createdAt={v.createdAt}
-        updatedAt={v.updatedAt}
-      />
-    )
+    return entries.map((v, i) => <BlogPost key={i} post={v} />)
   }
 
   render() {
+    const blogPosts = this.props.BlogPosts
+
+    if (!blogPosts || !blogPosts.length) {
+      return <center><Halogen.ClipLoader color="#000000" /></center>
+    }
+
     return (
-      <Grid>
-        <Row>
-          <Col xs={12}>
-            {this.renderBlogPosts()}
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} style={{ textAlign: 'center' }}>
+      <div className="container-fluid page-home">
+        {this.renderBlogPosts()}
+        <div className="row">
+          <div
+            className="col-xs"
+            style={{
+              textAlign: 'center',
+            }}
+          >
             <a href="#/blog">Archive OMG</a>
-          </Col>
-        </Row>
-      </Grid>
+          </div>
+        </div>
+      </div>
     )
   }
 }
-

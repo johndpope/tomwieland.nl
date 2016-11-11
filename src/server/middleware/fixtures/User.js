@@ -19,18 +19,16 @@ function createAdmin(app, cb) {
 function createDummyUsers(app, cb) {
   const { user } = app.models
 
-  user.create(_.map(_.range(1, 25), i => {
-    return {
-      fixture: true,
-      created: faker.fake('{{date.past}}'),
-      emailVerified: Math.ceil(Math.random()),
-      email: faker.fake('{{internet.email}}'),
-      lastUpdated: faker.fake('{{date.past}}'),
-      password: faker.fake('{{internet.password}}'),
-      status: faker.fake('{{internet.password}}'),
-      username: faker.fake('{{internet.userName}}'),
-    }
-  }), cb)
+  user.create(_.map(_.range(1, 25), i => ({
+    fixture: true,
+    created: faker.fake('{{date.past}}'),
+    emailVerified: Math.ceil(Math.random()),
+    email: faker.fake('{{internet.email}}'),
+    lastUpdated: faker.fake('{{date.past}}'),
+    password: faker.fake('{{internet.password}}'),
+    status: faker.fake('{{internet.password}}'),
+    username: faker.fake('{{internet.userName}}'),
+  })), cb)
 }
 
 export default function User(app, cb) {
@@ -38,17 +36,17 @@ export default function User(app, cb) {
 
   const { user } = app.models
 
-  log.debug('middleware:fixtures:User:destroying')
-
-  user.destroyAll({ fixture: true }, (error) => {
+  user.findOne({ fixture: true }, (error, result) => {
     if (error) return cb(error)
+
+    if (result) return cb()
 
     log.debug('middleware:fixtures:User:creating')
 
-    createAdmin(app, error => {
+    createAdmin(app, (error) => {
       if (error) return cb(error)
 
-      createDummyUsers(app, error => {
+      createDummyUsers(app, (error) => {
         if (error) return cb(error)
 
         log.debug('middleware:fixtures:User:created')

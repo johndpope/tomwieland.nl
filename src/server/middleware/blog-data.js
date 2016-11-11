@@ -1,7 +1,16 @@
 import _ from 'lodash'
+import async from 'async'
 import faker from 'faker'
 import hl from 'highland'
 import log from 'loglevel'
+
+function randomDate(start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+}
+
+function getRandomDate() {
+  return randomDate(new Date(2012, 0, 1), new Date())
+}
 
 function createBlogcomment(app, user, blogpost, cb) {
   app.models.BlogComment.create({
@@ -33,8 +42,8 @@ function createBlogpost(app, user, cb) {
     title,
     slug: faker.helpers.slugify(title),
     body: faker.fake('{{lorem.paragraphs}}'),
-    createdAt: faker.fake('{{date.past}}'),
-    updatedAt: faker.fake('{{date.past}}')
+    createdAt: getRandomDate(),
+    updatedAt: getRandomDate(),
   }, (error, blogpost) => {
     if (error) {
       return cb(error)
@@ -62,40 +71,22 @@ export default (app, cb) => {
     BlogComment,
   } = app.models
 
-  user.findOne({
-    where: {
-      username: 'admin',
-    },
-  }, (error, adminUser) => {
-    log.debug('middleware/blog-data:admin-user', error, adminUser)
+  BlogPost.findOne({ fixture: true }, (error, result) => {
+    if (error) return cb(error)
 
-    if (error) {
-      return cb(error)
-    }
+    if (result) return cb()
 
-    BlogPost.destroyAll({}, (error) => {
-      log.debug('middleware/blog-data:destroyed-blogposts', error)
+    user.findOne({
+      where: {
+        username: 'admin',
+      },
+    }, (error, adminUser) => {
+      if (error) return cb(error)
 
-      if (error) {
-        return cb(error)
-      }
+      createBlogposts(app, adminUser, 25, (error, results) => {
+        if (error) return cb(error)
 
-      BlogComment.destroyAll({}, (error) => {
-        log.debug('middleware/blog-data:destroyed-blogcomments', error)
-
-        if (error) {
-          return cb(error)
-        }
-
-        createBlogposts(app, adminUser, 25, (error, results) => {
-          log.debug('middleware/blog-data:created-blogposts', error, results.length)
-
-          if (error) {
-            return cb(error)
-          }
-
-          cb()
-        })
+        cb()
       })
     })
   })

@@ -5,10 +5,10 @@ export default function ACL(app, cb) {
 
   const { user, Role, RoleMapping, ACL } = app.models
 
-  log.debug('middleware:fixtures:ACL:destroying')
-
-  ACL.destroyAll({ fixture: true }, (error) => {
+  ACL.findOne({ fixture: true }, (error, result) => {
     if (error) return cb(error)
+
+    if (result) return cb()
 
     const record = {
       model: 'user',
@@ -21,7 +21,7 @@ export default function ACL(app, cb) {
 
     log.debug('middleware:fixtures:ACL:creating')
 
-    ACL.create(record, error => {
+    ACL.create(record, (error) => {
       if (error) return cb(error)
 
       log.debug('middleware:fixtures:ACL:created')

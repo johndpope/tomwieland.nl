@@ -1,7 +1,31 @@
+import { Kind } from 'graphql/language'
+
 export default (app) => {
   const { User, BlogPost, BlogComment } = app.models
 
   return {
+    Date: {
+      __parseValue(value) {
+        return new Date(value); // value from the client
+      },
+      __serialize(value) {
+        return value.getTime(); // value sent to the client
+      },
+      __parseLiteral(ast) {
+        if (ast.kind === Kind.INT) {
+          return parseInt(ast.value, 10); // ast value is always in string format
+        }
+        return null;
+      },
+    },
+
+    AccessToken: {
+      user(root, args, context) {
+        return User
+          .findOne({ id: root.user })
+      },
+    },
+
     BlogPost: {
       user(root, args, context) {
         return User
@@ -10,61 +34,68 @@ export default (app) => {
       blogComments(root, args, context) {
         return BlogComment
           .find({ blogPost: root.id })
-      }
+      },
     },
 
     BlogComment: {
       blogPost(root, args, context) {
         return BlogPost
           .findOne({
-            id: root.blogPost
+            id: root.blogPost,
           })
-      }
+      },
     },
 
     Query: {
-      users() {
+      Users() {
         return User
           .find({})
       },
 
-      userById(id) {
+      UserById(id) {
         return User
           .findOne({ id })
       },
 
-      userByEmail(email) {
+      UserByEmail(email) {
         return User
           .findOne({ email })
       },
 
-      userByUsername(username) {
+      UserByUsername(username) {
         return User
           .findOne({ username })
       },
 
-      blogposts() {
+      BlogPosts() {
         return BlogPost
           .find({})
       },
 
-      blogpostById(id) {
+      BlogPostById(id) {
         return BlogPost
           .findOne({ id })
       },
 
-      blogpostBySlug(slug) {
+      BlogPostBySlug(slug) {
         return BlogPost
           .findOne({ slug })
       },
     },
 
-    /*
     Mutation: {
-      upvotePost(_, { postId }) {
+      UserLoginWithEmail(_, { email, password }) {
+        return User.login({ email, password })
+      },
+
+      UserLoginWithUsername(_, { username, password }) {
+        return User.login({ username, password })
+      },
+
+      UserLogout(_, { accessTokenId }) {
+        return User.logout(accessTokenId)
       },
     },
-    */
 
     /*
     Subscription: {

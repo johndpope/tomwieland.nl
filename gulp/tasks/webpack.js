@@ -26,7 +26,7 @@ gulp.task('webpack:compile', (cb) => {
     }
 
     gulpUtil.log('webpack:compile', stats.toString({
-      colors: true
+      colors: true,
     }))
 
     cb()
