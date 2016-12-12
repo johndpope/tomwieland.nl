@@ -75,10 +75,25 @@ export default class Navigation extends React.Component {
   render() {
     return (
       <nav className={`navbar navbar-${this.style}`}>
-        <a className="navbar-brand" href={this.headerLink}>{this.headerLabel}</a>
-        <ul className="nav navbar-nav">
-          {this.renderNavItems()}
-        </ul>
+        <button
+          className="navbar-toggler hidden-lg-up"
+          type="button"
+          data-toggle="collapse"
+          data-target="#mainNav"
+          aria-controls="mainNav"
+          aria-expanded="true"
+          aria-label="Toggle navigation"
+        />
+
+        <div
+          className="collapse navbar-toggleable-md"
+          id="mainNav"
+        >
+          <a className="navbar-brand" href={this.headerLink}>{this.headerLabel}</a>
+          <ul className="nav navbar-nav">
+            {this.renderNavItems()}
+          </ul>
+        </div>
       </nav>
     )
   }

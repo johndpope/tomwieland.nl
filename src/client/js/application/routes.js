@@ -5,13 +5,16 @@ import { Provider } from 'react-redux'
 
 import apolloClient from '../apolloClient'
 
-export default options =>
-  <ApolloProvider store={options.store} client={apolloClient}>
-    <Provider store={options.store} key={options.key}>
-      <HashRouter>
-        <div>
-          {options.routes}
-        </div>
-      </HashRouter>
-    </Provider>
-  </ApolloProvider>
+export default (options) => {
+  return (
+    <ApolloProvider store={options.store} client={apolloClient}>
+      <Provider store={options.store} key={options.key}>
+        <HashRouter>
+          <div>
+            {options.routes}
+          </div>
+        </HashRouter>
+      </Provider>
+    </ApolloProvider>
+  )
+}

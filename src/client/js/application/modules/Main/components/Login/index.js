@@ -1,38 +1,38 @@
-import Halogen from 'halogen'
 import React from 'react'
 import log from 'loglevel'
 import reactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
+import { hashHistory } from 'react-router'
 
 import UserLoginWithEmailMutation from './mutations/UserLoginWithEmail'
 
-import SetCookieAction from '../../../Session/actions/SetCookie'
+import LoginAction from '../../../Session/actions/Login'
 
 @connect(
-  state => ({
-    session: state.Application.Session.session,
-    profile: state.Application.Session.profile,
-  }),
+  (state) => {
+    return {
+      session: state.Application.Session.session,
+      profile: state.Application.Session.profile,
+    }
+  },
 
-  dispatch => ({
-    SetCookieAction,
-  })
+  (dispatch) => {
+    return {
+      LoginAction: (...x) => dispatch(LoginAction(dispatch, ...x)),
+    }
+  }
 )
 @graphql(UserLoginWithEmailMutation, {
   props: ({ data, ownProps, mutate }) => {
     return {
-      handleFormSubmit: async (options) => {
-        const data = await mutate({ variables: options })
-
-        // TODO: Set the data
+      handleFormSubmit: (options) => {
+        ownProps.LoginAction(mutate, options)
       },
     }
   },
 })
 export default class Login extends React.Component {
-  // TODO: Don't use findDOMNode. Check ESLint.
-  // TODO: Don't use this.refs. Check ESLint.
   handleFormSubmit(event) {
     event.preventDefault()
 
@@ -42,11 +42,8 @@ export default class Login extends React.Component {
     this.props.handleFormSubmit({ email, password })
   }
 
-  renderLogginInState() {
-    return <center><Halogen.ClipLoader color="#000000" /></center>
-  }
-
-  renderDefaultState() {
+  // TODO: Stop using the ref="". Check the docs on this.
+  render() {
     const {
       session: {
         isLoggingIn,
@@ -64,18 +61,37 @@ export default class Login extends React.Component {
                   <h4 className="card-title">Login</h4>
                   <div className="form-group">
                     <label htmlFor="loginEmail">Email address</label>
-                    <input type="email" className="form-control" id="loginEmail" placeholder="Enter email" ref={(node) => { this.emailElement = node }} />
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="loginEmail"
+                      placeholder="Enter email"
+                      ref={(node) => { this.emailElement = node }}
+                      disabled={isLoggingIn}
+                    />
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="loginPassword">Password</label>
-                    <input type="password" className="form-control" id="loginPassword" placeholder="Password" aria-describedby="passwordHelp" ref={(node) => { this.passwordElement = node }} />
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="loginPassword"
+                      placeholder="Password"
+                      aria-describedby="passwordHelp"
+                      ref={(node) => { this.passwordElement = node }}
+                      disabled={isLoggingIn}
+                    />
                     <small className="form-text text-muted" id="passwordHelp">
                       Apply face to keyboard in rolling fashion
                     </small>
                   </div>
 
-                  <button className="btn btn-primary" type="submit">
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    disabled={isLoggingIn}
+                  >
                     Login
                   </button>
                 </form>
@@ -87,20 +103,5 @@ export default class Login extends React.Component {
         </div>
       </div>
     )
-  }
-
-  // TODO: Stop using the ref="". Check the docs on this.
-  render() {
-    const {
-      session: {
-        isLoggingIn,
-      },
-    } = this.props
-
-    if (isLoggingIn) {
-      return this.renderLoggingInState()
-    }
-
-    return this.renderDefaultState()
   }
 }

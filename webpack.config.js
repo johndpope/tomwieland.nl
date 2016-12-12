@@ -36,25 +36,25 @@ const options = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel',
+        loader: 'babel-loader',
       },
       {
         test: /\.json$/,
         exclude: /node_modules/,
-        loader: 'json',
+        loader: 'json-loader',
       },
       {
         test: /\.module.scss/,
         exclude: /node_modules/,
         loader: combineLoaders([
           {
-            loader: 'style',
+            loader: 'style-loader',
             query: {
               sourceMap: false,
             },
           },
           {
-            loader: 'css',
+            loader: 'css-loader',
             query: {
               modules: true,
               sourceMap: false,
@@ -62,7 +62,7 @@ const options = {
             },
           },
           {
-            loader: 'sass',
+            loader: 'sass-loader',
             query: {
               sourceMap: false,
             },
@@ -74,13 +74,13 @@ const options = {
         exclude: /node_modules/,
         loader: combineLoaders([
           {
-            loader: 'style',
+            loader: 'style-loader',
             query: {
               sourceMap: false,
             },
           },
           {
-            loader: 'css',
+            loader: 'css-loader',
             query: {
               modules: false,
               sourceMap: false,
@@ -88,7 +88,7 @@ const options = {
             },
           },
           {
-            loader: 'sass',
+            loader: 'sass-loader',
             query: {
               sourceMap: false,
             },

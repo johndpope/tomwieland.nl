@@ -1,7 +1,7 @@
 import reducers from './reducers'
 import routes from './routes'
 
-// import Admin from './modules/Admin'
+import Admin from './modules/Admin'
 import Main from './modules/Main'
 import Session from './modules/Session'
 
@@ -10,7 +10,7 @@ export default {
   reducers,
   routes,
   modules: [
-    // Admin,
+    Admin,
     Main,
     Session,
   ],

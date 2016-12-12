@@ -9,16 +9,16 @@ const defaultState = immutable({
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case 'user:get-profile:start':
+    case 'Session:GetProfile:Start':
       return state
         .merge({
           isFetching: true,
         })
 
-    case 'user:get-profile:failure':
+    case 'Session:GetProfile:Failure':
       return defaultState
 
-    case 'user:get-profile:success':
+    case 'Session:GetProfile:Success':
       return state
         .merge({
           isFetching: false,
@@ -27,7 +27,7 @@ export default (state = defaultState, action) => {
           username: action.payload.username,
         })
 
-    case 'user:logout:success':
+    case 'Session:Logout:Success':
       return state
 
     default:

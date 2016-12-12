@@ -1,19 +1,45 @@
+import React from 'react'
 import { connect } from 'react-redux'
-import Navigation from './Navigation'
 
-import logoutAction from '../../../Session/actions/logout'
+import Navigation from '../../../../../library/components/Navigation'
 
-export default connect(
-  (state) => {
-    return {
-      session: state.Application.Session.session,
-      profile: state.Application.Session.profile,
-    }
-  },
+// import logoutAction from '../../../Session/actions/logout'
 
-  (dispatch) => {
-    return {
-      logout: () => dispatch(logoutAction()),
-    }
+@connect(
+  state => ({
+    session: state.Application.Session.session,
+    profile: state.Application.Session.profile,
+  }),
+  dispatch => ({
+    // logout: () => dispatch(logoutAction()),
+  })
+)
+export default class MainNavigation extends Navigation {
+  constructor(options) {
+    super(options)
+
+    this.headerLink = '#/'
+    this.headerLabel = 'TomWieland.nl'
   }
-)(Navigation)
+
+  getMenuItems() {
+    return [
+      {
+        href: '/',
+        label: 'Home',
+      },
+      {
+        href: '/about',
+        label: 'About',
+      },
+      {
+        href: '/contact',
+        label: 'Contact',
+      },
+      {
+        href: '/login',
+        label: 'Login',
+      },
+    ]
+  }
+}

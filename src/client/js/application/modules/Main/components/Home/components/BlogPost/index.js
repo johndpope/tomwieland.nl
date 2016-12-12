@@ -33,7 +33,7 @@ export default class BlogPost extends React.Component {
     return (
       <h4 className={`card-title ${styles.title}`}>
         <a href={`#/blog/${slug}`}>
-          {title}
+          {title} B
         </a>
       </h4>
     )
@@ -88,8 +88,7 @@ export default class BlogPost extends React.Component {
   renderDefaultState() {
     return (
       <div className="row">
-        <div className="col-xs col-sm col-md col-lg col-xl" />
-        <div className="col-xs-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
+        <div className="col-xs">
           <div className="card">
             <div className="card-block">
               {this.renderTitle()}
@@ -102,8 +101,6 @@ export default class BlogPost extends React.Component {
             {this.renderFooter()}
           </div>
         </div>
-
-        <div className="col-xs" />
       </div>
     )
   }

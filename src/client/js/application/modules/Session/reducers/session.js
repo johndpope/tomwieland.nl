@@ -3,17 +3,159 @@ import { handleActions } from 'redux-actions'
 
 const defaultState = I({
   isLoggingIn: false,
+  isLoggedIn: false,
   isLoggingOut: false,
+  isLoggedOut: true,
   token: null,
   ttl: null,
-  userId: null,
   created: null,
+  user: {
+    id: null,
+    username: null,
+    email: null,
+  },
 })
 
 export default handleActions({
-  'Session:GetCookie': (state, action) => {
+  'Session:Login:Start': (state, action) => {
     return state
       .merge({
+        isLoggingIn: true,
+        isLoggedIn: false,
+        isLoggedOut: true,
+        token: null,
+        ttl: null,
+        created: null,
+        user: {
+          id: null,
+          username: null,
+          email: null,
+        },
+      })
+  },
+
+  'Session:Login:Success': (state, action) => {
+    return state
+      .merge({
+        isLoggingIn: false,
+        isLoggedIn: true,
+        isLoggedOut: false,
+        token: action.payload.id,
+        ttl: action.payload.id,
+        created: action.payload.id,
+        user: {
+          id: action.payload.user.id,
+          username: action.payload.user.username,
+          email: action.payload.user.email,
+        },
+      })
+  },
+
+  'Session:Login:Failure': (state, action) => {
+    return state
+      .merge({
+        isLoggingIn: false,
+        isLoggedIn: false,
+        isLoggedOut: true,
+        token: null,
+        ttl: null,
+        created: null,
+        user: {
+          id: null,
+          username: null,
+          email: null,
+        },
+      })
+  },
+
+  'Session:Logout:Start': (state, action) => {
+    return state
+      .merge({
+        isLoggingOut: true,
+        isLoggedIn: true,
+        isLoggedOut: false,
+        token: null,
+        ttl: null,
+        created: null,
+        user: {
+          id: null,
+          username: null,
+          email: null,
+        },
+      })
+  },
+
+  'Session:Logout:Success': (state, action) => {
+    return state
+      .merge({
+        isLoggingOut: false,
+        isLoggedIn: false,
+        isLoggedOut: true,
+        token: null,
+        ttl: null,
+        created: null,
+        user: {
+          id: null,
+          username: null,
+          email: null,
+        },
+      })
+  },
+
+  'Session:Logout:Failure': (state, action) => {
+    return state
+      .merge({
+        isLoggingOut: false,
+        isLoggedIn: true,
+        isLoggedOut: false,
+        token: null,
+        ttl: null,
+        created: null,
+        user: {
+          id: null,
+          username: null,
+          email: null,
+        },
+      })
+  },
+
+  'Session:GetCookie:Start': (state, action) => {
+    return state
+      .merge({
+        isLoggingIn: true,
+        isLoggedIn: false,
+        isLoggedOut: true,
+      })
+  },
+
+  'Session:GetCookie:Success': (state, action) => {
+    return state
+      .merge({
+        isLoggingIn: false,
+        isLoggedIn: false,
+        isLoggedOut: true,
+        created: action.payload.created,
+        token: action.payload.token,
+        ttl: action.payload.ttl,
+        userId: action.payload.userId,
+      })
+  },
+
+  'Session:GetCookie:Failure': (state, action) => {
+    return state
+      .merge({
+        isLoggingIn: false,
+        isLoggedIn: false,
+        isLoggedOut: true,
+      })
+  },
+
+  'Session:SetCookie:Success': (state, action) => {
+    return state
+      .merge({
+        isLoggingIn: false,
+        isLoggedIn: true,
+        isLoggedOut: false,
         created: action.payload.created,
         token: action.payload.token,
         ttl: action.payload.ttl,
@@ -21,74 +163,3 @@ export default handleActions({
       })
   },
 }, defaultState)
-
-/*
-(state = defaultState, action) => {
-  switch (action.type) {
-    case 'user:login:start':
-      return state.merge({
-        isLoggingIn: true,
-      })
-
-    case 'user:login:success':
-      return state.merge({
-        isLoggingIn: false,
-      })
-
-    case 'user:login:failure':
-      return state.merge({
-        isLoggingIn: false,
-      })
-
-    case 'user:logout:start':
-      return state.merge({
-        isLoggingOut: true,
-      })
-
-    case 'user:logout:success':
-      return state.merge({
-        isLoggingOut: false,
-      })
-
-    case 'user:logout:failure':
-      return state.merge({
-        isLoggingOut: false,
-      })
-
-    case 'user:get-cookie:start':
-      return state.merge({
-        isLoggingIn: true,
-      })
-
-    case 'user:get-cookie:success':
-      return state.merge({
-        isLoggingIn: false,
-        created: action.payload.created,
-        token: action.payload.token,
-        ttl: action.payload.ttl,
-        userId: action.payload.userId,
-      })
-
-    case 'user:get-cookie:failure':
-      return defaultState
-
-    case 'user:set-cookie:success':
-      return state.merge({
-        isLoggingIn: false,
-        created: action.payload.created,
-        token: action.payload.token,
-        ttl: action.payload.ttl,
-        userId: action.payload.userId,
-      })
-
-    case 'user:set-cookie:failure':
-      return state
-
-    case 'user:clear-cookie:success':
-      return state
-
-    default:
-      return state
-  }
-}
-*/
