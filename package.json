@@ -1,8 +1,8 @@
 {
-  "name": "test-loopback-app",
+  "name": "tomwieland.nl",
   "version": "1.3.0",
   "main": "build/server/server.js",
-  "description": "test-loopback-app",
+  "description": "tomwieland.nl",
   "scripts": {
     "develop": "NODE_ENV=develop ./node_modules/.bin/gulp develop",
     "production": "NODE_ENV=production ./node_modules/.bin/gulp production",

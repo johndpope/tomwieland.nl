@@ -38,10 +38,9 @@ jspm_packages
 
 # Temporary directory
 .tmp
-*/.tmp
-
-services/**/build
-services/**/.tmp
+build
+data
+mongod
 volumes
 .idea
 build
