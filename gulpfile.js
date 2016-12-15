@@ -4,10 +4,8 @@ const seq = require('run-sequence')
 require('babel-register')
 
 require('./gulp/tasks/babel')
-require('./gulp/tasks/browserify')
 require('./gulp/tasks/clean')
 require('./gulp/tasks/copy')
-require('./gulp/tasks/livescript')
 require('./gulp/tasks/mocha')
 require('./gulp/tasks/server')
 require('./gulp/tasks/webpack')
@@ -25,7 +23,6 @@ gulp.task('watch', cb => seq(
   [
     'babel:watch',
     'copy:watch',
-    'livescript:watch',
     'mocha:watch',
   ],
 
@@ -41,7 +38,6 @@ gulp.task('develop', cb => seq(
     'watch',
     'server:run',
 
-    'browserify:watch',
     'webpack:dev-server',
   ],
 
@@ -51,12 +47,7 @@ gulp.task('develop', cb => seq(
 gulp.task('production', cb => seq(
   'clean',
   'compile',
-
-  [
-    'browserify:compile',
-    'webpack:compile',
-  ],
-
+  'webpack:compile',
   'server:run',
 
   cb

@@ -7,6 +7,9 @@ import webpack from 'webpack'
 import webpackConfig from '../../webpack.config'
 import handleError from '../lib/handleError'
 
+const HOST = process.env.IP   || '0.0.0.0'
+const PORT = process.env.PORT || 8080
+
 gulp.task('webpack:compile', (cb) => {
   const config = Object.assign({}, webpackConfig)
 
@@ -59,12 +62,12 @@ gulp.task('webpack:dev-server', (cb) => {
 
   const devServer = new WebpackDevServer(compiler, devServerOptions)
 
-  devServer.listen(8080, '0.0.0.0', (e) => {
+  devServer.listen(PORT, HOST, (e) => {
     if (e) {
       throw new gulpUtil.PluginError('webpack:dev-server', e)
     }
 
-    gulpUtil.log('http://0.0.0.0:8080/webpack-dev-server/index.html')
+    gulpUtil.log(`http://${HOST}:${PORT}/webpack-dev-server/index.html`)
 
     cb()
   })

@@ -1,66 +1,78 @@
-import log from 'loglevel'
-import loopback from 'loopback'
-import boot from 'loopback-boot'
+import path from 'path'
+import zlib from 'zlib'
 
-import fixtures from './middleware/fixtures'
-import authentication from './middleware/authentication'
-import blogData from './middleware/blog-data'
-import logger from './middleware/logger'
-import restAPI from './middleware/rest-api'
-import graphql from './middleware/graphql'
-// import serveIndex from './middleware/serve-index'
+import Koa from 'koa'
+import koaBodyparser from 'koa-bodyparser'
+import koaCompress from 'koa-compress'
+import koaConvert from 'koa-convert'
+import koaErrorHandler from 'koa-errorhandler'
+import koaGraphql from 'koa-graphql'
+import koaHelmet from 'koa-helmet'
+import koaLogger from 'koa-logger'
+import koaPassport from 'koa-passport'
+import koaPing from 'koa-ping'
+import koaResponseTime from 'koa-response-time'
+import koaRouter from 'koa-router'
+import koaSession from 'koa-generic-session'
+import koaStatic from 'koa-static'
 
-log.setLevel('debug')
+import graphqlTools from 'graphql-tools'
 
-const app = loopback()
+import graphqlSchema from '../common/graphql/schema'
+import graphqlResolvers from '../common/graphql/resolvers'
 
-boot(app, __dirname, (error, cb) => {
-  if (error) {
-    throw error
-  }
+const CWD  = path.resolve(__dirname)
+const HOST = process.env.IP || '0.0.0.0'
+const PORT = /*process.env.PORT ||*/ 3000
+const ADDRESS = `http://${HOST}:${PORT}`
 
-  logger(app, (error) => {
-    if (error) {
-      throw error
-    }
+console.log()
+console.log('CWD:     ', CWD)
+console.log('HOST:    ', HOST)
+console.log('PORT:    ', PORT)
+console.log('ADDRESS: ', ADDRESS)
+console.log()
 
-    authentication(app, (error) => {
-      if (error) {
-        throw error
-      }
+const router = koaRouter()
+const app = new Koa()
+app.keys = ['keyboardcat']
 
-      restAPI(app, (error) => {
-        if (error) {
-          throw error
-        }
+const _use = app.use
+app.use = x => _use.call(app, koaConvert(x))
 
-        fixtures(app, (error) => {
-          if (error) {
-            throw error
-          }
+router
+  .all('/graphql', koaConvert(koaGraphql({
+    schema: graphqlTools.makeExecutableSchema({
+      typeDefs: graphqlSchema,
+      resolvers: graphqlResolvers,
+    }),
+    graphiql: true,
+  })))
 
-          graphql(app, (error) => {
-            if (error) {
-              throw error
-            }
+app
+  .use(koaLogger())
+  .use(koaErrorHandler())
+  .use(koaHelmet())
+  .use(koaResponseTime())
+  .use(koaCompress({
+    filter: (contentType) => /text/i.test(contentType),
+    threshold: 2048,
+    flush: zlib.Z_SYNC_FLUSH,
+  }))
+  .use(koaPing())
 
-            blogData(app, (error) => {
-              if (error) {
-                throw error
-              }
+  .use(koaBodyparser())
+  .use(koaSession())
+  .use(koaPassport.initialize())
+  .use(koaPassport.session())
 
-              if (require.main === module) {
-                app.server = app.listen(() => {
-                  app.emit('started')
-                  console.log(`Web server listening at: ${app.get('url')}`)
-                })
-              }
-            })
-          })
-        })
-      })
-    })
+  .use(router.routes())
+  .use(router.allowedMethods())
+  .use(koaStatic(`${CWD}/../client`))
+
+console.log('Starting...')
+
+app
+  .listen(PORT, HOST, () => {
+    console.log('Started.')
   })
-})
-
-export default app
