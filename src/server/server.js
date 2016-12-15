@@ -26,13 +26,6 @@ const HOST = process.env.IP || '0.0.0.0'
 const PORT = /*process.env.PORT ||*/ 3000
 const ADDRESS = `http://${HOST}:${PORT}`
 
-console.log()
-console.log('CWD:     ', CWD)
-console.log('HOST:    ', HOST)
-console.log('PORT:    ', PORT)
-console.log('ADDRESS: ', ADDRESS)
-console.log()
-
 const router = koaRouter()
 const app = new Koa()
 app.keys = ['keyboardcat']
@@ -70,9 +63,7 @@ app
   .use(router.allowedMethods())
   .use(koaStatic(`${CWD}/../client`))
 
-console.log('Starting...')
-
 app
   .listen(PORT, HOST, () => {
-    console.log('Started.')
+    console.log(`Listening at http://${HOST}:${PORT}`)
   })

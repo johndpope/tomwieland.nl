@@ -9,7 +9,7 @@ export default {
   name: 'Application',
   reducers,
   routes,
-  modules: [
+  submodules: [
     Admin,
     Main,
     Session,

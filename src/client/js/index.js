@@ -1,11 +1,12 @@
 import 'whatwg-fetch'
 
-import React from 'react'
 import log from 'loglevel'
 import loggerMiddleware from 'redux-logger'
+import React from 'react'
 import reduxPromise from 'redux-thunk'
 import { AppContainer } from 'react-hot-loader'
 import { getRoutes } from 'redux-id-modules'
+import { Module } from 'id-redux-modules'
 import { persistState } from 'redux-devtools'
 import { reducer as reduxFormReducer } from 'redux-form'
 import { render } from 'react-dom'
@@ -26,8 +27,6 @@ import App from './App'
 import DevTools from './library/components/DevTools'
 import apolloClient from './apolloClient'
 import application from './application'
-import reducers from './reducers'
-
 
 // Dependencies
 // Use require to force synchronous loading
@@ -103,19 +102,17 @@ function renderApplication(App, store, routes) {
   )
 }
 
-const middleware = getMiddleware()
-const store = createStore(getFinalReducer(reducers), middleware)
-const routes = getRoutes(application, store)
+console.log('APPLICATION', JSON.stringify(application))
 
-log.debug('routes', reactElementToJSXString(routes))
+const module = new Module(application)
+module.store = createStore(getFinalReducer(module.reducers), getMiddleware())
 
 function reload() {
   const NextApp = require('./App').default
-  const nextReducers = require('./reducers').default
 
-  store.replaceReducer(getFinalReducer(nextReducers))
+  module.store.replaceReducer(getFinalReducer(module.reducers))
 
-  renderApplication(NextApp, store, routes)
+  renderApplication(NextApp, module.store, module.routes)
 }
 
 if (module.hot) {
@@ -124,4 +121,4 @@ if (module.hot) {
   module.hot.accept('./reducers', reload)
 }
 
-renderApplication(App, store, routes)
+renderApplication(App, module.store, module.routes)

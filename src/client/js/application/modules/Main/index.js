@@ -4,7 +4,7 @@ import routes from './routes'
 export default {
   name: 'Main',
   routes,
-  modules: [
+  submodules: [
     // Blog,
   ],
 }
