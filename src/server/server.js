@@ -21,6 +21,9 @@ import graphqlTools from 'graphql-tools'
 import graphqlSchema from '../common/graphql/schema'
 import graphqlResolvers from '../common/graphql/resolvers'
 
+// Start a MultiLevel server with LevelGraph
+import './multilevel'
+
 const CWD  = path.resolve(__dirname)
 const HOST = process.env.IP || '0.0.0.0'
 const PORT = /*process.env.PORT ||*/ 3000
