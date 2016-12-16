@@ -1,11 +1,10 @@
 import 'whatwg-fetch'
 
+import React from 'react'
 import log from 'loglevel'
 import loggerMiddleware from 'redux-logger'
-import React from 'react'
 import reduxPromise from 'redux-thunk'
 import { AppContainer } from 'react-hot-loader'
-import { getRoutes } from 'redux-id-modules'
 import { Module } from 'id-redux-modules'
 import { persistState } from 'redux-devtools'
 import { reducer as reduxFormReducer } from 'redux-form'
@@ -17,9 +16,6 @@ import {
   applyMiddleware,
   compose,
 } from 'redux'
-
-import reactElementToJSXString from 'react-element-to-jsx-string'
-
 
 import '../css/app.scss'
 
@@ -105,12 +101,14 @@ function renderApplication(App, store, routes) {
 console.log('APPLICATION', JSON.stringify(application))
 
 const module = new Module(application)
-module.store = createStore(getFinalReducer(module.reducers), getMiddleware())
+const reducers = module.reducers
+module.store = createStore(getFinalReducer(reducers), getMiddleware())
 
 function reload() {
   const NextApp = require('./App').default
+  const reducers = module.reducers
 
-  module.store.replaceReducer(getFinalReducer(module.reducers))
+  module.store.replaceReducer(getFinalReducer(reducers))
 
   renderApplication(NextApp, module.store, module.routes)
 }

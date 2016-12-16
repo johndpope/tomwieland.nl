@@ -7,7 +7,7 @@ import { hashHistory } from 'react-router'
 
 import UserLoginWithEmailMutation from './mutations/UserLoginWithEmail'
 
-import LoginAction from '../../../Session/actions/Login'
+import LoginAction from '../../../Session/actionCreators/Login'
 
 @connect(
   (state) => {
