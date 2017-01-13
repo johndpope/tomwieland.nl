@@ -101,14 +101,12 @@ function renderApplication(App, store, routes) {
 console.log('APPLICATION', JSON.stringify(application))
 
 const module = new Module(application)
-const reducers = module.reducers
-module.store = createStore(getFinalReducer(reducers), getMiddleware())
+module.store = createStore(getFinalReducer(module.reducers), getMiddleware())
 
 function reload() {
   const NextApp = require('./App').default
-  const reducers = module.reducers
 
-  module.store.replaceReducer(getFinalReducer(reducers))
+  module.store.replaceReducer(getFinalReducer(module.reducers))
 
   renderApplication(NextApp, module.store, module.routes)
 }

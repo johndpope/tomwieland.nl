@@ -1,0 +1,27 @@
+@prefix p:  <http://www.example.org/personal_details#> .
+
+
+<http://tomwieland.nl/BlogPost#1>
+  p:title "Blog Post 1";
+  p:slug "blog-post-1";
+  p:body "BODY!" .
+
+<http://tomwieland.nl/BlogPost#2>
+  p:title "Blog Post 2";
+  p:slug "blog-post-2";
+  p:body "BODY!" .
+
+<http://tomwieland.nl/BlogPost#3>
+  p:title "Blog Post 3";
+  p:slug "blog-post-3";
+  p:body "BODY!" .
+
+<http://tomwieland.nl/BlogPost#4>
+  p:title "Blog Post 4";
+  p:slug "blog-post-4";
+  p:body "BODY!" .
+
+<http://tomwieland.nl/BlogPost#5>
+  p:title "Blog Post 5";
+  p:slug "blog-post-5";
+  p:body "BODY!" .
