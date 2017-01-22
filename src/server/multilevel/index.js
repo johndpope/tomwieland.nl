@@ -14,6 +14,7 @@ const LOGLEVEL = process.env.LOGLEVEL || 'debug'
 const DBPATH = process.env.DBPATH || path.resolve(__dirname, '../../../.tmp/data')
 const PORT = +process.env.PORT || 3001
 
+console.log('DUUUUDE')
 log.info(`Setting log level to "${LOGLEVEL}".`)
 log.setLevel(LOGLEVEL)
 

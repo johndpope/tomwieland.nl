@@ -1,6 +1,5 @@
 @prefix p:  <http://www.example.org/personal_details#> .
 
-
 <http://tomwieland.nl/BlogPost#1>
   p:title "Blog Post 1";
   p:slug "blog-post-1";

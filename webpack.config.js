@@ -1,7 +1,5 @@
 const path = require('path')
 
-const WriteFilePlugin = require('write-file-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const combineLoaders = require('webpack-combine-loaders')
 const webpack = require('webpack')
 
@@ -17,9 +15,6 @@ const options = {
   context: contentBaseDirectoryPath,
 
   entry: [
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?${webpackServiceURI}`, // WebpackDevServer host and port
-    'webpack/hot/only-dev-server',                   // "only" prevents reload on syntax errors
     `${javascriptDirectoryPath}/${entryFileName}`,
   ],
 
@@ -99,12 +94,10 @@ const options = {
   },
 
   plugins: [
-    new WriteFilePlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
     new webpack.NamedModulesPlugin(),
   ],
 }
 
-console.log(JSON.stringify(options))
-
 module.exports = options
+

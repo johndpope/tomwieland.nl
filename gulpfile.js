@@ -37,8 +37,6 @@ gulp.task('develop', cb => seq(
   [
     'watch',
     'server:run',
-
-    'webpack:dev-server',
   ],
 
   cb
