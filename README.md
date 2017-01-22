@@ -1,36 +1,38 @@
 # tomwieland.nl
 
-## Installation
+This documentation is out of date for the development branch..
 
-### Prerequisites
+## 1. Installation
+
+### 1.1 Prerequisites
 TODO: List versions
 - Docker Engine
 - Docker Compose
 
-### Clone Repository
+### 1.2 Clone Repository
 ```
 git clone git@github.com:Industrial/tomwieland.nl.git
 cd tomwieland.nl
 ```
 
-### Development
+### 1.3 Development
 ```
 ./bin/develop
 ```
 
-### Production
+### 1.4 Production
 ```
 ./bin/production
 ```
 
-## Live deployment
+## 1.5 Live deployment
 Use a CI platform that supports docker.
 - Travis CI (https://docs.travis-ci.com/user/docker/#Pushing-a-Docker-Image-to-a-Registry)
 
 Use a cloud platform.
 - Heroku (https://devcenter.heroku.com/articles/container-registry-and-runtime#using-a-ci-cd-platform)
 
-### DigitalOcean
+#### 1.5.1 DigitalOcean
 - Create a an Ubuntu droplet
 - Install dokku
   ```
