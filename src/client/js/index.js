@@ -98,23 +98,26 @@ function renderApplication(App, store, routes) {
   )
 }
 
-console.log('APPLICATION', JSON.stringify(application))
+// Build up the module tree starting at the root module, the application.
+const applicationModule = new Module(application)
 
-const module = new Module(application)
-module.store = createStore(getFinalReducer(module.reducers), getMiddleware())
+log.debug('ApplicationModule', applicationModule)
 
+applicationModule.store = createStore(getFinalReducer(applicationModule.reducers), getMiddleware())
+
+// Render the first time.
+renderApplication(App, applicationModule.store, applicationModule.routes)
+
+// Hot Module Reloading.
 function reload() {
   const NextApp = require('./App').default
 
-  module.store.replaceReducer(getFinalReducer(module.reducers))
+  applicationModule.store.replaceReducer(getFinalReducer(applicationModule.reducers))
 
-  renderApplication(NextApp, module.store, module.routes)
+  renderApplication(NextApp, applicationModule.store, applicationModule.routes)
 }
 
 if (module.hot) {
   module.hot.accept('./App', reload)
   module.hot.accept('./application', reload)
-  module.hot.accept('./reducers', reload)
 }
-
-renderApplication(App, module.store, module.routes)

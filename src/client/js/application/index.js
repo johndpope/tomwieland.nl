@@ -10,7 +10,7 @@ export default {
   reducers,
   routes,
   submodules: [
-    Admin,
+    // Admin,
     Main,
     Session,
   ],

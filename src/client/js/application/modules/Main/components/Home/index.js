@@ -9,25 +9,31 @@ import BlogPostsQuery from './queries/BlogPosts'
 import BlogPost from './components/BlogPost'
 
 @connect(
-  state => ({
-    session: state.Application.Session.session,
-  }),
+  (state) => {
+    return {
+      session: state.Application.Session.session,
+    }
+  },
 
-  dispatch => ({
-    // handleList(token, skip = 0, limit = 10, order = 'created DESC') {
-    //   dispatch(list(token, skip, limit, order))
-    // },
+  (dispatch) => {
+    return {
+      // handleList(token, skip = 0, limit = 10, order = 'created DESC') {
+      //   dispatch(list(token, skip, limit, order))
+      // },
 
-    navigateToShow(id) {
-      console.log('TODO: Implement.')
-      // dispatch(push(`/blog/${id}`))
-    },
-  })
+      navigateToShow(id) {
+        console.log('TODO: Implement.')
+        // dispatch(push(`/blog/${id}`))
+      },
+    }
+  }
 )
 @graphql(BlogPostsQuery, {
-  props: ({ data, ownProps, mutate }) => ({
-    BlogPosts: data.BlogPosts,
-  }),
+  props: ({ data, ownProps, mutate }) => {
+    return {
+      BlogPosts: data.BlogPosts,
+    }
+  },
 })
 export default class Home extends React.Component {
   componentWillMount() {

@@ -1,5 +1,4 @@
-export default `
-scalar Date
+/*
 
 type AccessToken {
   id: String!
@@ -32,12 +31,26 @@ type Role {
   modified: Date
 }
 
+type Mutation {
+  UserLoginWithUsername(username: String!, password: String!): AccessToken
+  UserLoginWithEmail(email: String!, password: String!): AccessToken
+  UserLogout(accessTokenId: String!): Boolean
+}
+
+*/
+
+export default `
+scalar Date
+
 type User {
   id: String!
   email: String!
-  emailVerified: Boolean
   username: String
-  realm: String
+}
+
+type Tag {
+  id: String!
+  label: String!
 }
 
 type BlogPost {
@@ -45,17 +58,20 @@ type BlogPost {
   title: String!
   slug: String!
   body: String!
-  createdAt: Date!
-  updatedAt: Date!
+  created: Date!
+  updated: Date!
   user: User!
-  blogComments: [BlogComment]
+  comments: [BlogComment]
+  tags: [Tag]
 }
 
 type BlogComment {
   id: String!
-  email: String!
   body: String!
-  blogPost: BlogPost!
+  created: Date!
+  updated: Date!
+  user: User!
+  blogpost: BlogPost!
 }
 
 # the schema allows the following query:
@@ -66,22 +82,16 @@ type Query {
   UserByUsername(username: String!): User
 
   BlogPosts: [BlogPost]
+  BlogPostsByUser(userId: String!): [BlogPost]
+  BlogPostsByTag(tagLabel: String!): [BlogPost]
   BlogPostById(id: String!): BlogPost
   BlogPostBySlug(slug: String!): BlogPost
-}
-
-# this schema allows the following mutation:
-type Mutation {
-  UserLoginWithUsername(username: String!, password: String!): AccessToken
-  UserLoginWithEmail(email: String!, password: String!): AccessToken
-  UserLogout(accessTokenId: String!): Boolean
 }
 
 # we need to tell the server which types represent the root query
 # and root mutation types. We call them RootQuery and RootMutation by convention.
 schema {
   query: Query
-  mutation: Mutation
 }
 `;
 

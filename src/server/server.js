@@ -16,28 +16,38 @@ import koaResponseTime from 'koa-response-time'
 import koaRouter from 'koa-router'
 import koaSession from 'koa-generic-session'
 import koaStatic from 'koa-static'
+import log from 'loglevel'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'koa-webpack-dev-middleware'
 import webpackHotMiddleware from 'koa-webpack-hot-middleware'
 
 // Start a MultiLevel server with LevelGraph. Import this before GraphQL.
-import './multilevel'
+// import './multilevel'
 
+import { getKnexHandler, getBookshelfHandler } from './database'
 import webpackConfig from '../../webpack.config'
-import graphqlSchema from '../common/graphql/schema'
-import graphqlResolvers from '../common/graphql/resolvers'
+import graphqlSchema from './graphql/schema'
+import graphqlResolvers from './graphql/resolvers'
 
-const CWD  = path.resolve(__dirname)
-const HOST = process.env.IP || '0.0.0.0'
+if (process.env.NODE_ENV === 'develop') {
+  log.setLevel('debug')
+}
+
+const CWD = path.resolve(__dirname)
+const HOSTNAME = process.env.IP || '0.0.0.0'
 const PORT = process.env.PORT || 3000
-const ADDRESS = `http://${HOST}:${PORT}`
+const ADDRESS = `http://${HOSTNAME}:${PORT}`
 
 const router = koaRouter()
 const app = new Koa()
 app.keys = ['keyboardcat']
 
-const _use = app.use
-app.use = x => _use.call(app, koaConvert(x))
+// Hook to convert old Koa.js middleware
+const oldUse = app.use
+app.use = x => oldUse.call(app, koaConvert(x))
+
+const knexHandler = getKnexHandler()
+const bookshelfHandler = getBookshelfHandler()
 
 router
   .all('/graphql', koaConvert(koaGraphql({
@@ -54,7 +64,7 @@ app
   .use(koaHelmet())
   .use(koaResponseTime())
   .use(koaCompress({
-    filter: (contentType) => /text/i.test(contentType),
+    filter: contentType => /text/i.test(contentType),
     threshold: 2048,
     flush: zlib.Z_SYNC_FLUSH,
   }))
@@ -76,10 +86,8 @@ if (process.env.NODE_ENV === 'develop') {
 
   webpackConfig.plugins = webpackConfig.plugins.concat([
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
   ])
-
-  // console.log('webpackConfig', JSON.stringify(webpackConfig))
 
   const webpackCompiler = webpack(webpackConfig)
 
@@ -87,13 +95,41 @@ if (process.env.NODE_ENV === 'develop') {
     .use(webpackDevMiddleware(webpackCompiler, {
       reload: true,
       noInfo: true,
-      quiet: true,
+      quiet: false,
+      lazy: false,
+      stats: {
+        colors: true,
+      },
       publicPath: '/',
     }))
     .use(webpackHotMiddleware(webpackCompiler))
 }
 
-app
-  .listen(PORT, HOST, () => {
-    console.log(`Listening at http://${HOST}:${PORT}`)
-  })
+async function start() {
+  log.debug('start')
+
+  try {
+    log.debug('Starting migrations')
+
+    await knexHandler.migrate.latest()
+      .then(() => {
+        log.debug('Migrations complete')
+
+        return knexHandler.seed.run()
+      })
+      .then(() => {
+        log.debug('Starting HTTP server')
+
+        // TODO: Promisify this.
+        app
+          .listen(PORT, HOSTNAME, () => {
+            log.info(`Listening at http://${HOSTNAME}:${PORT}`)
+          })
+      })
+  } catch (error) {
+    log.error(error)
+    process.exit()
+  }
+}
+
+start()

@@ -1,26 +1,35 @@
-@prefix p:  <http://www.example.org/personal_details#> .
+@base <http://tomwieland.nl/> .
 
-<http://tomwieland.nl/BlogPost#1>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+
+<BlogPost#1>
+  p:type "BlogPost";
   p:title "Blog Post 1";
   p:slug "blog-post-1";
   p:body "BODY!" .
 
-<http://tomwieland.nl/BlogPost#2>
+<BlogPost#2>
+  p:type "BlogPost";
   p:title "Blog Post 2";
   p:slug "blog-post-2";
   p:body "BODY!" .
 
-<http://tomwieland.nl/BlogPost#3>
+<BlogPost#3>
+  p:type "BlogPost";
   p:title "Blog Post 3";
   p:slug "blog-post-3";
   p:body "BODY!" .
 
-<http://tomwieland.nl/BlogPost#4>
+<BlogPost#4>
+  p:type "BlogPost";
   p:title "Blog Post 4";
   p:slug "blog-post-4";
   p:body "BODY!" .
 
-<http://tomwieland.nl/BlogPost#5>
+<BlogPost#5>
+  p:type "BlogPost";
   p:title "Blog Post 5";
   p:slug "blog-post-5";
   p:body "BODY!" .

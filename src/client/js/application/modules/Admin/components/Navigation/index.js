@@ -14,7 +14,7 @@ import Navigation from '../../../../../library/components/Navigation'
     // logout: () => dispatch(logoutAction()),
   })
 )
-export default class MainNavigation extends Navigation {
+export default class AdminNavigation extends Navigation {
   constructor(options) {
     super(options)
 

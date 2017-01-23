@@ -6,13 +6,17 @@ import Navigation from '../../../../../library/components/Navigation'
 // import logoutAction from '../../../Session/actions/logout'
 
 @connect(
-  state => ({
-    session: state.Application.Session.session,
-    profile: state.Application.Session.profile,
-  }),
-  dispatch => ({
-    // logout: () => dispatch(logoutAction()),
-  })
+  (state) => {
+    return {
+      session: state.Application.Session.session,
+      profile: state.Application.Session.profile,
+    }
+  },
+  (dispatch) => {
+    return {
+      // logout: () => dispatch(logoutAction()),
+    }
+  }
 )
 export default class MainNavigation extends Navigation {
   constructor(options) {

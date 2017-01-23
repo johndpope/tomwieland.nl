@@ -4,6 +4,11 @@ export default gql`
   query {
     BlogPosts {
       id
+    }
+  }
+`
+
+/*
       user {
         username
       }
@@ -15,6 +20,4 @@ export default gql`
       blogComments {
         body
       }
-    }
-  }
-`
+*/

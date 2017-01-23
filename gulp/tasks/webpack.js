@@ -5,7 +5,7 @@ import webpack from 'webpack'
 import webpackConfig from '../../webpack.config'
 import handleError from '../lib/handleError'
 
-const HOST = process.env.IP   || '0.0.0.0'
+const HOST = process.env.IP || '0.0.0.0'
 const PORT = process.env.PORT || 8080
 
 const webpackServiceURI = `http://${HOST}:${PORT}`
