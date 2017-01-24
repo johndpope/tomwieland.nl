@@ -1,12 +1,12 @@
-import path from 'path'
-import net from 'net'
-
 import log from 'loglevel'
-import multilevel from 'multilevel'
 import { Kind } from 'graphql/language'
 
-import models from '../models'
-import collections from '../collections'
+import { getDatabase } from '../database'
+
+const db = getDatabase()
+
+const asJSON = a => a.toJSON()
+const asFirst = a => a[0]
 
 export default {
   Date: {
@@ -27,38 +27,39 @@ export default {
     },
   },
 
-  BlogPost: {
-    user(root, args, context) {
-      return new models.User({ id: root.user_id })
+  Article: {
+    user({ user_id }, args, context) {
+      return models.User
+        .where({ id: user_id })
         .fetch()
-        .then(result => result.toJSON())
+        .then(asJSON)
     },
 
     tags(root, args, context) {
     },
 
-    comments(root, args, context) {
-      return models.BlogPost
-        .fetchAll({
-          blogpost_id: root.id,
-        })
-        .then(result => result.toJSON())
+    comments({ id }, args, context) {
+      return models.Comment
+        .where({ article_id: id })
+        .fetch()
+        .then(asJSON)
     },
   },
 
-  BlogComment: {
+  Comment: {
   },
 
   Query: {
-    BlogPosts() {
-      return models.BlogPost
-        .fetchAll()
-        .then((posts) => {
-          return posts.toJSON()
-        })
+    Articles(root, args, context) {
+      return db.models.Article.all()
+    },
+
+    ArticleBySlug(root, { slug }, context) {
+      return db.models.Article.findOneBySlug(slug)
     },
   },
 }
+
 
 /*
   Query: {
@@ -82,17 +83,17 @@ export default {
         .findOne({ username })
     },
 
-    BlogPosts() {
-      log.debug('BlogPosts')
+    Articles() {
+      log.debug('Articles')
     },
 
-    BlogPostById(id) {
-      return BlogPost
+    ArticleById(id) {
+      return Article
         .findOne({ id })
     },
 
-    BlogPostBySlug(slug) {
-      return BlogPost
+    ArticleBySlug(slug) {
+      return Article
         .findOne({ slug })
     },
   },

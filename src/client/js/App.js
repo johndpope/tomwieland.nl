@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import log from 'loglevel'
 
 import GetCookie from './application/modules/Session/actionCreators/GetCookie'
 

@@ -1,15 +1,10 @@
 import React from 'react'
 import _ from 'lodash'
+import log from 'loglevel'
 import moment from 'moment'
-
-import {
-  Col,
-  Grid,
-  Row,
-} from 'react-bootstrap'
-
 import { connect } from 'react-redux'
-import listAction from '../actions/list'
+
+import listAction from '../../actions/list'
 
 @connect(
   (state) => {
@@ -27,9 +22,9 @@ import listAction from '../actions/list'
 )
 export default class List extends React.Component {
   componentWillMount() {
-    const { token } = this.props.session.token
+    // const { token } = this.props.session.token
 
-    return this.props.handleList(token)
+    // return this.props.handleList(token)
   }
 
   renderPosts() {
@@ -51,26 +46,26 @@ export default class List extends React.Component {
 
       if (year === previousYear) {
         cols.push(
-          <Col xs={2} />
+          <div className="col-xs-2" />
         )
       } else {
         cols.push(
-          <Col xs={2}>
+          <div className="col-xs-2">
             <h1 style={{ marginTop: 0 }}>year</h1>
-          </Col>
+          </div>
         )
         previousYear = year
       }
 
       if (month === previousMonth) {
         cols.push(
-          <Col xs={2} />
+          <div className="col-xs-2" />
         )
       } else {
         cols.push(
-          <Col xs={2}>
+          <div className="col-xs-2">
             <h1 style={{ marginTop: 0 }}>month</h1>
-          </Col>
+          </div>
         )
 
         previousMonth = month
@@ -78,32 +73,33 @@ export default class List extends React.Component {
 
       if (day === previousDay) {
         cols.push(
-          <Col xs={1} />
+          <div className="col-xs-1" />
         )
       } else {
         cols.push(
-          <Col xs={1}>
-            <h2 style={{ marginTop: 0 }}>day</h2>
-          </Col>
+          <div className="col-xs-1">
+            <h1 style={{ marginTop: 0 }}>day</h1>
+          </div>
         )
 
         previousDay = day
       }
 
       cols.push(
-        <Col
+        <div
+          className="col-xs-5"
           key={entry.id}
-          xs={5}
           style={{ height: 45 }}
         >
           <div style={{ position: 'absolute', bottom: 10 }}>
             <a href={`#/blog/${entry.slug}`}>{entry.title}</a>
           </div>
-        </Col>
+        </div>
       )
 
       rows.push(
-        <Row
+        <div
+          className="row"
           key={entry.id}
           style={{
             marginBottom: 50,
@@ -111,18 +107,18 @@ export default class List extends React.Component {
           }}
         >
           {cols}
-        </Row>
+        </div>
       )
     })
   }
 
   render() {
-    const { entries, entriesByYear } = this.props.list
+    log.debug('List.render')
 
     return (
-      <Grid>
+      <div>
         {this.renderPosts()}
-      </Grid>
+      </div>
     )
   }
 }

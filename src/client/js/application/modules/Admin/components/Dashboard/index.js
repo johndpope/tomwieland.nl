@@ -4,9 +4,9 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 // import { graphql } from 'react-apollo'
 
-// import BlogPostsQuery from './queries/BlogPosts'
+// import ArticlesQuery from './queries/Articles'
 
-// import BlogPost from './components/BlogPost'
+// import Article from './components/Article'
 
 @connect(
   state => ({
@@ -19,9 +19,9 @@ import { connect } from 'react-redux'
     // },
   })
 )
-// @graphql(BlogPostsQuery, {
+// @graphql(ArticlesQuery, {
 //   props: ({ data, ownProps, mutate }) => ({
-//     BlogPosts: data.BlogPosts,
+//     Articles: data.Articles,
 //   }),
 // })
 export default class Home extends React.Component {
@@ -34,21 +34,21 @@ export default class Home extends React.Component {
   */
 
   /*
-  renderBlogPosts() {
-    const entries = _(this.props.BlogPosts)
+  renderArticles() {
+    const entries = _(this.props.Articles)
       .sortBy('createdAt')
       .value()
       .reverse()
 
-    return entries.map((v, i) => <BlogPost key={i} post={v} />)
+    return entries.map((v, i) => <Article key={i} post={v} />)
   }
   */
 
   render() {
     /*
-    const blogPosts = this.props.BlogPosts
+    const articles = this.props.Articles
 
-    if (!blogPosts || !blogPosts.length) {
+    if (!articles || !articles.length) {
       return <center><Halogen.ClipLoader color="#000000" /></center>
     }
     */

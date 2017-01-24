@@ -6,7 +6,7 @@ import moment from 'moment'
 import styles from './styles.module.scss'
 
 @CSSModules(styles)
-export default class BlogPost extends React.Component {
+export default class Article extends React.Component {
   renderDate() {
     const {
       post: {
@@ -33,7 +33,7 @@ export default class BlogPost extends React.Component {
     return (
       <h4 className={`card-title ${styles.title}`}>
         <a href={`#/blog/${slug}`}>
-          {title} B
+          {title}
         </a>
       </h4>
     )
@@ -65,7 +65,7 @@ export default class BlogPost extends React.Component {
     const {
       post: {
         slug,
-        blogComments,
+        comments,
       },
     } = this.props
 
@@ -79,7 +79,7 @@ export default class BlogPost extends React.Component {
             float: 'right',
           }}
         >
-          {blogComments.length} comments
+          {comments.length} comments
         </span>
       </div>
     )

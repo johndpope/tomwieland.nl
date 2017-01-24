@@ -15,7 +15,7 @@ export default (options) => {
     <div>
       <Navigation />
 
-      <Match exactly pattern="/" component={Home} />
+      <Match pattern="/" exactly component={Home} />
       <Match pattern="/about" component={About} />
       <Match pattern="/contact" component={Contact} />
       <Match pattern="/login" component={Login} />

@@ -19,8 +19,6 @@ import {
 
 import '../css/app.scss'
 
-import App from './App'
-import DevTools from './library/components/DevTools'
 import apolloClient from './apolloClient'
 import application from './application'
 
@@ -42,41 +40,13 @@ require('bootstrap/js/src/tab')
 require('bootstrap/js/src/tooltip')
 require('bootstrap/js/src/util')
 
-function getDebugSessionKey() {
-  const matches = window.location.href.match(/[?&]debug_session=([^&#]+)\b/)
-
-  if (matches && matches.length > 0) {
-    return matches[1]
-  }
-
-  return undefined
-}
-
-function getMiddleware() {
-  let middleware = [
-    reduxPromise,
-    apolloClient.middleware(),
-    loggerMiddleware({
-      collapsed: true,
-    }),
-  ]
-
-  if (window.devToolsExtension) {
-    middleware = compose(
-      applyMiddleware(...middleware),
-      window.devToolsExtension(),
-      persistState(getDebugSessionKey())
-    )
-  } else {
-    middleware = compose(
-      applyMiddleware(...middleware),
-      DevTools.instrument(),
-      persistState(getDebugSessionKey())
-    )
-  }
-
-  return middleware
-}
+const middleware = compose(applyMiddleware(
+  reduxPromise,
+  apolloClient.middleware(),
+  loggerMiddleware({
+    collapsed: true,
+  }),
+))
 
 function getFinalReducer(applicationReducers) {
   return combineReducers({
@@ -86,38 +56,49 @@ function getFinalReducer(applicationReducers) {
   })
 }
 
-function renderApplication(App, store, routes) {
+function getApplicationModule() {
+  const application = require('./application').default
+
+  return new Module(application)
+}
+
+// Only create this once to keep state.
+const store = createStore(getFinalReducer(getApplicationModule().reducers), middleware)
+
+// Hot Module Reloading.
+function rerender() {
+  const App = require('./App').default
+  const application = require('./application').default
+
+  const applicationModule = getApplicationModule()
+
+  // Deep set the store into all modules for easy access.
+  applicationModule.store = store
+
+  applicationModule.store.replaceReducer(getFinalReducer(applicationModule.reducers))
+
   render(
     <AppContainer>
       <App
-        store={store}
-        routes={routes}
+        store={applicationModule.store}
+        routes={applicationModule.routes}
       />
     </AppContainer>,
     document.querySelector('#root')
   )
 }
 
-// Build up the module tree starting at the root module, the application.
-const applicationModule = new Module(application)
-
-log.debug('ApplicationModule', applicationModule)
-
-applicationModule.store = createStore(getFinalReducer(applicationModule.reducers), getMiddleware())
-
-// Render the first time.
-renderApplication(App, applicationModule.store, applicationModule.routes)
-
-// Hot Module Reloading.
-function reload() {
-  const NextApp = require('./App').default
-
-  applicationModule.store.replaceReducer(getFinalReducer(applicationModule.reducers))
-
-  renderApplication(NextApp, applicationModule.store, applicationModule.routes)
-}
-
 if (module.hot) {
-  module.hot.accept('./App', reload)
-  module.hot.accept('./application', reload)
+  // Accept hot reloads from these paths.
+  module.hot.accept('./App', () => {
+    log.debug('App changed')
+    rerender()
+  })
+  module.hot.accept('./application', () => {
+    log.debug('application changed')
+    rerender()
+  })
 }
+
+// Initial run.
+rerender()

@@ -1,51 +1,10 @@
-/*
-
-type AccessToken {
-  id: String!
-  ttl: Int!
-  created: Date!
-  user: User!
-}
-
-type ACL {
-  model: String
-  property: String
-  accessType: String
-  permission: String
-  principalType: String
-  principalId: String
-}
-
-type RoleMapping {
-  id: String!
-  principalType: String!
-  principalId: String!
-  role: Role!
-}
-
-type Role {
-  id: String!
-  name: String!
-  description: String
-  created: Date
-  modified: Date
-}
-
-type Mutation {
-  UserLoginWithUsername(username: String!, password: String!): AccessToken
-  UserLoginWithEmail(email: String!, password: String!): AccessToken
-  UserLogout(accessTokenId: String!): Boolean
-}
-
-*/
-
 export default `
 scalar Date
 
 type User {
   id: String!
   email: String!
-  username: String
+  username: String!
 }
 
 type Tag {
@@ -53,7 +12,7 @@ type Tag {
   label: String!
 }
 
-type BlogPost {
+type Article {
   id: String!
   title: String!
   slug: String!
@@ -61,18 +20,19 @@ type BlogPost {
   created: Date!
   updated: Date!
   user: User!
-  comments: [BlogComment]
+  comments: [Comment]
   tags: [Tag]
 }
 
-type BlogComment {
+type Comment {
   id: String!
   body: String!
   created: Date!
   updated: Date!
   user: User!
-  blogpost: BlogPost!
+  article: Article!
 }
+
 
 # the schema allows the following query:
 type Query {
@@ -81,11 +41,11 @@ type Query {
   UserByEmail(email: String!): User
   UserByUsername(username: String!): User
 
-  BlogPosts: [BlogPost]
-  BlogPostsByUser(userId: String!): [BlogPost]
-  BlogPostsByTag(tagLabel: String!): [BlogPost]
-  BlogPostById(id: String!): BlogPost
-  BlogPostBySlug(slug: String!): BlogPost
+  Articles: [Article]
+  ArticlesByUserId(userId: String!): [Article]
+  ArticlesByTag(tagLabel: String!): [Article]
+  ArticleById(id: String!): Article
+  ArticleBySlug(slug: String!): Article
 }
 
 # we need to tell the server which types represent the root query
@@ -93,13 +53,4 @@ type Query {
 schema {
   query: Query
 }
-`;
-
-/*
- * TODO:
- *  - User
- *   - Query
- *   - Mutation
- *     - confirm
- *     - resetPassword
- */
+`

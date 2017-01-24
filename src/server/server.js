@@ -46,8 +46,8 @@ app.keys = ['keyboardcat']
 const oldUse = app.use
 app.use = x => oldUse.call(app, koaConvert(x))
 
-const knexHandler = getKnexHandler()
-const bookshelfHandler = getBookshelfHandler()
+// const knexHandler = getKnexHandler()
+// const bookshelfHandler = getBookshelfHandler()
 
 router
   .all('/graphql', koaConvert(koaGraphql({
@@ -111,6 +111,7 @@ async function start() {
   try {
     log.debug('Starting migrations')
 
+      /*
     await knexHandler.migrate.latest()
       .then(() => {
         log.debug('Migrations complete')
@@ -118,6 +119,7 @@ async function start() {
         return knexHandler.seed.run()
       })
       .then(() => {
+      */
         log.debug('Starting HTTP server')
 
         // TODO: Promisify this.
@@ -125,7 +127,7 @@ async function start() {
           .listen(PORT, HOSTNAME, () => {
             log.info(`Listening at http://${HOSTNAME}:${PORT}`)
           })
-      })
+      //})
   } catch (error) {
     log.error(error)
     process.exit()

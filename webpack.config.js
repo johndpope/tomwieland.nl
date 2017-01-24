@@ -24,8 +24,7 @@ const options = {
     filename: bundleFileName,
   },
 
-  //devtool: '#source-map',
-  devtool: '#eval',
+  devtool: '#source-map',
 
   module: {
     loaders: [
