@@ -2,10 +2,10 @@
 import { createAction } from 'redux-actions'
 
 // Temporary measure
-import { createHashHistory } from 'history'
+// import { createHashHistory } from 'history'
 
 // Temporary measure
-const history = createHashHistory()
+// const history = createHashHistory()
 
 const LoginStart = createAction('Session:Login:Start')
 const LoginSuccess = createAction('Session:Login:Success')
@@ -18,7 +18,7 @@ export default createAction('Session:Login', (dispatch, mutate, options) => {
     .then((data) => {
       dispatch(LoginSuccess(data.data.UserLoginWithEmail))
 
-      dispatch(history.push('/admin'))
+      // dispatch(history.push('/admin'))
     })
     .catch((error) => {
       if (error.graphQLErrors) {

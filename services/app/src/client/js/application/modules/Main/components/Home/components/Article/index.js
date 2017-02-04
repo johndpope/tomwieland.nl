@@ -24,7 +24,7 @@ export default class Article extends React.Component {
 
       links.push(
         <span className="badge badge-default">
-          <a href={`#/articles/tagged/${v.label}`}>{v.label}</a>
+          <a href={`/articles/tagged/${v.label}`}>{v.label}</a>
         </span>
       )
     })
@@ -66,7 +66,7 @@ export default class Article extends React.Component {
     return (
       <div className={`${styles.articleTitle}`}>
         <h4>
-          <a href={`#/articles/${slug}`}>
+          <a href={`/articles/${slug}`}>
             {title}
           </a>
         </h4>
@@ -86,7 +86,7 @@ export default class Article extends React.Component {
 
     return (
       <span className={`${styles.articleUsername}`}>
-        <a href={`#/articles/by/${username}`}>{username}</a>
+        <a href={`/articles/by/${username}`}>{username}</a>
       </span>
     )
   }
@@ -144,7 +144,7 @@ export default class Article extends React.Component {
 
     return (
       <div className={`${styles.articleFooter}`}>
-        <a className="btn btn-secondary" href={`#/articles/${slug}`}>
+        <a className="btn btn-secondary" href={`/articles/${slug}`}>
           Read more
         </a>
       </div>

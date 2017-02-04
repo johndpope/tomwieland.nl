@@ -8,7 +8,7 @@ export default class Navigation extends React.Component {
     super(options)
 
     this.headerLabel = 'Navigation'
-    this.headerLink = '#/'
+    this.headerLink = '/'
 
     this.style = 'inverse'
     this.bgStyle = 'primary'
@@ -23,8 +23,7 @@ export default class Navigation extends React.Component {
   }
 
   getActiveTopPath() {
-    const hash = window.location.hash
-    const path = hash.replace('#', '')
+    const path = window.location.path
     const splitPath = path.split('/')
     const firstTwo = [splitPath[0], splitPath[1]].join('/')
     return firstTwo
@@ -77,7 +76,7 @@ export default class Navigation extends React.Component {
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <a className="navbar-brand" href="#/">TomWieland.nl</a>
+        <a className="navbar-brand" href="/">TomWieland.nl</a>
         <div className="collapse navbar-collapse" id="mainNav">
           <ul className="navbar-nav mr-auto">
             {this.renderNavItems()}

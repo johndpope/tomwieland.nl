@@ -23,7 +23,7 @@ export default class AdminNavigation extends Navigation {
   constructor(options) {
     super(options)
 
-    this.headerLink = '#/'
+    this.headerLink = '/'
     this.headerLabel = 'TomWieland.nl'
   }
 

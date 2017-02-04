@@ -5,7 +5,7 @@ export default class AdminNavigation extends Navigation {
   constructor(options) {
     super(options)
 
-    this.headerLink = '#/admin'
+    this.headerLink = '/admin'
     this.headerLabel = 'Admin'
     this.inverse = true
   }

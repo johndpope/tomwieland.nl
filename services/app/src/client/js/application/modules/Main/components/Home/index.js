@@ -93,7 +93,7 @@ export default class Home extends React.Component {
                   textAlign: 'center',
                 }}
               >
-                <a href="#/articles">Archive</a>
+                <a href="/articles">Archive</a>
               </div>
             </div>
           </div>

@@ -84,7 +84,7 @@ function getStoreWithReducers(reducers) {
 function renderApplication() {
   // log.debug('rerender')
 
-  const App = require('./App').default
+  const ApplicationContainer = require('./ApplicationContainer').default
 
   const applicationModule = getApplicationModule()
   // log.debug('rerender applicationModule', applicationModule)
@@ -102,7 +102,7 @@ function renderApplication() {
 
   render(
     <AppContainer>
-      <App
+      <ApplicationContainer
         store={applicationModule.store}
         routes={applicationModule.routes}
       />

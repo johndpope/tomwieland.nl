@@ -24,7 +24,7 @@ const handleClickLogout = (props, event) => {
 
 const renderLoggedOut = props =>
   <Nav pullRight>
-    <NavItem eventKey="4" href="#/login" onClick={props.onClick}>
+    <NavItem eventKey="4" href="/login" onClick={props.onClick}>
       Log in
     </NavItem>
   </Nav>
@@ -32,8 +32,8 @@ const renderLoggedOut = props =>
 const renderLoggedIn = props =>
   <Nav pullRight>
     <NavDropdown eventKey="4" id="basic-nav-dropdown" title={props.profile.username}>
-      <MenuItem eventKey="4.0" href="#/">Public</MenuItem>
-      <MenuItem eventKey="4.1" href="#/admin">Admin</MenuItem>
+      <MenuItem eventKey="4.0" href="/">Public</MenuItem>
+      <MenuItem eventKey="4.1" href="/admin">Admin</MenuItem>
       <MenuItem eventKey="4.2" onClick={handleClickLogout(props)}>Admin</MenuItem>
     </NavDropdown>
   </Nav>

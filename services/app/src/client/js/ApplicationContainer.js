@@ -4,7 +4,7 @@ import log from 'loglevel'
 import GetCookie from './application/modules/Session/actionCreators/GetCookie'
 
 // This file exists to wrap the components for Hot Module Reloading.
-export default class App extends Component {
+export default class ApplicationContainer extends Component {
   componentWillMount() {
     this.props.store.dispatch(GetCookie())
   }

@@ -19,7 +19,7 @@ import styles from './styles.module.scss'
 
   (dispatch) => {
     return {
-      handleRedirectToPrevious: () => window.history.back(),
+      // handleRedirectToPrevious: () => window.history.back(),
       handleRedirectToList: () => {
         console.log('TODO: Fix redirect')
         // dispatch(push('/articles')
@@ -104,7 +104,7 @@ export default class Show extends React.Component {
 
     return (
       <h4 className={`card-title ${styles.articleTitle}`}>
-        <a href={`#/articles/${slug}`}>
+        <a href={`/articles/${slug}`}>
           {title}
         </a>
       </h4>
@@ -112,7 +112,7 @@ export default class Show extends React.Component {
   }
 
   renderUsername(username) {
-    return <a href={`#/articles/by/${username}`}>{username}</a>
+    return <a href={`/articles/by/${username}`}>{username}</a>
   }
 
   renderBody() {
@@ -140,7 +140,7 @@ export default class Show extends React.Component {
       }
 
       links.push(
-        <a href={`#/articles/tagged/${v.label}`}>{v.label}</a>
+        <a href={`/articles/tagged/${v.label}`}>{v.label}</a>
       )
     })
 
