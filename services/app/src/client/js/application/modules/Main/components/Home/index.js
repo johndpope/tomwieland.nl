@@ -5,6 +5,7 @@ import _ from 'lodash'
 import gql from 'graphql-tag'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
+import { Link } from 'react-router-dom'
 
 import styles from './styles.module.scss'
 import Article from './components/Article'
@@ -93,7 +94,7 @@ export default class Home extends React.Component {
                   textAlign: 'center',
                 }}
               >
-                <a href="/articles">Archive</a>
+                <Link to="/articles">Archive</Link>
               </div>
             </div>
           </div>

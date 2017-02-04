@@ -6,6 +6,7 @@ import log from 'loglevel'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
+import { Link } from 'react-router-dom'
 
 import styles from './styles.module.scss'
 
@@ -104,15 +105,15 @@ export default class Show extends React.Component {
 
     return (
       <h4 className={`card-title ${styles.articleTitle}`}>
-        <a href={`/articles/${slug}`}>
+        <Link to={`/articles/${slug}`}>
           {title}
-        </a>
+        </Link>
       </h4>
     )
   }
 
   renderUsername(username) {
-    return <a href={`/articles/by/${username}`}>{username}</a>
+    return <Link to={`/articles/by/${username}`}>{username}</Link>
   }
 
   renderBody() {
@@ -140,7 +141,7 @@ export default class Show extends React.Component {
       }
 
       links.push(
-        <a href={`/articles/tagged/${v.label}`}>{v.label}</a>
+        <Link to={`/articles/tagged/${v.label}`}>{v.label}</Link>
       )
     })
 

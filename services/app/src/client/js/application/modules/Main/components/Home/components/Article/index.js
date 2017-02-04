@@ -2,6 +2,7 @@ import CSSModules from 'react-css-modules'
 import React from 'react'
 import log from 'loglevel'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 import styles from './styles.module.scss'
 
@@ -24,7 +25,7 @@ export default class Article extends React.Component {
 
       links.push(
         <span className="badge badge-default">
-          <a href={`/articles/tagged/${v.label}`}>{v.label}</a>
+          <Link to={`/articles/tagged/${v.label}`}>{v.label}</Link>
         </span>
       )
     })
@@ -66,9 +67,9 @@ export default class Article extends React.Component {
     return (
       <div className={`${styles.articleTitle}`}>
         <h4>
-          <a href={`/articles/${slug}`}>
+          <Link to={`/articles/${slug}`}>
             {title}
-          </a>
+          </Link>
         </h4>
       </div>
     )
@@ -86,7 +87,7 @@ export default class Article extends React.Component {
 
     return (
       <span className={`${styles.articleUsername}`}>
-        <a href={`/articles/by/${username}`}>{username}</a>
+        <Link to={`/articles/by/${username}`}>{username}</Link>
       </span>
     )
   }
@@ -144,9 +145,9 @@ export default class Article extends React.Component {
 
     return (
       <div className={`${styles.articleFooter}`}>
-        <a className="btn btn-secondary" href={`/articles/${slug}`}>
+        <Link className="btn btn-secondary" to={`/articles/${slug}`}>
           Read more
-        </a>
+        </Link>
       </div>
     )
   }

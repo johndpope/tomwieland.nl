@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import log from 'loglevel'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 @connect(
@@ -89,7 +90,7 @@ export default class List extends React.Component {
           style={{ height: 45 }}
         >
           <div style={{ position: 'absolute', bottom: 10 }}>
-            <a href={`#/articles/${entry.slug}`}>{entry.title}</a>
+            <Link to={`#/articles/${entry.slug}`}>{entry.title}</Link>
           </div>
         </div>
       )

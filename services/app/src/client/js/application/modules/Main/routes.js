@@ -22,7 +22,7 @@ export default CSSModules(styles)((props) => {
       <Navigation />
 
       <div className={`${styles.pageContainer}`}>
-        <Route path="/" exactly component={Home} />
+        <Route path="/" exact component={Home} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/login" component={Login} />

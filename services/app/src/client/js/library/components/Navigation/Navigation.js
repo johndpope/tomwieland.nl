@@ -1,7 +1,10 @@
 // import log from 'loglevel'
 import React from 'react'
 import _ from 'lodash'
-import { Link } from 'react-router-dom'
+import {
+  Link,
+  Route,
+} from 'react-router-dom'
 
 export default class Navigation extends React.Component {
   constructor(options) {
@@ -52,9 +55,11 @@ export default class Navigation extends React.Component {
       } = item
 
       return (
-        <Link key={i} to={href} activeOnlyWhenExact>
-          {params => <a className={`nav-item nav-link ${params.isActive ? 'active' : ''}`} href={href} onClick={params.onClick}>{label}</a>}
-        </Link>
+        <Route path={href} key={i} children={({ match, onClick }) => (
+          <Link className={`nav-item nav-link ${match ? 'active' : ''}`} to={href} onClick={onClick}>
+            {label}
+          </Link>
+        )} />
       )
     })
   }
@@ -76,7 +81,7 @@ export default class Navigation extends React.Component {
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <a className="navbar-brand" href="/">TomWieland.nl</a>
+        <Link className="navbar-brand" to="/">TomWieland.nl</Link>
         <div className="collapse navbar-collapse" id="mainNav">
           <ul className="navbar-nav mr-auto">
             {this.renderNavItems()}

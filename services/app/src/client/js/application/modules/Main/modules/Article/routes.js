@@ -7,7 +7,7 @@ import Show from './components/Show'
 export default (options) => {
   return (
     <div>
-      <Route path="/articles" exactly component={List} />
+      <Route path="/articles" exact component={List} />
       <Route path="/articles/:slug" component={Show} />
     </div>
   )
