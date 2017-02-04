@@ -1,0 +1,45 @@
+@import "../../../../../../../../css/app.scss";
+
+.article {
+  margin-bottom: 100px;
+}
+
+.articleHeader {
+  height: 60px;
+  margin-bottom: 30px;
+}
+
+.articleTitle {
+  h4 {
+    margin-bottom: 10px;
+
+    a {
+      color: $gray-dark;
+    }
+  }
+}
+
+.articleTags {
+  a {
+    color: $gray-lightest;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.articleUsername {
+  a {
+    color: $gray-light;
+  }
+}
+
+.articleDate {
+}
+
+.articleFooter {
+  margin-top: 20px;
+
+  font-size: 14px;
+}
