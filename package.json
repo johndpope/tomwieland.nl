@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "koa-history-api-fallback": "^0.1.3"
+  }
+}

@@ -3539,9 +3539,9 @@ ini@^1.3.4, ini@~1.3.0:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.4.tgz#0537cb79daf59b59a1a517dff706c86ec039162e"
 
-"inline-style-prefixer@github:khan/inline-style-prefixer#f41f3040ac27eeec3b7a1fb7450ddce250cac4e4":
+inline-style-prefixer@Khan/inline-style-prefixer#f41f3040ac27eeec3b7a1fb7450ddce250cac4e4:
   version "0.6.7"
-  resolved "https://codeload.github.com/khan/inline-style-prefixer/tar.gz/f41f3040ac27eeec3b7a1fb7450ddce250cac4e4"
+  resolved "https://codeload.github.com/Khan/inline-style-prefixer/tar.gz/f41f3040ac27eeec3b7a1fb7450ddce250cac4e4"
   dependencies:
     bowser "^1.0.0"
 
@@ -4179,6 +4179,10 @@ koa-helmet@^3.1.0:
   resolved "https://registry.yarnpkg.com/koa-helmet/-/koa-helmet-3.1.0.tgz#67da33a3ab41b8308c0d1c517396ebc668d9a14e"
   dependencies:
     helmet "^3.0.0"
+
+koa-history-api-fallback@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/koa-history-api-fallback/-/koa-history-api-fallback-0.1.3.tgz#94eb35b481914d682634f9911021187667f02b39"
 
 koa-is-json@^1.0.0:
   version "1.0.0"
@@ -5047,7 +5051,7 @@ n3@^0.6.0:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/n3/-/n3-0.6.1.tgz#30b64dde8ef74d5a4fbea7edb79fae05401a0faa"
 
-"n3@github:iilab/N3.js#fix/object-is-not-IRI":
+n3@iilab/N3.js#fix/object-is-not-IRI:
   version "0.9.0"
   resolved "https://codeload.github.com/iilab/N3.js/tar.gz/57b2c6af9f644ed1c2f726600280d9020e2333af"
 

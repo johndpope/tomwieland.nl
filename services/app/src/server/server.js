@@ -9,6 +9,7 @@ import koaConvert from 'koa-convert'
 import koaErrorHandler from 'koa-errorhandler'
 import koaGraphql from 'koa-graphql'
 import koaHelmet from 'koa-helmet'
+import koaHistoryAPIFallback from 'koa-history-api-fallback'
 import koaLogger from 'koa-logger'
 import koaPassport from 'koa-passport'
 import koaPing from 'koa-ping'
@@ -76,6 +77,7 @@ app
   .use(router.routes())
   .use(router.allowedMethods())
   .use(koaStatic(`${CWD}/../client`))
+  .use(koaHistoryAPIFallback())
 
 if (process.env.NODE_ENV === 'develop') {
   webpackConfig.entry = ['react-hot-loader/patch']

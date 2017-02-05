@@ -20,16 +20,7 @@ ADD ./yarn.lock /service
 RUN yarn
 
 # Add all files.
-ADD ./.babelrc /service
-ADD ./.bootstraprc /service
-ADD ./.eslintrc /service
-ADD ./gulpfile.js /service
-ADD ./knexfile.js /service
-ADD ./webpack.config.js /service
-
-# Add directories.
-ADD ./src /service
-ADD ./gulp /service
+ADD . /service
 
 # Run the service.
 #CMD npm run develop

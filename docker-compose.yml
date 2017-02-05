@@ -42,4 +42,4 @@ services:
       - "DB_NAME=tomwieland_nl_develop"
     volumes:
       - "./services/app:/service"
-      #- "/service/node_modules"
+      - "/service/node_modules"
