@@ -76,8 +76,8 @@ app
 
   .use(router.routes())
   .use(router.allowedMethods())
-  .use(koaStatic(`${CWD}/../client`))
   .use(koaHistoryAPIFallback())
+  .use(koaStatic(`${CWD}/../client`))
 
 if (process.env.NODE_ENV === 'develop') {
   webpackConfig.entry = ['react-hot-loader/patch']
