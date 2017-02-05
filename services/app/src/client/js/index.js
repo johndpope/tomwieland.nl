@@ -113,8 +113,8 @@ function renderApplication() {
 
 if (module.hot) {
   // Accept hot reloads from these paths.
-  module.hot.accept('./App', () => {
-    // log.debug('App changed')
+  module.hot.accept('./ApplicationContainer', () => {
+    // log.debug('ApplicationContainer changed')
     renderApplication()
   })
 

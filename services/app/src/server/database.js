@@ -13,8 +13,6 @@ const {
 
 const DB_ADDRESS = `postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
 
-console.log('AAH', DB_ADDRESS)
-
 const knex = Knex({
   // debug: true,
   client: 'pg',
