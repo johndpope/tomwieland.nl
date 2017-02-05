@@ -29,22 +29,27 @@ export default class MainNavigation extends Navigation {
       {
         href: '/',
         label: 'Home',
+        highlight: 'exact',
       },
       {
         href: '/articles',
-        label: 'Home',
+        label: 'Articles',
+        highlight: 'start',
       },
       {
         href: '/about',
         label: 'About',
+        highlight: 'start',
       },
       {
         href: '/contact',
         label: 'Contact',
+        highlight: 'start',
       },
       {
         href: '/login',
         label: 'Login',
+        highlight: 'start',
       },
     ]
   }

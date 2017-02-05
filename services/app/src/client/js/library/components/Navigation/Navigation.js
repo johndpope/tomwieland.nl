@@ -52,13 +52,30 @@ export default class Navigation extends React.Component {
       const {
         href,
         label,
+        highlight,
       } = item
 
       return (
         <Route path={href} key={i} children={({ match, onClick }) => {
           let className = 'nav-item nav-link'
+          let isActive = false
 
-          if (match && match.isExact) {
+          switch (highlight) {
+            case 'exact':
+              if (match && match.isExact) {
+                isActive = true
+              }
+              break
+
+            case 'start':
+            default:
+              if (match && match.path.startsWith(href)) {
+                isActive = true
+              }
+              break
+          }
+
+          if (isActive) {
             className += ' active'
           }
 
