@@ -24,7 +24,7 @@ export default class Article extends React.Component {
       }
 
       links.push(
-        <span className="badge badge-default">
+        <span key={i} className="badge badge-default">
           <Link to={`/articles/tagged/${v.label}`}>{v.label}</Link>
         </span>
       )

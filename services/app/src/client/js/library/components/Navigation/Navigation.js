@@ -55,11 +55,19 @@ export default class Navigation extends React.Component {
       } = item
 
       return (
-        <Route path={href} key={i} children={({ match, onClick }) => (
-          <Link className={`nav-item nav-link ${match ? 'active' : ''}`} to={href} onClick={onClick}>
-            {label}
-          </Link>
-        )} />
+        <Route path={href} key={i} children={({ match, onClick }) => {
+          let className = 'nav-item nav-link'
+
+          if (match && match.isExact) {
+            className += ' active'
+          }
+
+          return (
+            <Link className={className} to={href} onClick={onClick}>
+              {label}
+            </Link>
+          )
+        }} />
       )
     })
   }

@@ -65,7 +65,7 @@ import styles from './styles.module.scss'
   options: (props) => {
     return {
       variables: {
-        slug: props.params.slug,
+        slug: props.match.params.slug,
       },
     }
   },
