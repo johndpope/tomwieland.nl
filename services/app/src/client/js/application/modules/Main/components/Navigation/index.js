@@ -31,6 +31,10 @@ export default class MainNavigation extends Navigation {
         label: 'Home',
       },
       {
+        href: '/articles',
+        label: 'Home',
+      },
+      {
         href: '/about',
         label: 'About',
       },
