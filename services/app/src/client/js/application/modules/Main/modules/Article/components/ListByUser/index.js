@@ -3,8 +3,9 @@ import gql from 'graphql-tag'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
 
+import Article from '../Article'
+import List from '../List/List'
 import styles from './styles.module.scss'
-import List from '../common/List'
 
 export default connect(
   (state) => {
@@ -19,8 +20,8 @@ export default connect(
   }
 )
 (graphql(gql`
-  query Articles($offset: Int!, $limit: Int!) {
-    articles(offset: $offset, limit: $limit) {
+  query ArticlesByUser($username: String!, $offset: Int!, $limit: Int!) {
+    articlesByUser(username: $username, offset: $offset, limit: $limit) {
       id,
       title,
       slug,
@@ -51,6 +52,7 @@ export default connect(
   options: (props) => {
     return {
       variables: {
+        username: props.match.params.username,
         offset: 0,
         limit: 10,
       }
@@ -58,7 +60,7 @@ export default connect(
   },
   props: ({ data, ownProps, mutate }) => {
     return {
-      articles: data.articles,
+      articles: data.articlesByUser,
     }
   },
 })

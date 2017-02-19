@@ -45,4 +45,10 @@ export default class Comment extends Model {
       },
     },
   }
+
+  static getCommentsByUserId(userId) {
+    return Comment
+      .query()
+      .where({ userId })
+  }
 }

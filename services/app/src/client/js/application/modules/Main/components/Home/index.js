@@ -1,14 +1,16 @@
 import CSSModules from 'react-css-modules'
-import Halogen from 'halogen'
 import React from 'react'
 import _ from 'lodash'
 import gql from 'graphql-tag'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
-import { Link } from 'react-router-dom'
+
+import Spinner from '../../../../../library/components/Spinner'
 
 import styles from './styles.module.scss'
-import Article from './components/Article'
+import Article from '../../modules/Article/components/Article'
+import Tags from '../../modules/Article/components/Tags'
 
 @connect(
   (state) => {
@@ -30,8 +32,8 @@ import Article from './components/Article'
   }
 )
 @graphql(gql`
-  query {
-    articles {
+  query Articles($offset: Int!, $limit: Int!) {
+    articles(offset: $offset, limit: $limit) {
       id,
       title,
       slug,
@@ -59,25 +61,83 @@ import Article from './components/Article'
     }
   }
 `, {
+  options: (props) => {
+    return {
+      variables: {
+        offset: 0,
+        limit: 5,
+      }
+    }
+  },
   props: ({ data, ownProps, mutate }) => {
     return {
       articles: data.articles,
     }
   },
 })
+@graphql(gql`
+  query Tags {
+    tags {
+      id
+      label
+    }
+  }
+`, {
+  props: ({ data, ownProps, mutate }) => {
+    return {
+      tags: data.tags,
+    }
+  },
+})
 @CSSModules(styles)
 export default class Home extends React.Component {
   renderArticles() {
-    return this.props.articles.map((v, i) => {
+    const {
+      articles
+    } = this.props
+
+    if (!articles) {
+      return <Spinner />
+    }
+
+    const articleElements = this.props.articles.map((v, i) => {
       return <Article key={i} article={v} />
     })
+
+    articleElements.push(
+      <div className="row" key={articleElements.length}>
+        <div
+          className="col"
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          <Link to="/articles">Archive</Link>
+        </div>
+      </div>
+    )
+
+    return articleElements
   }
 
-  renderLoadingState() {
-    return <center><Halogen.ClipLoader color="#000000" /></center>
+  renderTagsBlock() {
+    const { tags } = this.props
+
+    if (!tags) {
+      return <Spinner />
+    }
+
+    return (
+      <div className="row">
+        <div className="col">
+          <h4>Tags</h4>
+          <Tags tags={tags} />
+        </div>
+      </div>
+    )
   }
 
-  renderDefaultState() {
+  render() {
     const {
       styles,
     } = this.props
@@ -87,16 +147,6 @@ export default class Home extends React.Component {
         <div className="row">
           <div className="col">
             {this.renderArticles()}
-            <div className="row">
-              <div
-                className="col"
-                style={{
-                  textAlign: 'center',
-                }}
-              >
-                <Link to="/articles">Archive</Link>
-              </div>
-            </div>
           </div>
           <div className="hidden-sm-down col-md-3">
             <div className="row">
@@ -124,19 +174,11 @@ export default class Home extends React.Component {
                 </ul>
               </div>
             </div>
+            {this.renderTagsBlock()}
+
           </div>
         </div>
       </div>
     )
-  }
-
-  render() {
-    const { articles } = this.props
-
-    if (!articles || !articles.length) {
-      return this.renderLoadingState()
-    }
-
-    return this.renderDefaultState()
   }
 }

@@ -44,9 +44,9 @@ type Session {
 
 # the schema allows the following query:
 type Query {
-  articles: [Article]
-  articlesByUser(userId: String!): [Article]
-  articlesByTag(tag: String!): [Article]
+  articles(offset: Int!, limit: Int!): [Article]
+  articlesByUser(username: String!, offset: Int!, limit: Int!): [Article]
+  articlesByTag(tag: String!, offset: Int!, limit: Int!): [Article]
   articleById(id: String!): Article
   articleBySlug(slug: String!): Article
 
@@ -59,9 +59,7 @@ type Query {
 }
 
 type Mutation {
-  sessionWithoutCredentials(username: String!): Session
   sessionWithEmail(email: String!, password: String!): Session
-  sessionWithUsername(username: String!, password: String!): Session
 }
 
 # we need to tell the server which types represent the root query

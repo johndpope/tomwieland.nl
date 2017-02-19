@@ -1,45 +1,67 @@
 version: "2"
 
 services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    build:
+      context: "./services/kafka"
+      dockerfile: "Dockerfile"
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: "127.0.0.1"
+      # KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  users:
+    depends_on:
+      - "kafka"
+    build:
+      context: "./services/users"
+      dockerfile: "Dockerfile"
+    ports:
+      - "4001:4001"
+    environment:
+      NODE_ENV: "develop"
+      KAFKA_HOST: "127.0.0.1"
+      KAFKA_PORT: "9092"
+    volumes:
+      - "./services/users:/service"
+
   postgresql:
     restart: always
-    image: sameersbn/postgresql:latest
+    image: postgres:latest
     ports:
       - "5432:5432"
     environment:
-      - "DEBUG=false"
-
-      - "DB_USER=tomwieland_nl_user"
-      - "DB_PASS=tomwieland_nl_password"
-      - "PG_PASSWORD=postgres"
-      - "DB_NAME=tomwieland_nl_develop"
-      - "DB_TEMPLATE="
-
-      - "DB_EXTENSION="
-
-      - "REPLICATION_MODE="
-      - "REPLICATION_USER="
-      - "REPLICATION_PASS="
-      - "REPLICATION_SSLMODE="
-
+      - "POSTGRES_USER=tomwieland_nl_user"
+      - "POSTGRES_PASSWORD=tomwieland_nl_password"
+      - "POSTGRES_DB=tomwieland_nl_develop"
     volumes:
-      - /srv/docker/postgresql:/var/lib/postgresql
+      - /var/lib/postgresql:/var/lib/postgresql
 
   app:
     depends_on:
       - "postgresql"
+      - "kafka"
     build:
       context: "./services/app"
       dockerfile: "Dockerfile"
     ports:
       - "3000:3000"
     environment:
-      - "NODE_ENV=develop"
-      - "DB_HOST=postgresql"
-      - "DB_PORT=5432"
-      - "DB_USER=tomwieland_nl_user"
-      - "DB_PASS=tomwieland_nl_password"
-      - "DB_NAME=tomwieland_nl_develop"
+      NODE_ENV: "develop"
+      DB_HOST: "postgresql"
+      DB_PORT: "5432"
+      DB_USER: "tomwieland_nl_user"
+      DB_PASS: "tomwieland_nl_password"
+      DB_NAME: "tomwieland_nl_develop"
     volumes:
       - "./services/app:/service"
       - "/service/node_modules"

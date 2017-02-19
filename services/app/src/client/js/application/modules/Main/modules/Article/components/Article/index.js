@@ -5,6 +5,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 
 import styles from './styles.module.scss'
+import Tags from '../Tags'
 
 @CSSModules(styles)
 export default class Article extends React.Component {
@@ -50,7 +51,7 @@ export default class Article extends React.Component {
 
     return (
       <span className={`${styles.articleDate}`}>
-        {day} {month} {year}`
+        {day} {month} {year}
       </span>
     )
   }
@@ -94,6 +95,9 @@ export default class Article extends React.Component {
 
   renderHeader() {
     const {
+      article: {
+        tags,
+      },
       styles,
     } = this.props
 
@@ -105,7 +109,7 @@ export default class Article extends React.Component {
             By {this.renderUsername()} on {this.renderDate()}<br/>
           </div>
           <div className="float-sm-right">
-            {this.renderTags()}
+            <Tags tags={tags} />
           </div>
         </div>
       </div>

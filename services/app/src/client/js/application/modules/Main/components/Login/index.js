@@ -24,8 +24,8 @@ import LoginAction from '../../../Session/actionCreators/Login'
   }
 )
 @graphql(gql`
-  mutation UserLoginWithEmail($email: String!, $password: String!) {
-    UserLoginWithEmail(email: $email, password: $password) {
+  mutation SessionWithEmail($email: String!, $password: String!) {
+    sessionWithEmail(email: $email, password: $password) {
       id
       ttl
       created
@@ -92,6 +92,7 @@ export default class Login extends React.Component {
                   placeholder="Enter email"
                   ref={(node) => { this.emailElement = node }}
                   disabled={isLoggingIn}
+                  autoFocus
                 />
               </div>
 

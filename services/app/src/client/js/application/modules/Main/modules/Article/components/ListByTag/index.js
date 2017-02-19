@@ -3,8 +3,8 @@ import gql from 'graphql-tag'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
 
+import List from '../List/List'
 import styles from './styles.module.scss'
-import List from '../common/List'
 
 export default connect(
   (state) => {
@@ -19,8 +19,8 @@ export default connect(
   }
 )
 (graphql(gql`
-  query Articles($offset: Int!, $limit: Int!) {
-    articles(offset: $offset, limit: $limit) {
+  query ArticlesByTag($tag: String!, $offset: Int!, $limit: Int!) {
+    articlesByTag(tag: $tag, offset: $offset, limit: $limit) {
       id,
       title,
       slug,
@@ -51,6 +51,7 @@ export default connect(
   options: (props) => {
     return {
       variables: {
+        tag: props.match.params.label,
         offset: 0,
         limit: 10,
       }
@@ -58,7 +59,7 @@ export default connect(
   },
   props: ({ data, ownProps, mutate }) => {
     return {
-      articles: data.articles,
+      articles: data.articlesByTag,
     }
   },
 })

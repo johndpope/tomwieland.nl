@@ -1,5 +1,8 @@
 import { Model } from 'objection'
 
+import Tag from './Tag'
+import User from './User'
+
 export default class Article extends Model {
   static tableName = 'articles'
 
@@ -71,19 +74,43 @@ export default class Article extends Model {
     },
   }
 
-  static getArticles() {
+  static getArticles(offset, limit) {
     return Article
       .query()
+      .offset(offset)
+      .limit(limit)
   }
 
-  static getArticlesByUserId(userId) {
+  static getArticlesByUserId(userId, offset, limit) {
     return Article
       .query()
       .where({ userId })
+      .offset(offset)
+      .limit(limit)
   }
 
-  // TODO: Implement.
-  static getArticlesByTag(tag) {
+  static getArticlesByUsername(username, offset, limit) {
+    return User
+      .query()
+      .where({ username: username })
+      .then(([ user ]) => {
+        return user
+          .$relatedQuery('articles')
+          .offset(offset)
+          .limit(limit)
+      })
+  }
+
+  static getArticlesByTag(tag, offset, limit) {
+    return Tag
+      .query()
+      .where({ label: tag })
+      .then(([ tag ]) => {
+        return tag
+          .$relatedQuery('articles')
+          .offset(offset)
+          .limit(limit)
+      })
   }
 
   static getArticleById(id) {

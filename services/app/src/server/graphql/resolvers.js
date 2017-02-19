@@ -1,6 +1,7 @@
-import log from 'loglevel'
-import { Kind } from 'graphql/language'
 import _ from 'lodash'
+import log from 'loglevel'
+import passport from 'passport'
+import { Kind } from 'graphql/language'
 
 import Article from '../models/Article'
 import Comment from '../models/Comment'
@@ -85,75 +86,131 @@ export default {
   User: {
     articles(root, args, context) {
       return Article
-        .query()
-        .where({ userId: root.id })
+        .getArticlesByUserId(root.id)
     },
 
     comments(root, args, context) {
       return Comment
-        .query()
-        .where({ userId: root.id })
+        .getCommentsByUserId(root.id)
     },
   },
 
   Query: {
     articles(root, args, context) {
+      const {
+        offset,
+        limit,
+      } = args
+
+      log.debug('GraphQL.Resolvers.Query.articles', offset, limit)
+
       return Article
-        .getArticles()
+        .getArticles(offset, limit)
         .then(jsonResult)
     },
 
     articlesByUser(root, args, context) {
+      const {
+        username,
+        offset,
+        limit,
+      } = args
+
+      log.debug('GraphQL.Resolvers.Query.articlesByUser', tag, offset, limit)
+
       return Article
-        .getArticlesByUserId(args.userId)
+        .getArticlesByUsername(username, offset, limit)
         .then(jsonResult)
     },
 
     articlesByTag(root, args, context) {
-      // TODO: Implement
-      return false
+      const {
+        tag,
+        offset,
+        limit,
+      } = args
+
+      log.debug('GraphQL.Resolvers.Query.articlesByUser', tag, offset, limit)
+
+      return Article
+        .getArticlesByTag(tag, offset, limit)
+        .then(jsonResult)
     },
 
     articleById(root, args, context) {
+      log.debug('GraphQL.Resolvers.Query.articlesById')
+
       return Article
         .getArticleById(args.id)
         .then(jsonResult)
     },
 
     articleBySlug(root, args, context) {
+      log.debug('GraphQL.Resolvers.Query.articleBySlug')
+
       return Article
         .getArticleBySlug(args.slug)
         .then(jsonResult)
     },
 
     tags(root, args, context) {
+      log.debug('GraphQL.Resolvers.Query.tags')
+
       return Tag
         .getTags()
         .then(jsonResult)
     },
 
     users(root, args, context) {
+      log.debug('GraphQL.Resolvers.Query.users')
+
       return User
         .getUsers()
         .then(jsonResult)
     },
 
     userById(root, args, context) {
+      log.debug('GraphQL.Resolvers.Query.userById')
+
       return User
         .getUserById(args.id)
         .then(jsonResult)
     },
 
     userByEmail(root, args, context) {
+      log.debug('GraphQL.Resolvers.Query.userByEmail')
+
       return User
         .getUserByEmail(args.email)
         .then(jsonResult)
     },
 
     userByUsername(root, args, context) {
+      log.debug('GraphQL.Resolvers.Query.userByUsername')
+
       return User
         .getUserByUsername(args.username)
         .then(jsonResult)
+    },
+  },
+
+  Mutation: {
+    sessionWithEmail(root, args, context) {
+      const {
+        email,
+        password
+      } = args
+
+      log.debug('GraphQL.Resolvers.Mutation.sessionWithEmail', email, password)
+
+      passport.authenticate('local', )
+
+      // TODO: Hashing function?
+      return User
+        .query()
+        .where({ email, password })
+
+      return false
     },
   },
 }

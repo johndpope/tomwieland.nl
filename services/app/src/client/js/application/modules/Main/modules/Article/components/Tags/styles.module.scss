@@ -1,0 +1,12 @@
+@import "../../../../../../../../css/app.scss";
+
+.tags {
+  a {
+    color: $gray-lightest;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+

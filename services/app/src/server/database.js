@@ -13,24 +13,32 @@ const {
 
 const DB_ADDRESS = `postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
 
-const knex = Knex({
-  // debug: true,
-  client: 'pg',
-  connection: DB_ADDRESS,
-  searchPath: 'knex,public',
-  pool: {
-    min: 2,
-    max: 10,
-  },
-  migrations: {
-    tableName: 'knex_migrations',
-    directory: path.resolve(__dirname, './migrations'),
-  },
-  seeds: {
-    directory: path.resolve(__dirname, './seeds'),
-  },
-})
+let knex
 
-Model.knex(knex)
+export default function getDatabase() {
+  if (knex) {
+    return knex
+  }
 
-export default knex
+  knex = Knex({
+    // debug: true,
+    client: 'pg',
+    connection: DB_ADDRESS,
+    searchPath: 'knex,public',
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+      directory: path.resolve(__dirname, './migrations'),
+    },
+    seeds: {
+      directory: path.resolve(__dirname, './seeds'),
+    },
+  })
+
+  Model.knex(knex)
+
+  return knex
+}

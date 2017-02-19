@@ -23,11 +23,13 @@ import webpackDevMiddleware from 'koa-webpack-dev-middleware'
 import webpackHotMiddleware from 'koa-webpack-hot-middleware'
 
 // Import this first.
-import db from './database'
+import getDatabase from './database'
 
 import webpackConfig from '../../webpack.config'
 import graphqlSchema from './graphql/schema'
 import graphqlResolvers from './graphql/resolvers'
+
+import './authentication'
 
 if (process.env.NODE_ENV === 'develop') {
   log.setLevel('debug')
@@ -46,7 +48,7 @@ app.keys = ['keyboardcat']
 const oldUse = app.use
 app.use = x => oldUse.call(app, koaConvert(x))
 
-
+const db = getDatabase()
 
 router
   .all('/graphql', koaConvert(koaGraphql({
@@ -107,17 +109,17 @@ if (process.env.NODE_ENV === 'develop') {
 
 async function start() {
   try {
-    log.info('Running migrations...')
-
-    await db.migrate.latest()
-
-    log.info('Migrations complete.')
-
-    log.info('Running seed...')
-
-    await db.seed.run()
-
-    log.info('Seed complete.')
+    // log.info('Running migrations...')
+    //
+    // await db.migrate.latest()
+    //
+    // log.info('Migrations complete.')
+    //
+    // log.info('Running seed...')
+    //
+    // await db.seed.run()
+    //
+    // log.info('Seed complete.')
 
     log.info('Starting HTTP Server...')
 

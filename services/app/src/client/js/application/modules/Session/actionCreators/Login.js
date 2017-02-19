@@ -21,7 +21,7 @@ export default createAction('Session:Login', (dispatch, mutate, options) => {
       // dispatch(history.push('/admin'))
     })
     .catch((error) => {
-      if (error.graphQLErrors) {
+      if (error.graphQLErrors && error.graphQLErrors[0]) {
         const message = error.graphQLErrors[0].message
 
         dispatch(LoginFailure(message))
