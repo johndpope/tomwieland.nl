@@ -1,4 +1,11 @@
+# Use the Node.js container
 FROM node:7
+
+# Install package dependencies.
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y build-essential
+RUN apt-get install -y libsasl2-dev
 
 # Expose ports.
 EXPOSE 4001
@@ -20,9 +27,3 @@ ADD . /service
 
 # Run the service.
 CMD node /service/index.js
-
-# Dockerize if you want to wait for a socket to connect
-#ENV DOCKERIZE_VERSION v0.2.0
-#RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-#    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-#CMD dockerize -wait tcp://db:27017 ./node_modules/.bin/gulp production

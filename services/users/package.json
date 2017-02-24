@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ascoltatori": "^4.0.0"
+    "node-rdkafka": "^0.7.0-ALPHA.3"
   }
 }
